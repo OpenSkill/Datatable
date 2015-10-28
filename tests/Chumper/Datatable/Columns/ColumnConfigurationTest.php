@@ -25,20 +25,6 @@ class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Will test the label
-     */
-    public function testLabel()
-    {
-        $cc = ColumnConfigurationBuilder::create()
-            ->name("fooBar")
-            ->label("barFoo")
-            ->build();
-
-        $this->assertSame("fooBar", $cc->getName());
-        $this->assertSame("barFoo", $cc->getLabel());
-    }
-
-    /**
      * Will test if the builder will throw an exception on an empty name
      * @expectedException InvalidArgumentException
      */
@@ -50,23 +36,8 @@ class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Will test if the builder will set the label correctly when it is missing
+     * Will test if the default callable can work with multiple data representations
      */
-    public function testMissingLabel()
-    {
-        $name = "fooBar";
-        $cc = ColumnConfigurationBuilder::create()
-            ->name($name)
-            ->searchable(true)
-            ->orderable(true)
-            ->build();
-
-        $this->assertSame($name, $cc->getName(), "The name should be set to the correct value");
-        $this->assertSame($name, $cc->getLabel(), "The name should be set to the correct value");
-        $this->assertTrue($cc->isSearchable(), "The column should be searchable");
-        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
-    }
-
     public function testCallable()
     {
         $obj = new FooClass();

@@ -17,7 +17,18 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
      */
     protected $provider;
 
+    /**
+     * Will set up a mocked provider and the class to test
+     */
+    protected function setUp()
+    {
+        $this->provider = Mockery::mock('Chumper\Datatable\Providers\DTProvider');
+        $this->composer = new DTDataComposer($this->provider);
+    }
 
+    /**
+     * Close the mock engine
+     */
     public function tearDown()
     {
         Mockery::close();
@@ -34,13 +45,13 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Will test if a normal column can be added and results in the correct ColumnConfiguration
+     * Will check if the column method with just the name has all values set to the right defaults
      */
-    public function testModelColumnConfiguration()
+    public function testNameColumn()
     {
         $name = "fooBar";
 
-        $this->composer->modelColumn($name);
+        $this->composer->column($name);
 
         // get configuration and verify
         $numberOfColumns = count($this->composer->getColumnConfiguration());
@@ -54,18 +65,19 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($cc->isOrderable(), "The column should be orderable");
         $this->assertTrue($cc->isSearchable(), "The column should be searchable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
-        $this->assertSame($name, $cc->getLabel(), "The label should be set to the correct value");
     }
 
     /**
-     * Will test if a normal column can be added and results in the correct ColumnConfiguration
+     * Will check if the column method with the name and a callable has all values set to the right defaults
      */
-    public function testLabelColumnConfiguration()
+    public function testNameFunctionColumn()
     {
         $name = "fooBar";
-        $label = "barFoo";
+        $callable = function ($data) {
+            return "bar";
+        };
 
-        $this->composer->labelColumn($name, $label);
+        $this->composer->column($name, $callable);
 
         // get configuration and verify
         $numberOfColumns = count($this->composer->getColumnConfiguration());
@@ -76,53 +88,29 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
          */
         $cc = $this->composer->getColumnConfiguration()[0];
 
-        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
-        $this->assertTrue($cc->isSearchable(), "The column should be searchable");
-        $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
-        $this->assertSame($label, $cc->getLabel(), "The label should be set to the correct value");
-    }
-
-    /**
-     * Will test if a normal column can be added and results in the correct ColumnConfiguration
-     */
-    public function testFunctionColumnConfiguration()
-    {
-        $name = "fooBar";
-
-        $this->composer->functionColumn($name, function ($data) {
-            return "fooBar";
-        });
-
-        // get configuration and verify
-        $numberOfColumns = count($this->composer->getColumnConfiguration());
-        $this->assertSame($numberOfColumns, 1, "There should only be one column configuration");
-
         /**
-         * @var ColumnConfiguration
+         * @var callable
          */
-        $cc = $this->composer->getColumnConfiguration()[0];
-
-        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
-        $this->assertTrue($cc->isSearchable(), "The column should be searchable");
-        $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
-        $this->assertSame($name, $cc->getLabel(), "The label should be set to the correct value");
-
         $func = $cc->getCallable();
 
-        $this->assertSame("fooBar", $func(["foo" => "bar"]));
-
-        $this->assertSame("fooBar", $func(null));
+        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
+        $this->assertTrue($cc->isSearchable(), "The column should be searchable");
+        $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
+        $this->assertSame("bar", $func("fooBar"));
     }
 
     /**
-     * Will test if a normal column can be added and results in the correct ColumnConfiguration
+     * Will check if the column method with the name and a callable as well as the searchable flag has all values set
+     * to the right defaults
      */
-    public function testConfigureColumn()
+    public function testNameFunctionSearchableColumn()
     {
-        $this->composer->add(\Chumper\Datatable\Columns\ColumnConfigurationBuilder::create()
-            ->searchable(false)
-            ->orderable(false)
-            ->build());
+        $name = "fooBar";
+        $callable = function ($data) {
+            return "bar";
+        };
+
+        $this->composer->column($name, $callable, false);
 
         // get configuration and verify
         $numberOfColumns = count($this->composer->getColumnConfiguration());
@@ -133,16 +121,74 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
          */
         $cc = $this->composer->getColumnConfiguration()[0];
 
+        /**
+         * @var callable
+         */
+        $func = $cc->getCallable();
+
+        $this->assertFalse($cc->isSearchable(), "The column should not be searchable");
         $this->assertTrue($cc->isOrderable(), "The column should be orderable");
-        $this->assertTrue($cc->isSearchable(), "The column should be searchable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
-        $this->assertSame($name, $cc->getLabel(), "The label should be set to the correct value");
+        $this->assertSame("bar", $func("fooBar"));
     }
 
-    protected function setUp()
+    /**
+     * Will check if the column method with the name and a callable as well as the searchable and orderable flag has
+     * all values set to the right defaults
+     */
+    public function testNameFunctionSearchableOrderableColumn()
     {
-        $this->provider = Mockery::mock('Chumper\Datatable\Providers\DTProvider');
-        $this->composer = new DTDataComposer($this->provider);
+        $name = "fooBar";
+        $callable = function ($data) {
+            return "bar";
+        };
+
+        $this->composer->column($name, $callable, false, false);
+
+        // get configuration and verify
+        $numberOfColumns = count($this->composer->getColumnConfiguration());
+        $this->assertSame($numberOfColumns, 1, "There should only be one column configuration");
+
+        /**
+         * @var ColumnConfiguration
+         */
+        $cc = $this->composer->getColumnConfiguration()[0];
+
+        /**
+         * @var callable
+         */
+        $func = $cc->getCallable();
+
+        $this->assertFalse($cc->isSearchable(), "The column should not be searchable");
+        $this->assertFalse($cc->isOrderable(), "The column should be orderable");
+        $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
+        $this->assertSame("bar", $func("fooBar"));
     }
 
+    /**
+     * Will test that the column method will throw exceptions on invalid name
+     *
+     * @expectedException InvalidArgumentException
+     */
+    public function testNameExceptions() {
+        $this->composer->column(false);
+    }
+
+    /**
+     * Will test that the column method will throw exceptions on invalid searchable flag
+     *
+     * @expectedException InvalidArgumentException
+     */
+    public function testSearchableExceptions() {
+        $this->composer->column("fooBar", function($data) { return "bar"; }, "false");
+    }
+
+    /**
+     * Will test that the column method will throw exceptions on invalid orderable flag
+     *
+     * @expectedException InvalidArgumentException
+     */
+    public function testOrderableExceptions() {
+        $this->composer->column("fooBar", function($data) { return "bar"; }, false, "false");
+    }
 }

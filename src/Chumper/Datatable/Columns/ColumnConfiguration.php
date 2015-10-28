@@ -18,11 +18,6 @@ class ColumnConfiguration
     private $name;
 
     /**
-     * @var string The label of the column used on the frontend
-     */
-    private $label;
-
-    /**
      * @var bool Determines if the column can be searched on or not
      */
     private $searchable;
@@ -42,15 +37,13 @@ class ColumnConfiguration
      * As the class is immutable, all properties have to be set here
      *
      * @param string $name The internal name of the column configuration
-     * @param string $label The label of the column shown in the frontend
      * @param callable $callable the function to call when the value should be calculated
      * @param bool $isSearchable If the column should be searchable
      * @param bool $isOrderable If the column should be orderable
      */
-    public function __construct($name, $label, $callable, $isSearchable, $isOrderable)
+    public function __construct($name, $callable, $isSearchable, $isOrderable)
     {
         $this->name = $name;
-        $this->label = $label;
         $this->callable = $callable;
         $this->searchable = $isSearchable;
         $this->orderable = $isOrderable;
@@ -84,16 +77,6 @@ class ColumnConfiguration
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Will return the label of this column that will be shown on the frontend
-     *
-     * @return string
-     */
-    public function getLabel()
-    {
-        return $this->label;
     }
 
     /**

@@ -18,11 +18,6 @@ class ColumnConfigurationBuilder
     private $name = null;
 
     /**
-     * @var string
-     */
-    private $label = null;
-
-    /**
      * @var callable
      */
     private $callable = null;
@@ -65,16 +60,6 @@ class ColumnConfigurationBuilder
     }
 
     /**
-     * @param string $label
-     * @return $this
-     */
-    public function label($label)
-    {
-        $this->label = $label;
-        return $this;
-    }
-
-    /**
      * @param bool $searchable
      * @return $this
      */
@@ -112,10 +97,9 @@ class ColumnConfigurationBuilder
     public function build()
     {
         $this->checkName();
-        $this->checkLabel();
         $this->checkCallable();
 
-        return new ColumnConfiguration($this->name, $this->label, $this->callable, $this->searchable, $this->orderable);
+        return new ColumnConfiguration($this->name, $this->callable, $this->searchable, $this->orderable);
     }
 
     /**
@@ -126,17 +110,6 @@ class ColumnConfigurationBuilder
         if(empty($this->name))
         {
             throw new \InvalidArgumentException("The name can not be empty");
-        }
-    }
-
-    /**
-     * Will check if the label is set. If not it will set the label to the given name.
-     */
-    private function checkLabel()
-    {
-        if(empty($this->label))
-        {
-            $this->label($this->name);
         }
     }
 

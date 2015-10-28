@@ -45,55 +45,6 @@ class DTDataComposer
     }
 
     /**
-     * Most basic column configuration. The resulting configuration will try to return the given name property of the
-     * data passed to it. It will default to be searchable and orderable.
-     *
-     * @param string $name The name of the property to show
-     * @return $this
-     */
-    public function modelColumn($name)
-    {
-        $this->columnConfiguration[] = ColumnConfigurationBuilder::create()
-            ->name($name)
-            ->build();
-
-        return $this;
-    }
-
-    /**
-     * Will create a column configuration with the given name and label and default settings.
-     *
-     * @param string $name
-     * @param string $label
-     * @return $this
-     */
-    public function labelColumn($name, $label)
-    {
-        $this->columnConfiguration[] = ColumnConfigurationBuilder::create()
-            ->name($name)
-            ->label($label)
-            ->build();
-        return $this;
-    }
-
-    /**
-     * Will create a column configuration with the given name and the given callable
-     *
-     * @param string $name The internal name of this column configuration
-     * @param callable $function the callable to execute
-     * @return $this
-     */
-    public function functionColumn($name, callable $function)
-    {
-        $this->columnConfiguration[] = ColumnConfigurationBuilder::create()
-            ->name($name)
-            ->withCallable($function)
-            ->build();
-
-        return $this;
-    }
-
-    /**
      * Will return the internal column configurations that are registered with the current composer.
      *
      * @return ColumnConfiguration[]
@@ -104,28 +55,45 @@ class DTDataComposer
     }
 
     /**
-     * Will add the immutable column configuration to the internal array.
+     * Will create a new ColumnConfiguration with all defaults but allows overriding all properties through the method.
      *
-     * @param ColumnConfiguration $configuration
-     * @return $this
+     * @param string $name The name of the configuration, required for the configuration
+     * @param callable $callable The function to execute, defaults to null which means the default will be set.
+     * @param bool $searchable If the column should be searchable or not
+     * @param bool $orderable If the column should be orderable or not
+     * @return DTDataComposer
      */
-    public function add(ColumnConfiguration $configuration)
+    public function column($name, callable $callable = null, $searchable = true, $orderable = true)
     {
-        $this->columnConfiguration[] = $configuration;
+        /**
+         * @var ColumnConfigurationBuilder
+         */
+        $config = null;
+
+        if (is_string($name)) {
+            $config = ColumnConfigurationBuilder::create()
+                ->name($name);
+        } else {
+            throw new \InvalidArgumentException('$name must be a string');
+        }
+
+        if (!is_null($callable) && is_callable($callable)) {
+            $config->withCallable($callable);
+        }
+
+        if (is_bool($searchable)) {
+            $config->searchable($searchable);
+        } else {
+            throw new \InvalidArgumentException('$searchable needs to be a boolean value');
+        }
+
+        if (is_bool($orderable)) {
+            $config->orderable($orderable);
+        } else {
+            throw new \InvalidArgumentException('$orderable needs to be a boolean value');
+        }
+
+        $this->columnConfiguration[] = $config->build();
         return $this;
     }
-
-    /**
-     * Will create a new ColumnBuilder where the column can be configured.
-     *
-     * @param string $name
-     * @return ColumnBuilder
-     */
-    public function column($name)
-    {
-        return ColumnBuilder::create($this)
-            ->name($name);
-    }
-
-
 }
