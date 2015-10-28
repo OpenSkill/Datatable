@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSKill\Datatable;
+namespace OpenSkill\Datatable;
 
-use OpenSKill\Datatable\Providers\DTProvider;
-use OpenSKill\Datatable\Composers\DTDataComposer;
+use OpenSkill\Datatable\Providers\DTProvider;
+use OpenSkill\Datatable\Composers\DTDataComposer;
 use Illuminate\Http\Request;
 
 /**

@@ -1,15 +1,15 @@
 <?php
 
-namespace OpenSKill\Datatable\Providers;
+namespace OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
-use OpenSKill\Datatable\Columns\ColumnConfiguration;
-use OpenSKill\Datatable\Interfaces\DTData;
-use OpenSKill\Datatable\Interfaces\DTQueryConfiguration;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Interfaces\DTData;
+use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
 
 /**
  * Class CollectionProvider
- * @package OpenSKill\Datatable\Providers
+ * @package OpenSkill\Datatable\Providers
  *
  * Provider that is able to provide data based on a initial passed collection.
  */

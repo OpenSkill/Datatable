@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSKill\Datatable\Interfaces;
+namespace OpenSkill\Datatable\Interfaces;
 
 
 class DTData

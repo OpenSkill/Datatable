@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenSKill\Datatable\Composers;
+namespace OpenSkill\Datatable\Composers;
 
-use OpenSKill\Datatable\Columns\ColumnConfiguration;
-use OpenSKill\Datatable\Columns\ColumnConfigurationBuilder;
-use OpenSKill\Datatable\Providers\DTProvider;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\Providers\DTProvider;
 
 /**
  * Class DTDataComposer

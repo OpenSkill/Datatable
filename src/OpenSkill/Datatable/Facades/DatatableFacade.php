@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSKill\Datatable\Facades;
+namespace OpenSkill\Datatable\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

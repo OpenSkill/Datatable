@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSKill\Datatable\Composers;
+namespace OpenSkill\Datatable\Composers;
 
 
 class DTViewComposer
