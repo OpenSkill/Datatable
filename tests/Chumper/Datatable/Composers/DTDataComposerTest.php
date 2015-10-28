@@ -1,6 +1,7 @@
 <?php
 
 use Chumper\Datatable\Columns\ColumnConfiguration;
+use Chumper\Datatable\Columns\ColumnConfigurationBuilder;
 use Chumper\Datatable\Composers\DTDataComposer;
 use Chumper\Datatable\Providers\DTProvider;
 
@@ -170,7 +171,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testNameExceptions() {
+    public function testNameExceptions()
+    {
         $this->composer->column(false);
     }
 
@@ -179,8 +181,11 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testSearchableExceptions() {
-        $this->composer->column("fooBar", function($data) { return "bar"; }, "false");
+    public function testSearchableExceptions()
+    {
+        $this->composer->column("fooBar", function ($data) {
+            return "bar";
+        }, "false");
     }
 
     /**
@@ -188,7 +193,39 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
      *
      * @expectedException InvalidArgumentException
      */
-    public function testOrderableExceptions() {
-        $this->composer->column("fooBar", function($data) { return "bar"; }, false, "false");
+    public function testOrderableExceptions()
+    {
+        $this->composer->column("fooBar", function ($data) {
+            return "bar";
+        }, false, "false");
+    }
+
+    /**
+     * Will test if the composer functions correct when the configure method is called
+     */
+    public function testConfigureColumn()
+    {
+        $name = "fooBar";
+        $config = ColumnConfigurationBuilder::create()
+            ->name($name)
+            ->build();
+
+        $this->composer->add($config);
+
+        // get configuration and verify
+        $numberOfColumns = count($this->composer->getColumnConfiguration());
+        $this->assertSame($numberOfColumns, 1, "There should only be one column configuration");
+
+        /**
+         * @var ColumnConfiguration
+         */
+        $cc = $this->composer->getColumnConfiguration()[0];
+
+        $func = $cc->getCallable();
+
+        $this->assertTrue($cc->isSearchable(), "The column should not be searchable");
+        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
+        $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
+        $this->assertSame("bar", $func(["fooBar" => "bar"]));
     }
 }

@@ -61,7 +61,7 @@ class DTDataComposer
      * @param callable $callable The function to execute, defaults to null which means the default will be set.
      * @param bool $searchable If the column should be searchable or not
      * @param bool $orderable If the column should be orderable or not
-     * @return DTDataComposer
+     * @return $this
      */
     public function column($name, callable $callable = null, $searchable = true, $orderable = true)
     {
@@ -94,6 +94,19 @@ class DTDataComposer
         }
 
         $this->columnConfiguration[] = $config->build();
+        return $this;
+    }
+
+    /**
+     * This method will add the given ColumnConfiguration to the composer.
+     *
+     * @param ColumnConfiguration $configuration the configuration to add to the composer
+     *
+     * @return $this
+     */
+    public function add(ColumnConfiguration $configuration)
+    {
+        $this->columnConfiguration[] = $configuration;
         return $this;
     }
 }
