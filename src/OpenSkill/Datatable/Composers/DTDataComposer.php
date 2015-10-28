@@ -2,7 +2,6 @@
 
 namespace OpenSKill\Datatable\Composers;
 
-use OpenSKill\Datatable\Columns\ColumnBuilder;
 use OpenSKill\Datatable\Columns\ColumnConfiguration;
 use OpenSKill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSKill\Datatable\Providers\DTProvider;
@@ -108,6 +107,15 @@ class DTDataComposer
     {
         $this->columnConfiguration[] = $configuration;
         return $this;
+    }
+
+    /**
+     * Called when the current DTDataComposer should handle the request and return data.
+     * This is a terminating operation
+     */
+    public function handleRequest()
+    {
+
     }
 
 

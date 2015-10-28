@@ -26,9 +26,6 @@ class Datatable
     public function __construct(Request $request)
     {
         $this->request = $request;
-        if($this->shouldHandle()) {
-            // prepare DTQueryConfiguration?
-        }
     }
 
     /**
@@ -39,7 +36,11 @@ class Datatable
      */
     public function make(DTProvider $provider)
     {
-        return new DTDataComposer($provider, $this->request);
+        $composer = new DTDataComposer($provider, $this->request);
+        if($this->shouldHandle()) {
+            //$provider->prepareForProcessing()
+        }
+        return $composer;
     }
 
     /**
