@@ -1,11 +1,17 @@
 <?php
 
-namespace Chumper\Datatable;
+namespace OpenSKill\Datatable;
 
-use Chumper\Datatable\Providers\DTProvider;
-use Chumper\Datatable\Composers\DTDataComposer;
+use OpenSKill\Datatable\Providers\DTProvider;
+use OpenSKill\Datatable\Composers\DTDataComposer;
 use Illuminate\Http\Request;
 
+/**
+ * Class Datatable
+ * @package OpenSkill\Datatable
+ *
+ * Main class for all data table related operations.
+ */
 class Datatable
 {
     /**
@@ -20,6 +26,9 @@ class Datatable
     public function __construct(Request $request)
     {
         $this->request = $request;
+        if($this->shouldHandle()) {
+            // prepare DTQueryConfiguration?
+        }
     }
 
     /**
@@ -30,7 +39,7 @@ class Datatable
      */
     public function make(DTProvider $provider)
     {
-        return new DTDataComposer($provider);
+        return new DTDataComposer($provider, $this->request);
     }
 
     /**

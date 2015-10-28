@@ -1,10 +1,10 @@
 <?php
 
-namespace Chumper\Datatable\Columns;
+namespace OpenSKill\Datatable\Columns;
 
 /**
  * Class ColumnConfiguration
- * @package Chumper\Datatable\Columns
+ * @package OpenSkill\Datatable\Columns
  *
  * The ColumnConfiguration is used to describe a column on the datatable. It contains all possible configuration options
  * so the data can be evaluated as well as the views can create a javascript representation of this configuration.

@@ -1,15 +1,15 @@
 <?php
 
-namespace Chumper\Datatable\Composers;
+namespace OpenSKill\Datatable\Composers;
 
-use Chumper\Datatable\Columns\ColumnBuilder;
-use Chumper\Datatable\Columns\ColumnConfiguration;
-use Chumper\Datatable\Columns\ColumnConfigurationBuilder;
-use Chumper\Datatable\Providers\DTProvider;
+use OpenSKill\Datatable\Columns\ColumnBuilder;
+use OpenSKill\Datatable\Columns\ColumnConfiguration;
+use OpenSKill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSKill\Datatable\Providers\DTProvider;
 
 /**
  * Class DTDataComposer
- * @package Chumper\Datatable\Composers
+ * @package OpenSkill\Datatable\Composers
  *
  * The composer is responsible to collect all column configuration as well as view configurations and to pass them
  * to the DTProvider when the data needs to be collected.
@@ -109,4 +109,6 @@ class DTDataComposer
         $this->columnConfiguration[] = $configuration;
         return $this;
     }
+
+
 }

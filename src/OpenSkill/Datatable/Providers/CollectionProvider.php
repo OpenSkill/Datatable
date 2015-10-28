@@ -1,12 +1,12 @@
 <?php
 
-namespace Chumper\Datatable\Providers;
+namespace OpenSKill\Datatable\Providers;
 
 
-use Chumper\Datatable\Interfaces\ColumnConfiguration;
-use Chumper\Datatable\Interfaces\DTProvider;
-use Chumper\Datatable\Interfaces\DTData;
-use Chumper\Datatable\Interfaces\PresentationConfiguration;
+use OpenSKill\Datatable\Interfaces\ColumnConfiguration;
+use OpenSKill\Datatable\Interfaces\DTProvider;
+use OpenSKill\Datatable\Interfaces\DTData;
+use OpenSKill\Datatable\Interfaces\PresentationConfiguration;
 
 class CollectionProvider implements DTProvider
 {

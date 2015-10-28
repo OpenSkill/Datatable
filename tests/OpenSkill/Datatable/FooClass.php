@@ -1,6 +1,6 @@
 <?php
 
-namespace Chumper\Datatable;
+namespace OpenSkill\Datatable;
 
 class FooClass
 {

@@ -1,9 +1,9 @@
 <?php
 
-use Chumper\Datatable\Columns\ColumnConfiguration;
-use Chumper\Datatable\Columns\ColumnConfigurationBuilder;
-use Chumper\Datatable\Composers\DTDataComposer;
-use Chumper\Datatable\Providers\DTProvider;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\Composers\DTDataComposer;
+use OpenSkill\Datatable\Providers\DTProvider;
 
 class DTDataComposerTest extends PHPUnit_Framework_TestCase
 {
@@ -23,8 +23,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->provider = Mockery::mock('Chumper\Datatable\Providers\DTProvider');
-        $this->composer = new DTDataComposer($this->provider);
+        $this->provider = Mockery::mock('OpenSkill\Datatable\Providers\DTProvider');
+        $this->composer = new DTDataComposer($this->provider, null);
     }
 
     /**

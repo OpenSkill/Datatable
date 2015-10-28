@@ -1,11 +1,11 @@
 <?php
 
-namespace Chumper\Datatable\Columns;
+namespace OpenSkill\Datatable\Columns;
 
 
 /**
  * Class ColumnConfigurationBuilder
- * @package Chumper\Datatable\Columns
+ * @package OpenSkill\Datatable\Columns
  *
  * Simple builder class for the column configuration
  */

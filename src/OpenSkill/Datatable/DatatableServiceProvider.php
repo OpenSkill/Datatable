@@ -1,6 +1,6 @@
 <?php
 
-namespace Chumper\Datatable;
+namespace OpenSKill\Datatable;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -21,7 +21,7 @@ class DatatableServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Chumper\Datatable\Datatable', function ($app) {
+        $this->app->singleton('OpenSkill\Datatable\Datatable', function ($app) {
             return new Datatable(config('datatable'));
         });
     }

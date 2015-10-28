@@ -1,7 +1,7 @@
 <?php
 
-use Chumper\Datatable\Columns\ColumnConfigurationBuilder;
-use Chumper\Datatable\FooClass;
+use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\FooClass;
 
 class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
 {

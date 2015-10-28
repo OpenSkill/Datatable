@@ -2,7 +2,7 @@
     "description": "This is a laravel 5 package for the server and client side of datatables at http://datatables.net/",
     "keywords" : ["laravel","datatables", "ajax", "jquery"],
     "license": "MIT",
-    "homepage": "http://github.com/Chumper/datatable",
+    "homepage": "http://github.com/OpenSkill/Datatable",
     "authors": [
         {
             "name": "Nils Plaschke",
@@ -11,7 +11,7 @@
             "role": "Developer"
         }
     ],
-    "name": "chumper/datatable",
+    "name": "openskill/datatable",
     "require": {
         "php": ">=5.4.0"
     },
@@ -21,7 +21,7 @@
     },
     "autoload": {
       "psr-4": {
-        "Chumper\\Datatable\\": "src/Chumper/Datatable"
+        "OpenSkill\\Datatable\\": "src/OpenSkill/Datatable"
       }
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Chumper\Datatable\Columns;
+namespace OpenSKill\Datatable\Columns;
 
 
-use Chumper\Datatable\Composers\DTDataComposer;
+use OpenSKill\Datatable\Composers\DTDataComposer;
 
 class ColumnBuilder extends ColumnConfigurationBuilder
 {
