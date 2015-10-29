@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSKill\Datatable\Utils;
+namespace OpenSkill\Datatable\Utils;
 
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSKill\Datatable;
+namespace OpenSkill\Datatable;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenSKill\Datatable\Columns;
+namespace OpenSkill\Datatable\Columns;
 
 
-use OpenSKill\Datatable\Composers\DTDataComposer;
+use OpenSkill\Datatable\Composers\DTDataComposer;
 
 class ColumnBuilder extends ColumnConfigurationBuilder
 {

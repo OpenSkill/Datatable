@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenSKill\Datatable\Providers;
+namespace OpenSkill\Datatable\Providers;
 
-use OpenSKill\Datatable\Columns\ColumnConfiguration;
-use OpenSKill\Datatable\Interfaces\DTData;
-use OpenSKill\Datatable\Interfaces\DTQueryConfiguration;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Interfaces\DTData;
+use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
 
 /**
  * Interface DatatableProvider

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSKill\Datatable\Columns;
+namespace OpenSkill\Datatable\Columns;
 
 /**
  * Class ColumnConfiguration
