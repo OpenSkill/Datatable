@@ -2,6 +2,7 @@
 
 namespace OpenSkill\Datatable;
 
+use OpenSkill\Datatable\Query\DTQueryEngine;
 use OpenSkill\Datatable\Providers\DTProvider;
 use OpenSkill\Datatable\Composers\DTDataComposer;
 use Illuminate\Http\Request;
@@ -15,9 +16,9 @@ use Illuminate\Http\Request;
 class Datatable
 {
     /**
-     * @var Request
+     * @var DTQueryEngine
      */
-    private $request;
+    private $queryEngine;
 
     /**
      * Datatable constructor. Will be resolved by laravel and will inject the needed dependencies
@@ -25,7 +26,7 @@ class Datatable
      */
     public function __construct(Request $request)
     {
-        $this->request = $request;
+        $this->queryEngine = new DTQueryEngine($request);
     }
 
     /**
@@ -53,9 +54,6 @@ class Datatable
      * @return boolean true, if the plugin should handle this request, false otherwise
      */
     public function shouldHandle() {
-        if($this->request->ajax()) {
-            return true;
-        }
-        return false;
+        return $this->queryEngine->shouldHandle();
     }
 }
