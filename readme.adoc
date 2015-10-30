@@ -14,15 +14,13 @@ image:https://poser.pugx.org/chumper/datatable/license["License", link="https://
 
 == Introduction
 
-This is the development and proposal version of Datatable3 for laravel 5. Here we develop and discuss the structure of
-the new version.
+This is the development repository for the refactor of Chumper/Datatable3 for Laravel 5.
+In this repository we are developing and discussing the structure of the new version.
 
-== Thanks
+== Todo List
 
-NOTE: First all i want to thank Tim Groeneveld for doing such an awesome job on maintaining this library and making it
-ready for laravel 5.
-Tim, without your help this library would not be what it is now and that you took over the development means a lot to
-me, you did a great job and you deserve all my gratitude. Let us improve this library together.
+See https://github.com/OpenSkill/Datatable/issues/2[issue #2 in the bug tracker] for an up to date 
+list of current issues.
 
 == Usage
 
