@@ -59,7 +59,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         ]);
         $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
 
-        $this->assertFalse($engine->shouldHandle());
+        $this->assertTrue($engine->shouldHandle());
     }
 
     /**
@@ -72,7 +72,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         ]);
         $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
 
-        $this->assertFalse($engine->shouldHandle());
+        $this->assertTrue($engine->shouldHandle());
     }
 
     /**

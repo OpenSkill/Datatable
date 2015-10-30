@@ -19,7 +19,8 @@ class DT19QueryParser implements DTQueryParser
      */
     public function canParse(Request $request)
     {
-        // TODO: Implement canParse() method.
+        // check if sEcho is set and draw not
+        return $request->query->has("sEcho") && !$request->query->has("draw");
     }
 
     /**

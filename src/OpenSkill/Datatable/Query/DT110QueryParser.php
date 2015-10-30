@@ -25,7 +25,8 @@ class DT110QueryParser implements DTQueryParser
      */
     public function canParse(Request $request)
     {
-        // TODO: Implement canParse() method.
+        // check if draw is set and sEcho not
+        return !$request->query->has("sEcho") && $request->query->has("draw");
     }
 
     /**

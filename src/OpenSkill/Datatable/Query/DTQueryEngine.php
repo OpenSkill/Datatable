@@ -9,9 +9,9 @@ class DTQueryEngine
     private $shouldHandle = false;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     * @var DTQueryParser the parser responsible for the current request
      */
-    protected $query;
+    protected $parser;
 
 //
 //    protected $version;
@@ -29,7 +29,16 @@ class DTQueryEngine
      */
     public function __construct(Request $request, array $parser)
     {
-        $this->query = $request->query;
+        // foreach parser check if it can handle the request.
+        // the parser which will return true first will be handling the request
+        foreach ($parser as $p) {
+            if($p->canParse($request)) {
+                $this->parser = $p;
+                $this->shouldHandle = true;
+                break;
+            }
+        }
+
 //
 //        $echo_value_old = $this->input->get('sEcho', null);
 //        $echo_value_new = $this->input->get('draw', null);
