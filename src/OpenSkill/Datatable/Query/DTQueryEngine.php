@@ -8,10 +8,11 @@ class DTQueryEngine
 {
     private $shouldHandle = false;
 
-//    /**
-//     * @var \Symfony\Component\HttpFoundation\ParameterBag
-//     */
-//    protected $input;
+    /**
+     * @var \Symfony\Component\HttpFoundation\ParameterBag
+     */
+    protected $query;
+
 //
 //    protected $version;
 //
@@ -22,9 +23,13 @@ class DTQueryEngine
 //     */
 //    protected $response;
 
-    public function __construct(Request $request)
+    /**
+     * @param Request $request the current request to analyse
+     * @param DTQueryParser[] $parser an array of parser that could handle the request
+     */
+    public function __construct(Request $request, array $parser)
     {
-//        $this->input = $request->query;
+        $this->query = $request->query;
 //
 //        $echo_value_old = $this->input->get('sEcho', null);
 //        $echo_value_new = $this->input->get('draw', null);

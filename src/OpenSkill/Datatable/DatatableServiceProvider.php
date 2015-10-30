@@ -3,6 +3,7 @@
 namespace OpenSkill\Datatable;
 
 use Illuminate\Support\ServiceProvider;
+use OpenSkill\Datatable\Query\DTQueryEngine;
 
 class DatatableServiceProvider extends ServiceProvider
 {
@@ -12,7 +13,7 @@ class DatatableServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = true;
+    protected $defer = false;
 
     /**
      * Register the application services.
@@ -21,8 +22,14 @@ class DatatableServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('OpenSkill\Datatable\Datatable', function ($app) {
-            return new Datatable(config('datatable'));
+
+        $this->app->bind('DT19Parser', 'OpenSkill\Datatable\Query\DT19QueryParser');
+        $this->app->bind('DT110Parser', 'OpenSkill\Datatable\Query\DT110QueryParser');
+
+        $this->app->tag(['DT19Parser', 'DT110Parser'], 'dt.query.parser');
+
+        $this->app->singleton("datatable", function ($app) {
+            return new Datatable(new DTQueryEngine($app->make('request'), $app->tagged('dt.query.parser')));
         });
     }
 

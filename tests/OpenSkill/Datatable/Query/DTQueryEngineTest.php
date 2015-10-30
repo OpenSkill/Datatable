@@ -44,7 +44,47 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         $request = new Request([
             "foo" => "bar"
         ]);
-        $engine = new DTQueryEngine($request);
+        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+
+        $this->assertFalse($engine->shouldHandle());
+    }
+
+    /**
+     * Will test if the DTQueryEngine behaves correctly when a request should be handled by the 1.9 parser
+     */
+    public function test_1_9_Query()
+    {
+        $request = new Request([
+            "sEcho" => 1
+        ]);
+        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+
+        $this->assertFalse($engine->shouldHandle());
+    }
+
+    /**
+     * Will test if the DTQueryEngine behaves correctly when a request should be handled by the 1.10 parser
+     */
+    public function test_1_10_Query()
+    {
+        $request = new Request([
+            "draw" => 1
+        ]);
+        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+
+        $this->assertFalse($engine->shouldHandle());
+    }
+
+    /**
+     * Will test if the DTQueryEngine behaves correctly when a request should not be handled by the 1.9 or the 1.10 parser
+     */
+    public function test_1_9_X_1_10_Query()
+    {
+        $request = new Request([
+            "sEcho" => 1,
+            "draw"  => 2
+        ]);
+        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
 
         $this->assertFalse($engine->shouldHandle());
     }

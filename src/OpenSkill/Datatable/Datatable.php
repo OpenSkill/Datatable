@@ -22,11 +22,12 @@ class Datatable
 
     /**
      * Datatable constructor. Will be resolved by laravel and will inject the needed dependencies
-     * @param Request $request The request object
+     *
+     * @param DTQueryEngine $queryEngine the query engine that will handle the request parsing
      */
-    public function __construct(Request $request)
+    public function __construct(DTQueryEngine $queryEngine)
     {
-        $this->queryEngine = new DTQueryEngine($request);
+        $this->queryEngine = $queryEngine;
     }
 
     /**
@@ -37,7 +38,7 @@ class Datatable
      */
     public function make(DTProvider $provider)
     {
-        $composer = new DTDataComposer($provider, $this->request);
+        $composer = new DTDataComposer($provider, $this->queryEngine);
         if($this->shouldHandle()) {
             //$provider->prepareForProcessing()
         }

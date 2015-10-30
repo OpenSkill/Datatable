@@ -8,6 +8,6 @@ class DatatableFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'OpenSkill\Datatable\Datatable';
+        return "datatable";
     }
 }

@@ -123,7 +123,8 @@ class DTDataComposer
      */
     public function handleRequest()
     {
-        // evaluate the request based on the
+        // get the query configuration and pass it to the provider,
+        // take the data and prepare it for display
     }
 
 
