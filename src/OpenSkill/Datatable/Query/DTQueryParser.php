@@ -31,10 +31,10 @@ interface DTQueryParser
      *
      * @param Request $request the current request to analyse
      *
-     * @param ColumnConfiguration $columnConfiguration The configuration of the columns
      * @return DTQueryConfiguration the configuration the provider can use to prepare the data
+     * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
      */
-    public function parse(Request $request, ColumnConfiguration $columnConfiguration);
+    public function parse(Request $request, array $columnConfiguration);
 
 
     /**

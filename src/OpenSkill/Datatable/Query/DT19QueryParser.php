@@ -41,11 +41,11 @@ class DT19QueryParser implements DTQueryParser
      * Method that should parse the request and return a DTQueryConfiguration
      *
      * @param Request $request the current request to analyse
+     * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
      *
-     * @param ColumnConfiguration $columnConfiguration The configuration of the columns
      * @return DTQueryConfiguration the configuration the provider can use to prepare the data
      */
-    public function parse(Request $request, ColumnConfiguration $columnConfiguration)
+    public function parse(Request $request, array $columnConfiguration)
     {
         // TODO: Implement parse() method.
     }
