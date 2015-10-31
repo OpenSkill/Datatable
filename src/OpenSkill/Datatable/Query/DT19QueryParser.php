@@ -4,7 +4,10 @@ namespace OpenSkill\Datatable\Query;
 
 
 use Illuminate\Http\Request;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Interfaces\DTData;
 use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
+use Symfony\Component\HttpFoundation\Response;
 
 class DT19QueryParser implements DTQueryParser
 {
@@ -24,13 +27,25 @@ class DT19QueryParser implements DTQueryParser
     }
 
     /**
+     * Responsible to create a response with the given data, that conforms to the data table request.
+     *
+     * @param DTData $data The data to return
+     * @return Response the response
+     */
+    public function respond(DTData $data)
+    {
+        // TODO: Implement respond() method.
+    }
+
+    /**
      * Method that should parse the request and return a DTQueryConfiguration
      *
      * @param Request $request the current request to analyse
      *
+     * @param ColumnConfiguration $columnConfiguration The configuration of the columns
      * @return DTQueryConfiguration the configuration the provider can use to prepare the data
      */
-    public function parse(Request $request)
+    public function parse(Request $request, ColumnConfiguration $columnConfiguration)
     {
         // TODO: Implement parse() method.
     }

@@ -12,11 +12,6 @@ namespace OpenSkill\Datatable\Interfaces;
 class DTQueryConfiguration
 {
     /**
-     * @var bool do we need to search on columns, or just order & filter?
-     */
-    private $searchColumns = false;
-
-    /**
      * @var bool are we using a plugin to search individual plugins
      */
     protected $searchIndividualColumns = true;
@@ -24,7 +19,7 @@ class DTQueryConfiguration
     /**
      * @var string The string we are searching for (note: for searchColumns)
      */
-    protected $searchString = '';
+    protected $searchValue = null;
 
     /**
      * @var array the columns that we are searching, the content that has been put in
