@@ -13,7 +13,7 @@ class DatatableServiceProvider extends ServiceProvider
      *
      * @var bool
      */
-    protected $defer = false;
+    protected $defer = true;
 
     /**
      * Register the application services.
@@ -34,12 +34,14 @@ class DatatableServiceProvider extends ServiceProvider
     }
 
     /**
-     * Perform post-registration booting of services.
+     * Get the services provided by the provider.
      *
-     * @return void
+     * @return array
      */
-    public function boot()
+    public function provides()
     {
+        return [
+            'datatable',
+        ];
     }
-
 }
