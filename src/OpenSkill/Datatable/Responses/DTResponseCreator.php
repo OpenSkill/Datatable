@@ -8,7 +8,7 @@ use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
 
 /**
  * Interface DTResponseCreator
- * @package OpenSkill\Datatable\Response
+ * @package OpenSkill\Datatable\Responses
  *
  * Base interface that is used to create custom responses for the data table request
  */

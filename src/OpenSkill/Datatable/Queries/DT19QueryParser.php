@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: n.plaschke
- * Date: 29/10/15
- * Time: 22:58
- */
 
-namespace OpenSkill\Datatable\Query;
+namespace OpenSkill\Datatable\Queries;
 
 
 use Illuminate\Http\Request;
@@ -15,7 +9,7 @@ use OpenSkill\Datatable\Interfaces\DTData;
 use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
 use Symfony\Component\HttpFoundation\Response;
 
-class DT110QueryParser implements DTQueryParser
+class DT19QueryParser implements DTQueryParser
 {
 
     /**
@@ -28,8 +22,8 @@ class DT110QueryParser implements DTQueryParser
      */
     public function canParse(Request $request)
     {
-        // check if draw is set and sEcho not
-        return !$request->query->has("sEcho") && $request->query->has("draw");
+        // check if sEcho is set and draw not
+        return $request->query->has("sEcho") && !$request->query->has("draw");
     }
 
     /**
@@ -47,9 +41,9 @@ class DT110QueryParser implements DTQueryParser
      * Method that should parse the request and return a DTQueryConfiguration
      *
      * @param Request $request the current request to analyse
+     * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
      *
      * @return DTQueryConfiguration the configuration the provider can use to prepare the data
-     * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
      */
     public function parse(Request $request, array $columnConfiguration)
     {

@@ -62,7 +62,7 @@ class DTDataComposer
     }
 
     /**
-     * Will create a new ColumnConfiguration with all defaults but allows overriding all properties through the method.
+     * Will create a new ColumnConfiguration with all defaults but allows overriding of all properties through the method.
      *
      * @param string $name The name of the configuration, required for the configuration
      * @param callable $callable The function to execute, defaults to null which means the default will be set.

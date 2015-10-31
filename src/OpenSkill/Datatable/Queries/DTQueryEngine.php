@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSkill\Datatable\Query;
+namespace OpenSkill\Datatable\Queries;
 
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Interfaces\DTData;
