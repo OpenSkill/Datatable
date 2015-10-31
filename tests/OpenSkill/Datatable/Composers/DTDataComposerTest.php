@@ -5,6 +5,7 @@ use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Composers\DTDataComposer;
 use OpenSkill\Datatable\Providers\DTProvider;
 use OpenSkill\Datatable\Query\DTQueryEngine;
+use OpenSkill\Datatable\Versions\DTVersion;
 
 class DTDataComposerTest extends PHPUnit_Framework_TestCase
 {
@@ -20,9 +21,9 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
     protected $provider;
 
     /**
-     * @var DTQueryEngine
+     * @var DTVersion
      */
-    protected $queryEngine;
+    private $version;
 
     /**
      * Will set up a mocked provider and the class to test
@@ -30,8 +31,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->provider = Mockery::mock('OpenSkill\Datatable\Providers\DTProvider');
-        $this->queryEngine = Mockery::mock('OpenSkill\Datatable\Query\DTQueryEngine');
-        $this->composer = new DTDataComposer($this->provider, $this->queryEngine);
+        $this->version = Mockery::mock('OpenSkill\Datatable\Versions\DTVersion');
+        $this->composer = new DTDataComposer($this->provider, $this->version);
     }
 
     /**

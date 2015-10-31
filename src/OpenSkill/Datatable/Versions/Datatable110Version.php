@@ -1,12 +1,12 @@
 <?php
 
 namespace OpenSkill\Datatable\Versions;
-use OpenSkill\Datatable\Query\DT110QueryParser;
-use OpenSkill\Datatable\Query\DTQueryParser;
+use OpenSkill\Datatable\Queries\DT110QueryParser;
+use OpenSkill\Datatable\Queries\DTQueryParser;
 use OpenSkill\Datatable\Response\DT110ResponseCreator;
 use OpenSkill\Datatable\Response\DTResponseCreator;
-use OpenSkill\Datatable\View\DT110ViewCreator;
-use packages\openskill\datatable\src\OpenSkill\Datatable\View\DTViewCreator;
+use OpenSkill\Datatable\Views\DT110ViewCreator;
+use OpenSkill\Datatable\Views\DTViewCreator;
 
 /**
  * Class Datatable110Version

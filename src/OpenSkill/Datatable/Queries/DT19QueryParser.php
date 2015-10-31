@@ -6,7 +6,7 @@ namespace OpenSkill\Datatable\Queries;
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
+use OpenSkill\Datatable\Queries\DTQueryConfiguration;
 use Symfony\Component\HttpFoundation\Response;
 
 class DT19QueryParser implements DTQueryParser
@@ -47,6 +47,22 @@ class DT19QueryParser implements DTQueryParser
      */
     public function parse(Request $request, array $columnConfiguration)
     {
-        // TODO: Implement parse() method.
+        $query = $request->query;
+        $builder = DTQueryConfigurationBuilder::create();
+
+        if($query->has('sEcho')) {
+            $builder->drawCall($query->get('sEcho'));
+        }
+
+        if($query->has('iDisplayStart')) {
+            $builder->start($query->get('iDisplayStart'));
+        }
+
+        if($query->has('iDisplayLength')) {
+            $builder->length($query->get('iDisplayLength'));
+        }
+
+        return $builder->build();
+
     }
 }

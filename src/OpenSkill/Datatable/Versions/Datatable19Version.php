@@ -3,12 +3,12 @@
 namespace OpenSkill\Datatable\Versions;
 
 
-use OpenSkill\Datatable\Query\DT19QueryParser;
-use OpenSkill\Datatable\Query\DTQueryParser;
+use OpenSkill\Datatable\Queries\DT19QueryParser;
+use OpenSkill\Datatable\Queries\DTQueryParser;
 use OpenSkill\Datatable\Response\DT19ResponseCreator;
 use OpenSkill\Datatable\Response\DTResponseCreator;
-use OpenSkill\Datatable\View\DT19ViewCreator;
-use packages\openskill\datatable\src\OpenSkill\Datatable\View\DTViewCreator;
+use OpenSkill\Datatable\Views\DT19ViewCreator;
+use OpenSkill\Datatable\Views\DTViewCreator;
 
 /**
  * Class Datatable19Version

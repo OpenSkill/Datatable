@@ -28,9 +28,9 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
     {
         // create request
         $request = new Request([
-            'sEcho'             => 1,
-            'iDisplayStart'     => 1,
-            'iDisplayLength'    => 10,
+            'sEcho'             => 13,
+            'iDisplayStart'     => 11,
+            'iDisplayLength'    => 103,
             'iColumns'          => 1,
             'sSearch'           => 'fooBar',
             'bRegex'            => true,
@@ -49,6 +49,10 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         $conf = $this->parser->parse($request, [$column]);
+
+        $this->assertSame(13, $conf->drawCall());
+        $this->assertSame(11, $conf->start());
+        $this->assertSame(103, $conf->length());
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenSkill\Datatable\View;
+namespace OpenSkill\Datatable\Views;
 
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use packages\openskill\datatable\src\OpenSkill\Datatable\View\DTViewCreator;
+use OpenSkill\Datatable\Views\DTViewCreator;
 
 class DT19ViewCreator implements DTViewCreator
 {

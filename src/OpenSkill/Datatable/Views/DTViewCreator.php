@@ -1,7 +1,7 @@
 <?php
 
 
-namespace packages\openskill\datatable\src\OpenSkill\Datatable\View;
+namespace OpenSkill\Datatable\Views;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 

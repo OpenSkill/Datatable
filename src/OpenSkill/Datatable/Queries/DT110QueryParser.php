@@ -5,7 +5,7 @@ namespace OpenSkill\Datatable\Queries;
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
+use OpenSkill\Datatable\Queries\DTQueryConfiguration;
 use Symfony\Component\HttpFoundation\Response;
 
 class DT110QueryParser implements DTQueryParser

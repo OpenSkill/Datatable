@@ -2,10 +2,10 @@
 
 namespace OpenSkill\Datatable;
 
-use OpenSkill\Datatable\Query\DTQueryEngine;
 use OpenSkill\Datatable\Providers\DTProvider;
 use OpenSkill\Datatable\Composers\DTDataComposer;
 use Illuminate\Http\Request;
+use OpenSkill\Datatable\Versions\DTVersionEngine;
 
 /**
  * Class Datatable
@@ -16,18 +16,17 @@ use Illuminate\Http\Request;
 class Datatable
 {
     /**
-     * @var DTQueryEngine
+     * @var DTVersionEngine
      */
-    private $queryEngine;
+    private $versionEngine;
 
     /**
-     * Datatable constructor. Will be resolved by laravel and will inject the needed dependencies
-     *
-     * @param DTQueryEngine $queryEngine the query engine that will handle the request parsing
+     * Datatable constructor.
+     * @param DTVersionEngine $versionEngine
      */
-    public function __construct(DTQueryEngine $queryEngine)
+    public function __construct(DTVersionEngine $versionEngine)
     {
-        $this->queryEngine = $queryEngine;
+        $this->versionEngine = $versionEngine;
     }
 
     /**
@@ -38,10 +37,7 @@ class Datatable
      */
     public function make(DTProvider $provider)
     {
-        $composer = new DTDataComposer($provider, $this->queryEngine);
-        if($this->shouldHandle()) {
-            //$provider->prepareForProcessing()
-        }
+        $composer = new DTDataComposer($provider);
         return $composer;
     }
 
@@ -49,12 +45,9 @@ class Datatable
      * Will determine if the Datatable should handle the current request.
      * This is normally used when just one route is active for the view and the json data.
      *
-     * The method will check if the current request is an ajax request and if the "sEcho" or "draw" parameter is set,
-     * depending on the version of the databtable javascript.
-     *
      * @return boolean true, if the plugin should handle this request, false otherwise
      */
     public function shouldHandle() {
-        return $this->queryEngine->shouldHandle();
+        return $this->versionEngine->hasVersion();
     }
 }

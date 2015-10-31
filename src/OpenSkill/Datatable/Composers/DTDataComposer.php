@@ -4,7 +4,6 @@ namespace OpenSkill\Datatable\Composers;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
-use OpenSkill\Datatable\Query\DTQueryEngine;
 use OpenSkill\Datatable\Providers\DTProvider;
 
 /**
@@ -27,19 +26,12 @@ class DTDataComposer
     private $columnConfiguration = [];
 
     /**
-     * @var DTQueryEngine The engine that will parse the request and offers a DTQueryConfiguration
-     */
-    private $queryEngine;
-
-    /**
      * Will create a new datatable composer instance with the given provider
      * @param DTProvider $provider the provider that will process the underlying data
-     * @param DTQueryEngine $queryEngine The query engine that will parse the request and offers the query parameters
      */
-    public function __construct(DTProvider $provider, DTQueryEngine $queryEngine)
+    public function __construct(DTProvider $provider)
     {
         $this->provider = $provider;
-        $this->queryEngine = $queryEngine;
     }
 
     /**
@@ -125,6 +117,10 @@ class DTDataComposer
     {
         // get the query configuration and pass it to the provider,
         // take the data and prepare it for display
+    }
+
+    public function view() {
+
     }
 
 

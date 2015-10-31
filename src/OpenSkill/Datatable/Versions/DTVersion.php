@@ -1,9 +1,9 @@
 <?php
 
 namespace OpenSkill\Datatable\Versions;
-use OpenSkill\Datatable\Query\DTQueryParser;
+use OpenSkill\Datatable\Queries\DTQueryParser;
 use OpenSkill\Datatable\Response\DTResponseCreator;
-use packages\openskill\datatable\src\OpenSkill\Datatable\View\DTViewCreator;
+use OpenSkill\Datatable\Views\DTViewCreator;
 
 /**
  * Interface DTVersion

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenSkill\Datatable\Interfaces;
+namespace OpenSkill\Datatable\Queries;
 
 /**
  * Class DTQueryConfiguration
@@ -11,6 +11,32 @@ namespace OpenSkill\Datatable\Interfaces;
  */
 class DTQueryConfiguration
 {
+
+    /**
+     * DTQueryConfiguration constructor.
+     * @param string|int $drawCall
+     * @param int $start
+     * @param int $length
+     */
+    public function __construct(
+        $drawCall,
+        $start,
+        $length
+    )
+    {
+        $this->drawCall = $drawCall;
+        $this->start = $start;
+        $this->length = $length;
+    }
+
+    /**
+     * @var string $drawCall
+     *
+     * Most data tables will send a drawCall with the request to make sure that the data
+     * is not cached.
+     */
+    protected $drawCall;
+
     /**
      * @var bool are we using a plugin to search individual plugins
      */
@@ -50,11 +76,27 @@ class DTQueryConfiguration
     /**
      * @var int which result to start from
      */
-    protected $start = 0;
+    protected $start;
 
     /**
-     * @var int the limit of the result.
+     * @var int the length of the wished result.
      */
-    protected $limit = 0;
+    protected $length;
+
+
+    public function drawCall()
+    {
+        return $this->drawCall;
+    }
+
+    public function start()
+    {
+        return $this->start;
+    }
+
+    public function length()
+    {
+        return $this->length;
+    }
 
 }
