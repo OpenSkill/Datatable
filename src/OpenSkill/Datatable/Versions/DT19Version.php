@@ -5,8 +5,8 @@ namespace OpenSkill\Datatable\Versions;
 
 use OpenSkill\Datatable\Queries\DT19QueryParser;
 use OpenSkill\Datatable\Queries\DTQueryParser;
-use OpenSkill\Datatable\Response\DT19ResponseCreator;
-use OpenSkill\Datatable\Response\DTResponseCreator;
+use OpenSkill\Datatable\Responses\DT19ResponseCreator;
+use OpenSkill\Datatable\Responses\DTResponseCreator;
 use OpenSkill\Datatable\Views\DT19ViewCreator;
 use OpenSkill\Datatable\Views\DTViewCreator;
 
@@ -18,7 +18,7 @@ use OpenSkill\Datatable\Views\DTViewCreator;
  * http://legacy.datatables.net/index
  *
  */
-class Datatable19Version implements DTVersion
+class DT19Version implements DTVersion
 {
     /** @var DT19QueryParser  */
     private $queryParser;

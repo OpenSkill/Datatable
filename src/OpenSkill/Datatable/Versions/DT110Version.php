@@ -3,8 +3,8 @@
 namespace OpenSkill\Datatable\Versions;
 use OpenSkill\Datatable\Queries\DT110QueryParser;
 use OpenSkill\Datatable\Queries\DTQueryParser;
-use OpenSkill\Datatable\Response\DT110ResponseCreator;
-use OpenSkill\Datatable\Response\DTResponseCreator;
+use OpenSkill\Datatable\Responses\DT110ResponseCreator;
+use OpenSkill\Datatable\Responses\DTResponseCreator;
 use OpenSkill\Datatable\Views\DT110ViewCreator;
 use OpenSkill\Datatable\Views\DTViewCreator;
 
@@ -16,7 +16,7 @@ use OpenSkill\Datatable\Views\DTViewCreator;
  * http://datatables.net/
  *
  */
-class Datatable110Version implements DTVersion
+class DT110Version implements DTVersion
 {
     /** @var DT110QueryParser  */
     private $queryParser;

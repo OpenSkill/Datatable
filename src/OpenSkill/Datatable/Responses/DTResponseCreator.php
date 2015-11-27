@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenSkill\Datatable\Response;
+namespace OpenSkill\Datatable\Responses;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
+use OpenSkill\Datatable\Queries\DTQueryConfiguration;
 
 /**
  * Interface DTResponseCreator

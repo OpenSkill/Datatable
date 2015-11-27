@@ -23,8 +23,8 @@ class DatatableServiceProvider extends ServiceProvider
     public function register()
     {
 
-        $this->app->bind('DT19Version', 'OpenSkill\Datatable\Versions\Datatable19Version');
-        $this->app->bind('dt.default.version', 'OpenSkill\Datatable\Versions\Datatable110Version');
+        $this->app->bind('DT19Version', 'OpenSkill\Datatable\Versions\DT19Version');
+        $this->app->bind('dt.default.version', 'OpenSkill\Datatable\Versions\DT110Version');
 
         $this->app->tag(['DT19Version', 'dt.default.version'], 'dt.query.versions');
 

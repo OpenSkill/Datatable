@@ -5,7 +5,7 @@ namespace OpenSkill\Datatable\Providers;
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Interfaces\DTQueryConfiguration;
+use OpenSkill\Datatable\Queries\DTQueryConfiguration;
 
 /**
  * Class CollectionProvider
