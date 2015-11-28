@@ -53,6 +53,8 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(13, $conf->drawCall());
         $this->assertSame(11, $conf->start());
         $this->assertSame(103, $conf->length());
+        $this->assertSame('fooBar', $conf->searchValue());
+        $this->assertTrue($conf->isGlobalRegex());
     }
 
     /**

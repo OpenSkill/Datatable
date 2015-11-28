@@ -62,6 +62,14 @@ class DT19QueryParser implements DTQueryParser
             $builder->length($query->get('iDisplayLength'));
         }
 
+        if($query->has('sSearch')) {
+            $builder->searchValue($query->get('sSearch'));
+        }
+
+        if($query->has('bRegex')) {
+            $builder->searchRegex($query->get('bRegex'));
+        }
+
         return $builder->build();
 
     }

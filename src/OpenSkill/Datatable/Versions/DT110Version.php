@@ -18,10 +18,10 @@ use OpenSkill\Datatable\Views\DTViewCreator;
  */
 class DT110Version implements DTVersion
 {
-    /** @var DT110QueryParser  */
+    /** @var DT110QueryParser */
     private $queryParser;
 
-    /** @var DT110ResponseCreator  */
+    /** @var DT110ResponseCreator */
     private $responseCreator;
 
     /** @var  DT110ViewCreator */

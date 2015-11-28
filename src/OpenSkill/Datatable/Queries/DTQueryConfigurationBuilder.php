@@ -14,6 +14,12 @@ class DTQueryConfigurationBuilder
     /** @var int */
     protected $length = 10;
 
+    /** @var string */
+    protected $searchValue = null;
+
+    /** @var bool */
+    protected $searchRegex = false;
+
     /**
      * DTQueryConfigurationBuilder constructor.
      */
@@ -49,12 +55,30 @@ class DTQueryConfigurationBuilder
         $this->length = $length;
     }
 
+    public function searchValue($searchValue)
+    {
+        if(!is_string($searchValue)) {
+            throw new \InvalidArgumentException('$searchValue needs to be a string');
+        }
+        $this->searchValue = $searchValue;
+    }
+
+    public function searchRegex($searchRegex)
+    {
+        if(!is_bool($searchRegex)) {
+            throw new \InvalidArgumentException('$searchRegex needs to be a boolean');
+        }
+        $this->searchRegex = $searchRegex;
+    }
+
     public function build()
     {
         return new DTQueryConfiguration(
             $this->drawCall,
             $this->start,
-            $this->length
+            $this->length,
+            $this->searchValue,
+            $this->searchRegex
         );
     }
 }
