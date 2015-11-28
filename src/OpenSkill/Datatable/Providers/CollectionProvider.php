@@ -4,8 +4,8 @@ namespace OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Queries\DTQueryConfiguration;
+use OpenSkill\Datatable\Interfaces\Data;
+use OpenSkill\Datatable\Queries\QueryConfiguration;
 
 /**
  * Class CollectionProvider
@@ -13,7 +13,7 @@ use OpenSkill\Datatable\Queries\DTQueryConfiguration;
  *
  * Provider that is able to provide data based on a initial passed collection.
  */
-class CollectionProvider implements DTProvider
+class CollectionProvider implements Provider
 {
     /**
      * @var Collection The underlying data
@@ -21,7 +21,7 @@ class CollectionProvider implements DTProvider
     private $collection;
 
     /**
-     * @var DTQueryConfiguration
+     * @var QueryConfiguration
      */
     private $queryConfiguration;
 
@@ -39,10 +39,10 @@ class CollectionProvider implements DTProvider
      * This will only be called when the DTProvider needs to handle the request.
      * It will never be called when the DTProvider does not need to handle the request.
      *
-     * @param DTQueryConfiguration $queryConfiguration
+     * @param QueryConfiguration $queryConfiguration
      * @return mixed
      */
-    public function prepareForProcessing(DTQueryConfiguration $queryConfiguration)
+    public function prepareForProcessing(QueryConfiguration $queryConfiguration)
     {
         $this->queryConfiguration = $queryConfiguration;
     }
@@ -54,7 +54,7 @@ class CollectionProvider implements DTProvider
      * a DTData object so the Composer can further handle the data.
      *
      * @param ColumnConfiguration[] $columnConfiguration
-     * @return DTData The processed data
+     * @return Data The processed data
      *
      */
     public function process(array $columnConfiguration)

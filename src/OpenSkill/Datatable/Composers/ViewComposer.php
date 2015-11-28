@@ -3,7 +3,7 @@
 namespace OpenSkill\Datatable\Composers;
 
 
-class DTViewComposer
+class ViewComposer
 {
 
 }

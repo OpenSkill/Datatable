@@ -2,10 +2,10 @@
 
 namespace OpenSkill\Datatable;
 
-use OpenSkill\Datatable\Providers\DTProvider;
-use OpenSkill\Datatable\Composers\DTDataComposer;
+use OpenSkill\Datatable\Providers\Provider;
+use OpenSkill\Datatable\Composers\DataComposer;
 use Illuminate\Http\Request;
-use OpenSkill\Datatable\Versions\DTVersionEngine;
+use OpenSkill\Datatable\Versions\VersionEngine;
 
 /**
  * Class Datatable
@@ -16,28 +16,28 @@ use OpenSkill\Datatable\Versions\DTVersionEngine;
 class Datatable
 {
     /**
-     * @var DTVersionEngine
+     * @var VersionEngine
      */
     private $versionEngine;
 
     /**
      * Datatable constructor.
-     * @param DTVersionEngine $versionEngine
+     * @param VersionEngine $versionEngine
      */
-    public function __construct(DTVersionEngine $versionEngine)
+    public function __construct(VersionEngine $versionEngine)
     {
         $this->versionEngine = $versionEngine;
     }
 
     /**
-     * Will create a new DTDataComposer with the given provider as implementation.
+     * Will create a new DataComposer with the given provider as implementation.
      *
-     * @param DTProvider $provider The provider for the underlying data.
-     * @return DTDataComposer
+     * @param Provider $provider The provider for the underlying data.
+     * @return DataComposer
      */
-    public function make(DTProvider $provider)
+    public function make(Provider $provider)
     {
-        $composer = new DTDataComposer($provider);
+        $composer = new DataComposer($provider, $this->versionEngine);
         return $composer;
     }
 

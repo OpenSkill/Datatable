@@ -3,8 +3,8 @@
 namespace OpenSkill\Datatable\Responses;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Queries\DTQueryConfiguration;
+use OpenSkill\Datatable\Interfaces\Data;
+use OpenSkill\Datatable\Queries\QueryConfiguration;
 
 /**
  * Interface DTResponseCreator
@@ -12,7 +12,7 @@ use OpenSkill\Datatable\Queries\DTQueryConfiguration;
  *
  * Base interface that is used to create custom responses for the data table request
  */
-interface DTResponseCreator
+interface ResponseCreator
 {
-    public function createResponse(DTData $data, DTQueryConfiguration $queryConfiguration, ColumnConfiguration $columnConfiguration);
+    public function createResponse(Data $data, QueryConfiguration $queryConfiguration, ColumnConfiguration $columnConfiguration);
 }

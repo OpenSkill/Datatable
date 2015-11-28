@@ -8,7 +8,7 @@ use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 
 class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var DT19QueryParser */
+    /** @var Datatable19QueryParser */
     private $parser;
 
     /**
@@ -16,7 +16,7 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->parser = new DT19QueryParser();
+        $this->parser = new Datatable19QueryParser();
     }
 
     /**
@@ -31,13 +31,13 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
             'sEcho'             => 13,
             'iDisplayStart'     => 11,
             'iDisplayLength'    => 103,
-            'iColumns'          => 1,
+            'iColumns'          => 1, // will be ignored
             'sSearch'           => 'fooBar',
             'bRegex'            => true,
-            'bSearchable_1'     => true,
+            'bSearchable_1'     => true, // will be ignored
             'sSearch_1'         => 'fooBar_1',
             'bRegex_1'          => true,
-            'bSortable_1'       => true,
+            'bSortable_1'       => true, // will be ignored
             'iSortingCols'      => 1,
             'iSortCol_1'        => true,
             'sSortDir_1'        => 'desc',

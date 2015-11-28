@@ -7,9 +7,9 @@ namespace OpenSkill\Datatable\Queries;
  * @package OpenSkill\Datatable\Interfaces
  *
  * This class contains all parameters that the frontend queries from the backend.
- * So this class contains the parsed query parameters, abstracted away form datatables 1.9 and 1.10
+ * So this class contains the parsed query parameters, abstracted away form the data table frontend
  */
-class DTQueryConfiguration
+class QueryConfiguration
 {
 
     /**

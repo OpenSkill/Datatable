@@ -5,11 +5,11 @@ namespace OpenSkill\Datatable\Queries;
 
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Queries\DTQueryConfiguration;
+use OpenSkill\Datatable\Interfaces\Data;
+use OpenSkill\Datatable\Queries\QueryConfiguration;
 use Symfony\Component\HttpFoundation\Response;
 
-class DT19QueryParser implements DTQueryParser
+class Datatable19QueryParser implements QueryParser
 {
 
     /**
@@ -29,10 +29,10 @@ class DT19QueryParser implements DTQueryParser
     /**
      * Responsible to create a response with the given data, that conforms to the data table request.
      *
-     * @param DTData $data The data to return
+     * @param Data $data The data to return
      * @return Response the response
      */
-    public function respond(DTData $data)
+    public function respond(Data $data)
     {
         // TODO: Implement respond() method.
     }
@@ -43,12 +43,12 @@ class DT19QueryParser implements DTQueryParser
      * @param Request $request the current request to analyse
      * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
      *
-     * @return DTQueryConfiguration the configuration the provider can use to prepare the data
+     * @return QueryConfiguration the configuration the provider can use to prepare the data
      */
     public function parse(Request $request, array $columnConfiguration)
     {
         $query = $request->query;
-        $builder = DTQueryConfigurationBuilder::create();
+        $builder = QueryConfigurationBuilder::create();
 
         if($query->has('sEcho')) {
             $builder->drawCall($query->get('sEcho'));

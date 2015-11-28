@@ -3,7 +3,7 @@
 namespace OpenSkill\Datatable\Interfaces;
 
 
-class DTData
+class Data
 {
 
 }

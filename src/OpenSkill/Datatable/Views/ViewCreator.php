@@ -11,7 +11,7 @@ use OpenSkill\Datatable\Columns\ColumnConfiguration;
  *
  * Base interface that is used to create a specific javascript declaration on the view
  */
-interface DTViewCreator
+interface ViewCreator
 {
     public function createJavascript(ColumnConfiguration $columnConfiguration);
 }

@@ -3,12 +3,12 @@
 namespace OpenSkill\Datatable\Queries;
 
 use Illuminate\Http\Request;
-use OpenSkill\Datatable\Interfaces\DTData;
+use OpenSkill\Datatable\Interfaces\Data;
 
-class DTQueryEngine
+class QueryEngine
 {
     /**
-     * @var DTQueryParser the parser responsible for the current request
+     * @var QueryParser the parser responsible for the current request
      */
     protected $parser = null;
 
@@ -16,7 +16,7 @@ class DTQueryEngine
      * Default constructor, will select the first matching query parser for the request.
      *
      * @param Request $request the current request to analyse
-     * @param DTQueryParser[] $parser an array of parser that could handle the request
+     * @param QueryParser[] $parser an array of parser that could handle the request
      */
     public function __construct(Request $request, array $parser)
     {
@@ -44,11 +44,11 @@ class DTQueryEngine
      * Will return a response from the data if a parser was set.
      * Will throw an exception if no parser was set
      *
-     * @param DTData $data The data to return
+     * @param Data $data The data to return
      *
      * @return \Symfony\Component\HttpFoundation\Response the response to deliver to the frontend
      */
-    public function createResponse(DTData $data) {
+    public function createResponse(Data $data) {
         if($this->parser == null) {
             throw new \InvalidArgumentException("There is no parser that can handle the request.");
         }

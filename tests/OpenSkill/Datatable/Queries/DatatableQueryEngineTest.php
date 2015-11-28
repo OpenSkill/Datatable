@@ -5,7 +5,7 @@ namespace OpenSkill\Datatable\Queries;
 
 use Illuminate\Http\Request;
 use Mockery;
-use OpenSkill\Datatable\Interfaces\DTData;
+use OpenSkill\Datatable\Interfaces\Data;
 
 class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +26,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         $request = new Request([
             "foo" => "bar"
         ]);
-        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
 
         $this->assertFalse($engine->shouldHandle());
     }
@@ -39,7 +39,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         $request = new Request([
             "sEcho" => 1
         ]);
-        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
 
         $this->assertTrue($engine->shouldHandle());
     }
@@ -52,7 +52,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         $request = new Request([
             "draw" => 1
         ]);
-        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
 
         $this->assertTrue($engine->shouldHandle());
     }
@@ -66,7 +66,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
             "sEcho" => 1,
             "draw"  => 2
         ]);
-        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
 
         $this->assertFalse($engine->shouldHandle());
     }
@@ -81,12 +81,12 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
             "sEcho" => 1,
             "draw"  => 2
         ]);
-        $engine = new DTQueryEngine($request, [new DT19QueryParser(), new DT110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
 
         $this->assertFalse($engine->shouldHandle());
 
-        /** @var DTData $data */
-        $data = Mockery::mock('OpenSkill\Datatable\Interfaces\DTData');
+        /** @var Data $data */
+        $data = Mockery::mock('OpenSkill\Datatable\Interfaces\Data');
 
         $engine->createResponse($data);
     }
@@ -98,16 +98,16 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request([]);
 
-        /** @var DTData $data */
-        $data = Mockery::mock('OpenSkill\Datatable\Interfaces\DTData');
+        /** @var Data $data */
+        $data = Mockery::mock('OpenSkill\Datatable\Interfaces\Data');
 
-        /** @var DTQueryParser $parser */
-        $parser = Mockery::mock('OpenSkill\Datatable\Query\DTQueryParser');
+        /** @var QueryParser $parser */
+        $parser = Mockery::mock('OpenSkill\Datatable\Query\QueryParser');
         $parserMock = Mockery::self();
         $parserMock->shouldReceive('canParse')->with($request)->once()->andReturn(true);
         $parserMock->shouldReceive('respond')->with($data)->once()->andReturn();
 
-        $engine = new DTQueryEngine($request, [$parser]);
+        $engine = new QueryEngine($request, [$parser]);
 
         $this->assertTrue($engine->shouldHandle());
 

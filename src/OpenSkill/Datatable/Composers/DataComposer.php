@@ -4,21 +4,28 @@ namespace OpenSkill\Datatable\Composers;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
-use OpenSkill\Datatable\Providers\DTProvider;
+use OpenSkill\Datatable\DatatableService;
+use OpenSkill\Datatable\Providers\Provider;
+use OpenSkill\Datatable\Versions\VersionEngine;
 
 /**
- * Class DTDataComposer
+ * Class DataComposer
  * @package OpenSkill\Datatable\Composers
  *
  * The composer is responsible to collect all column configuration as well as view configurations and to pass them
  * to the DTProvider when the data needs to be collected.
  */
-class DTDataComposer
+class DataComposer
 {
     /**
-     * @var DTProvider The Provider for the underlying data.
+     * @var Provider The Provider for the underlying data.
      */
     private $provider;
+
+    /**
+     * @var VersionEngine The version engine that will parse the request parameter.
+     */
+    private $version;
 
     /**
      * @var ColumnConfiguration[] An array of the configurations of the columns
@@ -27,16 +34,18 @@ class DTDataComposer
 
     /**
      * Will create a new datatable composer instance with the given provider
-     * @param DTProvider $provider the provider that will process the underlying data
+     * @param Provider $provider the provider that will process the underlying data
+     * @param VersionEngine $versionEngine The version engine to handle the request data
      */
-    public function __construct(DTProvider $provider)
+    public function __construct(Provider $provider, VersionEngine $versionEngine)
     {
         $this->provider = $provider;
+        $this->version = $versionEngine;
     }
 
     /**
      * Will return the Provider for the underlying data.
-     * @return DTProvider
+     * @return Provider
      */
     public function getProvider()
     {
@@ -110,18 +119,10 @@ class DTDataComposer
     }
 
     /**
-     * Called when the current DTDataComposer should handle the request and return data.
-     * This is a terminating operation
+     * @return DatatableService Will return the fully built DatatableService that will contain the ColumnConfiguration
      */
-    public function handleRequest()
-    {
-        // get the query configuration and pass it to the provider,
-        // take the data and prepare it for display
+    public function build() {
+        return new DatatableService($this->version);
     }
-
-    public function view() {
-
-    }
-
 
 }

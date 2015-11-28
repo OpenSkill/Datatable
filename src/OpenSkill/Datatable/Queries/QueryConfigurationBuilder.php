@@ -2,7 +2,7 @@
 
 namespace OpenSkill\Datatable\Queries;
 
-class DTQueryConfigurationBuilder
+class QueryConfigurationBuilder
 {
 
     /** @var string */
@@ -29,7 +29,7 @@ class DTQueryConfigurationBuilder
 
     public static function create()
     {
-        return new DTQueryCOnfigurationBuilder();
+        return new QueryCOnfigurationBuilder();
     }
 
     public function drawCall($drawCall) {
@@ -73,7 +73,7 @@ class DTQueryConfigurationBuilder
 
     public function build()
     {
-        return new DTQueryConfiguration(
+        return new QueryConfiguration(
             $this->drawCall,
             $this->start,
             $this->length,

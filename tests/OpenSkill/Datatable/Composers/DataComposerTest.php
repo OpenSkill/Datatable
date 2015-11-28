@@ -2,37 +2,44 @@
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
-use OpenSkill\Datatable\Composers\DTDataComposer;
-use OpenSkill\Datatable\Providers\DTProvider;
-use OpenSkill\Datatable\Query\DTQueryEngine;
-use OpenSkill\Datatable\Versions\DTVersion;
+use OpenSkill\Datatable\Composers\DataComposer;
+use OpenSkill\Datatable\Providers\Provider;
+use OpenSkill\Datatable\Queries\QueryEngine;
+use OpenSkill\Datatable\Versions\Version;
+use OpenSkill\Datatable\Versions\VersionEngine;
 
 class DTDataComposerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var DTDataComposer
+     * @var DataComposer
      */
     protected $composer;
 
     /**
-     * @var DTProvider
+     * @var Provider
      */
     protected $provider;
 
     /**
-     * @var DTVersion
+     * @var Version
      */
     private $version;
+
+    /**
+     * @var VersionEngine
+     */
+    private $versionEngine;
 
     /**
      * Will set up a mocked provider and the class to test
      */
     protected function setUp()
     {
-        $this->provider = Mockery::mock('OpenSkill\Datatable\Providers\DTProvider');
-        $this->version = Mockery::mock('OpenSkill\Datatable\Versions\DTVersion');
-        $this->composer = new DTDataComposer($this->provider, $this->version);
+        $this->provider = Mockery::mock('OpenSkill\Datatable\Providers\Provider');
+        $this->version = Mockery::mock('OpenSkill\Datatable\Versions\Version');
+        $this->versionEngine = Mockery::mock('OpenSkill\Datatable\Versions\VersionEngine');
+        $this->composer = new DataComposer($this->provider, $this->versionEngine);
     }
 
     /**

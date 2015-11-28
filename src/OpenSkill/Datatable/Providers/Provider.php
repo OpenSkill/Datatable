@@ -3,8 +3,8 @@
 namespace OpenSkill\Datatable\Providers;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Interfaces\DTData;
-use OpenSkill\Datatable\Queries\DTQueryConfiguration;
+use OpenSkill\Datatable\Interfaces\Data;
+use OpenSkill\Datatable\Queries\QueryConfiguration;
 
 /**
  * Interface DatatableProvider
@@ -13,7 +13,7 @@ use OpenSkill\Datatable\Queries\DTQueryConfiguration;
  * Base interface for all datatable providers. A datatable provider will process the underlying data based on the
  *given configuration that it will get.
  */
-interface DTProvider
+interface Provider
 {
 
     /**
@@ -21,10 +21,10 @@ interface DTProvider
      * This will only be called when the DTProvider needs to handle the request.
      * It will never be called when the DTProvider does not need to handle the request.
      *
-     * @param DTQueryConfiguration $queryConfiguration
+     * @param QueryConfiguration $queryConfiguration
      * @return mixed
      */
-    public function prepareForProcessing(DTQueryConfiguration $queryConfiguration);
+    public function prepareForProcessing(QueryConfiguration $queryConfiguration);
 
     /**
      * This method should process all configurations and prepare the underlying data for the view. It will arrange the
@@ -33,7 +33,7 @@ interface DTProvider
      * a DTData object so the Composer can further handle the data.
      *
      * @param ColumnConfiguration[] $columnConfiguration
-     * @return DTData The processed data
+     * @return Data The processed data
      *
      */
     public function process(array $columnConfiguration);

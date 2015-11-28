@@ -6,7 +6,7 @@ namespace OpenSkill\Datatable\Views;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Views\DTViewCreator;
 
-class DT110ViewCreator implements DTViewCreator
+class Datatable19ViewCreator implements ViewCreator
 {
 
     public function createJavascript(ColumnConfiguration $columnConfiguration)
