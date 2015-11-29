@@ -2,6 +2,7 @@
 
 namespace OpenSkill\Datatable\Composers;
 
+use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
@@ -34,15 +35,20 @@ class ColumnComposer
      */
     private $columnConfiguration = [];
 
+    /** @var Request */
+    private $request;
+
     /**
      * Will create a new datatable composer instance with the given provider
      * @param Provider $provider the provider that will process the underlying data
      * @param VersionEngine $versionEngine The version engine to handle the request data
+     * @param Request $request The current request
      */
-    public function __construct(Provider $provider, VersionEngine $versionEngine)
+    public function __construct(Provider $provider, VersionEngine $versionEngine, Request $request)
     {
         $this->provider = $provider;
         $this->version = $versionEngine;
+        $this->request = $request;
     }
 
     /**
@@ -120,7 +126,7 @@ class ColumnComposer
      * @return DatatableService Will return the fully built DatatableService that will contain the ColumnConfiguration
      */
     public function build() {
-        return new DatatableService($this->version);
+        return new DatatableService($this->request, $this->provider, $this->columnConfiguration, $this->version);
     }
 
 }

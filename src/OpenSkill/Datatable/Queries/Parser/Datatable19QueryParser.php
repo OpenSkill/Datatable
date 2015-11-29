@@ -1,53 +1,48 @@
 <?php
 
-namespace OpenSkill\Datatable\Queries;
+namespace OpenSkill\Datatable\Queries\Parser;
 
 
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Interfaces\Data;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
+use OpenSkill\Datatable\Queries\QueryConfigurationBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
-class Datatable19QueryParser implements QueryParser
+class Datatable19QueryParser extends QueryParser
 {
+
+    /**
+     * Datatable19QueryParser constructor.
+     * @param Request $request
+     */
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+    }
 
     /**
      * Method to determine if this parser can handle the query parameters. If so then the parser should return true
      * and be able to return a DTQueryConfiguration
      *
-     * @param Request $request the current request the parse should analyse
-     *
      * @return bool true if the parser is able to parse the query parameters and to return a DTQueryConfiguration
      */
-    public function canParse(Request $request)
+    public function canParse()
     {
         // check if sEcho is set and draw not
-        return $request->query->has("sEcho") && !$request->query->has("draw");
-    }
-
-    /**
-     * Responsible to create a response with the given data, that conforms to the data table request.
-     *
-     * @param Data $data The data to return
-     * @return Response the response
-     */
-    public function respond(Data $data)
-    {
-        // TODO: Implement respond() method.
+        return $this->request->query->has("sEcho") && !$this->request->query->has("draw");
     }
 
     /**
      * Method that should parse the request and return a DTQueryConfiguration
      *
-     * @param Request $request the current request to analyse
      * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
      *
      * @return QueryConfiguration the configuration the provider can use to prepare the data
      */
-    public function parse(Request $request, array $columnConfiguration)
+    public function parse(array $columnConfiguration)
     {
-        $query = $request->query;
+        $query = $this->request->query;
         $builder = QueryConfigurationBuilder::create();
 
         if($query->has('sEcho')) {

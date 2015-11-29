@@ -3,6 +3,7 @@
 namespace OpenSkill\Datatable\Versions;
 
 
+use Illuminate\Http\Request;
 use OpenSkill\Datatable\Queries\Datatable19QueryParser;
 use OpenSkill\Datatable\Queries\QueryParser;
 use OpenSkill\Datatable\Responses\Datatable19ResponseCreator;
@@ -18,7 +19,7 @@ use OpenSkill\Datatable\Views\ViewCreator;
  * http://legacy.datatables.net/index
  *
  */
-class Datatable19Version implements Version
+class Datatable19Version extends Version
 {
     /** @var Datatable19QueryParser  */
     private $queryParser;
@@ -32,16 +33,19 @@ class Datatable19Version implements Version
     /**
      * Datatable19Version constructor.
      *
+     * @param Request $request The current request
      * @param Datatable19QueryParser $queryParser a custom subclass for the query parser
      * @param Datatable19ResponseCreator $responseCreator a custom subclass for the response
      * @param Datatable19ViewCreator $viewCreator a custom subclass for the view
      */
     public function __construct(
+        Request $request,
         Datatable19QueryParser $queryParser = null,
         Datatable19ResponseCreator $responseCreator = null,
         Datatable19ViewCreator $viewCreator = null
     )
     {
+        parent::__construct($request);
         if(is_null($queryParser)) {
             $this->queryParser = new Datatable19QueryParser();
         } else {

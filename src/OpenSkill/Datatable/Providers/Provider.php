@@ -22,7 +22,6 @@ interface Provider
      * It will never be called when the DTProvider does not need to handle the request.
      *
      * @param QueryConfiguration $queryConfiguration
-     * @return mixed
      */
     public function prepareForProcessing(QueryConfiguration $queryConfiguration);
 

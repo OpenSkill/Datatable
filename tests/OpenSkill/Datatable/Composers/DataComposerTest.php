@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
@@ -32,6 +33,9 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
      */
     private $versionEngine;
 
+    /** @var Request */
+    private $request;
+
     /**
      * Will set up a mocked provider and the class to test
      */
@@ -40,7 +44,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
         $this->provider = Mockery::mock('OpenSkill\Datatable\Providers\Provider');
         $this->version = Mockery::mock('OpenSkill\Datatable\Versions\Version');
         $this->versionEngine = Mockery::mock('OpenSkill\Datatable\Versions\VersionEngine');
-        $this->composer = new ColumnComposer($this->provider, $this->versionEngine);
+        $this->request = Mockery::mock('Illuminate\Http\Request');
+        $this->composer = new ColumnComposer($this->provider, $this->versionEngine, $this->request);
     }
 
     /**

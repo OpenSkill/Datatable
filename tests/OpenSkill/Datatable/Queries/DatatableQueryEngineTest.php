@@ -2,10 +2,12 @@
 
 namespace OpenSkill\Datatable\Queries;
 
-
 use Illuminate\Http\Request;
 use Mockery;
 use OpenSkill\Datatable\Interfaces\Data;
+use OpenSkill\Datatable\Queries\Parser\Datatable110QueryParser;
+use OpenSkill\Datatable\Queries\Parser\Datatable19QueryParser;
+use OpenSkill\Datatable\Queries\Parser\QueryParser;
 
 class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +28,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         $request = new Request([
             "foo" => "bar"
         ]);
-        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser($request), new Datatable110QueryParser($request)]);
 
         $this->assertFalse($engine->shouldHandle());
     }
@@ -39,7 +41,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         $request = new Request([
             "sEcho" => 1
         ]);
-        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser($request), new Datatable110QueryParser($request)]);
 
         $this->assertTrue($engine->shouldHandle());
     }
@@ -52,7 +54,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
         $request = new Request([
             "draw" => 1
         ]);
-        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser($request), new Datatable110QueryParser($request)]);
 
         $this->assertTrue($engine->shouldHandle());
     }
@@ -66,7 +68,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
             "sEcho" => 1,
             "draw"  => 2
         ]);
-        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser($request), new Datatable110QueryParser($request)]);
 
         $this->assertFalse($engine->shouldHandle());
     }
@@ -81,7 +83,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
             "sEcho" => 1,
             "draw"  => 2
         ]);
-        $engine = new QueryEngine($request, [new Datatable19QueryParser(), new Datatable110QueryParser()]);
+        $engine = new QueryEngine($request, [new Datatable19QueryParser($request), new Datatable110QueryParser($request)]);
 
         $this->assertFalse($engine->shouldHandle());
 

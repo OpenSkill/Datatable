@@ -37,7 +37,7 @@ class Datatable
      */
     public function make(Provider $provider)
     {
-        $composer = new ColumnComposer($provider, $this->versionEngine);
+        $composer = new ColumnComposer($this->provider, $this->versionEngine);
         return $composer;
     }
 
