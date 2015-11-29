@@ -14,8 +14,6 @@ use Illuminate\Http\Request;
  */
 class VersionEngine
 {
-    /** @var Request */
-    private $request;
 
     /** @var array */
     private $versions = [];
@@ -26,18 +24,16 @@ class VersionEngine
     /**
      * DTVersionEngine constructor.
      *
-     * @param Request $request The current request
      * @param Version[] $versions an array of possible version this data table supports
      */
-    public function __construct(Request $request, array $versions)
+    public function __construct(array $versions)
     {
-        $this->request = $request;
         foreach ($versions as $version) {
             $this->versions[get_class($version)] = $version;
         }
 
         foreach ($versions as $v) {
-            if ($v->queryParser()->canParse($request)) {
+            if ($v->queryParser()->canParse()) {
                 $this->version = $v;
                 break;
             }

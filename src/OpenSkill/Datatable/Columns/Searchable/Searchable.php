@@ -39,11 +39,4 @@ abstract class Searchable {
      * @return bool
      */
     abstract public function isSearchable();
-
-    /**
-     * Will determine if the column content matches the given $searchValue.
-     * @param string $searchValue The value to search for in this column.
-     * @return bool Will return true if the content matches and false if it does not match.
-     */
-    abstract public function matches($searchValue);
 }

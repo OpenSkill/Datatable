@@ -15,17 +15,20 @@ use OpenSkill\Datatable\Versions\VersionEngine;
  */
 class Datatable
 {
-    /**
-     * @var VersionEngine
-     */
+    /** @var VersionEngine */
     private $versionEngine;
+
+    /** @var Request */
+    private $request;
 
     /**
      * Datatable constructor.
-     * @param VersionEngine $versionEngine
+     * @param Request $request The current request
+     * @param VersionEngine $versionEngine The version engine that determines the correct version
      */
-    public function __construct(VersionEngine $versionEngine)
+    public function __construct(Request $request, VersionEngine $versionEngine)
     {
+        $this->request = $request;
         $this->versionEngine = $versionEngine;
     }
 
@@ -37,17 +40,7 @@ class Datatable
      */
     public function make(Provider $provider)
     {
-        $composer = new ColumnComposer($this->provider, $this->versionEngine);
+        $composer = new ColumnComposer($provider, $this->versionEngine, $this->request);
         return $composer;
-    }
-
-    /**
-     * Will determine if the Datatable should handle the current request.
-     * This is normally used when just one route is active for the view and the json data.
-     *
-     * @return boolean true, if the plugin should handle this request, false otherwise
-     */
-    public function shouldHandle() {
-        return $this->versionEngine->hasVersion();
     }
 }
