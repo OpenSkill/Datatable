@@ -1,6 +1,8 @@
 <?php
 
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\Columns\Orderable\Orderable;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
 use OpenSkill\Datatable\FooClass;
 
 class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
@@ -15,13 +17,13 @@ class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
 
         $cc = ColumnConfigurationBuilder::create()
             ->name($name)
-            ->searchable(false)
-            ->orderable(false)
+            ->searchable(Searchable::REGEX())
+            ->orderable(Orderable::NONE())
             ->build();
 
         $this->assertSame($name, $cc->getName(), "Name should be set correctly");
-        $this->assertFalse($cc->isSearchable(), "The column should be searchable");
-        $this->assertFalse($cc->isOrderable(), "The column should be orderable");
+        $this->assertTrue($cc->getSearch()->isSearchable(), "The column should be searchable");
+        $this->assertFalse($cc->getOrder()->isOrderable(), "The column should be orderable");
     }
 
     /**
@@ -45,6 +47,7 @@ class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
         $cc = ColumnConfigurationBuilder::create()
             ->name("fooBar")
             ->build();
+
         $func = $cc->getCallable();
 
         $this->assertSame("", $func(["foo" => "bar"]));
@@ -58,6 +61,7 @@ class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
         $cc = ColumnConfigurationBuilder::create()
             ->name("fooProperty")
             ->build();
+
         $func = $cc->getCallable();
 
         $this->assertSame("barProperty", $func($obj));
@@ -65,11 +69,9 @@ class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
         $cc = ColumnConfigurationBuilder::create()
             ->name("fooMethod")
             ->build();
+
         $func = $cc->getCallable();
 
         $this->assertSame("barMethod", $func($obj));
-
     }
-
-
 }

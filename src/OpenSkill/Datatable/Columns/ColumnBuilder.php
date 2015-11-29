@@ -3,21 +3,21 @@
 namespace OpenSkill\Datatable\Columns;
 
 
-use OpenSkill\Datatable\Composers\DataComposer;
+use OpenSkill\Datatable\Composers\ColumnComposer;
 
 class ColumnBuilder extends ColumnConfigurationBuilder
 {
     /**
-     * @var DataComposer
+     * @var ColumnComposer
      */
     private $composer;
 
     /**
      * ColumnBuilder constructor.
      *
-     * @param DataComposer $composer
+     * @param ColumnComposer $composer
      */
-    public function __construct(DataComposer $composer)
+    public function __construct(ColumnComposer $composer)
     {
         $this->composer = $composer;
     }
@@ -25,7 +25,7 @@ class ColumnBuilder extends ColumnConfigurationBuilder
     /**
      * Will create the final ColumnConfiguration
      *
-     * @return DataComposer
+     * @return ColumnComposer
      */
     public function build()
     {
@@ -36,10 +36,10 @@ class ColumnBuilder extends ColumnConfigurationBuilder
     /**
      * Will create a new builder for a ColumnConfigurationBuilder.
      *
-     * @param DataComposer $composer
+     * @param ColumnComposer $composer
      * @return ColumnBuilder
      */
-    public static function create(DataComposer $composer)
+    public static function create(ColumnComposer $composer)
     {
         return new ColumnBuilder($composer);
     }

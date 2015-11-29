@@ -1,6 +1,8 @@
 <?php
 
 namespace OpenSkill\Datatable\Columns;
+use OpenSkill\Datatable\Columns\Orderable\Orderable;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
 
 /**
  * Class ColumnConfiguration
@@ -18,12 +20,12 @@ class ColumnConfiguration
     private $name;
 
     /**
-     * @var bool Determines if the column can be searched on or not
+     * @var Searchable Determines if the column can be searched on or not
      */
     private $searchable;
 
     /**
-     * @var bool Determines if the column can be ordered on or not
+     * @var Orderable Determines if the column can be ordered on or not
      */
     private $orderable;
 
@@ -38,10 +40,10 @@ class ColumnConfiguration
      *
      * @param string $name The internal name of the column configuration
      * @param callable $callable the function to call when the value should be calculated
-     * @param bool $isSearchable If the column should be searchable
-     * @param bool $isOrderable If the column should be orderable
+     * @param Searchable $isSearchable If the column should be searchable
+     * @param Orderable $isOrderable If the column should be orderable
      */
-    public function __construct($name, $callable, $isSearchable, $isOrderable)
+    public function __construct($name, $callable, Searchable $isSearchable, Orderable $isOrderable)
     {
         $this->name = $name;
         $this->callable = $callable;
@@ -50,21 +52,21 @@ class ColumnConfiguration
     }
 
     /**
-     * Will return if the column is searchable
+     * Will return the searchable column configuration
      *
-     * @return boolean
+     * @return Searchable
      */
-    public function isSearchable()
+    public function getSearch()
     {
         return $this->searchable;
     }
 
     /**
-     * Will return if the column is orderable
+     * Will return the orderable column configuration
      *
-     * @return boolean
+     * @return Orderable
      */
-    public function isOrderable()
+    public function getOrder()
     {
         return $this->orderable;
     }
@@ -88,7 +90,4 @@ class ColumnConfiguration
     {
         return $this->callable;
     }
-
-
-
 }

@@ -2,9 +2,10 @@
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
-use OpenSkill\Datatable\Composers\DataComposer;
+use OpenSkill\Datatable\Columns\Orderable\Orderable;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
+use OpenSkill\Datatable\Composers\ColumnComposer;
 use OpenSkill\Datatable\Providers\Provider;
-use OpenSkill\Datatable\Queries\QueryEngine;
 use OpenSkill\Datatable\Versions\Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
 
@@ -12,7 +13,7 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var DataComposer
+     * @var ColumnComposer
      */
     protected $composer;
 
@@ -39,7 +40,7 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
         $this->provider = Mockery::mock('OpenSkill\Datatable\Providers\Provider');
         $this->version = Mockery::mock('OpenSkill\Datatable\Versions\Version');
         $this->versionEngine = Mockery::mock('OpenSkill\Datatable\Versions\VersionEngine');
-        $this->composer = new DataComposer($this->provider, $this->versionEngine);
+        $this->composer = new ColumnComposer($this->provider, $this->versionEngine);
     }
 
     /**
@@ -78,8 +79,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
          */
         $cc = $this->composer->getColumnConfiguration()[0];
 
-        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
-        $this->assertTrue($cc->isSearchable(), "The column should be searchable");
+        $this->assertTrue($cc->getOrder()->isOrderable(), "The column should be orderable");
+        $this->assertTrue($cc->getSearch()->isSearchable(), "The column should be searchable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
     }
 
@@ -109,8 +110,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
          */
         $func = $cc->getCallable();
 
-        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
-        $this->assertTrue($cc->isSearchable(), "The column should be searchable");
+        $this->assertTrue($cc->getOrder()->isOrderable(), "The column should be orderable");
+        $this->assertTrue($cc->getSearch()->isSearchable(), "The column should be searchable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func("fooBar"));
     }
@@ -126,7 +127,7 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
             return "bar";
         };
 
-        $this->composer->column($name, $callable, false);
+        $this->composer->column($name, $callable, Searchable::NONE());
 
         // get configuration and verify
         $numberOfColumns = count($this->composer->getColumnConfiguration());
@@ -142,8 +143,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
          */
         $func = $cc->getCallable();
 
-        $this->assertFalse($cc->isSearchable(), "The column should not be searchable");
-        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
+        $this->assertFalse($cc->getSearch()->isSearchable(), "The column should not be searchable");
+        $this->assertTrue($cc->getOrder()->isOrderable(), "The column should be orderable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func("fooBar"));
     }
@@ -159,7 +160,7 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
             return "bar";
         };
 
-        $this->composer->column($name, $callable, false, false);
+        $this->composer->column($name, $callable, Searchable::NONE(), Orderable::NONE());
 
         // get configuration and verify
         $numberOfColumns = count($this->composer->getColumnConfiguration());
@@ -175,8 +176,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
          */
         $func = $cc->getCallable();
 
-        $this->assertFalse($cc->isSearchable(), "The column should not be searchable");
-        $this->assertFalse($cc->isOrderable(), "The column should be orderable");
+        $this->assertFalse($cc->getSearch()->isSearchable(), "The column should not be searchable");
+        $this->assertFalse($cc->getOrder()->isOrderable(), "The column should be orderable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func("fooBar"));
     }
@@ -189,30 +190,6 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
     public function testNameExceptions()
     {
         $this->composer->column(false);
-    }
-
-    /**
-     * Will test that the column method will throw exceptions on invalid searchable flag
-     *
-     * @expectedException InvalidArgumentException
-     */
-    public function testSearchableExceptions()
-    {
-        $this->composer->column("fooBar", function ($data) {
-            return "bar";
-        }, "false");
-    }
-
-    /**
-     * Will test that the column method will throw exceptions on invalid orderable flag
-     *
-     * @expectedException InvalidArgumentException
-     */
-    public function testOrderableExceptions()
-    {
-        $this->composer->column("fooBar", function ($data) {
-            return "bar";
-        }, false, "false");
     }
 
     /**
@@ -238,8 +215,8 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
 
         $func = $cc->getCallable();
 
-        $this->assertTrue($cc->isSearchable(), "The column should not be searchable");
-        $this->assertTrue($cc->isOrderable(), "The column should be orderable");
+        $this->assertFalse($cc->getSearch()->isSearchable(), "The column should not be searchable");
+        $this->assertFalse($cc->getOrder()->isOrderable(), "The column should be orderable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func(["fooBar" => "bar"]));
     }

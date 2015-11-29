@@ -1,7 +1,8 @@
 <?php
 
 namespace OpenSkill\Datatable\Columns;
-
+use OpenSkill\Datatable\Columns\Orderable\Orderable;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
 
 /**
  * Class ColumnConfigurationBuilder
@@ -23,14 +24,14 @@ class ColumnConfigurationBuilder
     private $callable = null;
 
     /**
-     * @var bool
+     * @var Searchable
      */
-    private $searchable = true;
+    private $searchable = null;
 
     /**
-     * @var bool
+     * @var Orderable
      */
-    private $orderable = true;
+    private $orderable = null;
 
     /**
      * ColumnConfigurationBuilder constructor.
@@ -60,20 +61,20 @@ class ColumnConfigurationBuilder
     }
 
     /**
-     * @param bool $searchable
+     * @param Searchable $searchable
      * @return $this
      */
-    public function searchable($searchable)
+    public function searchable(Searchable $searchable)
     {
         $this->searchable = $searchable;
         return $this;
     }
 
     /**
-     * @param bool $orderable
+     * @param Orderable $orderable
      * @return $this
      */
-    public function orderable($orderable)
+    public function orderable(Orderable $orderable)
     {
         $this->orderable = $orderable;
         return $this;
@@ -98,6 +99,8 @@ class ColumnConfigurationBuilder
     {
         $this->checkName();
         $this->checkCallable();
+        $this->checkOrderable();
+        $this->checkSearchable();
 
         return new ColumnConfiguration($this->name, $this->callable, $this->searchable, $this->orderable);
     }
@@ -110,6 +113,26 @@ class ColumnConfigurationBuilder
         if(empty($this->name))
         {
             throw new \InvalidArgumentException("The name can not be empty");
+        }
+    }
+
+    /**
+     * Will check if the orderable flag is correctly set, otherwise it will be set to the default NONE
+     */
+    private function checkOrderable()
+    {
+        if($this->orderable == null) {
+            $this->orderable = Orderable::NONE();
+        }
+    }
+
+    /**
+     * Will check if the searchable flag is correctly set, if not it will be set to the default NONE
+     */
+    private function checkSearchable()
+    {
+        if($this->searchable == null) {
+            $this->searchable = Searchable::NONE();
         }
     }
 

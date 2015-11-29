@@ -3,7 +3,7 @@
 namespace OpenSkill\Datatable;
 
 use OpenSkill\Datatable\Providers\Provider;
-use OpenSkill\Datatable\Composers\DataComposer;
+use OpenSkill\Datatable\Composers\ColumnComposer;
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Versions\VersionEngine;
 
@@ -33,11 +33,11 @@ class Datatable
      * Will create a new DataComposer with the given provider as implementation.
      *
      * @param Provider $provider The provider for the underlying data.
-     * @return DataComposer
+     * @return ColumnComposer
      */
     public function make(Provider $provider)
     {
-        $composer = new DataComposer($provider, $this->versionEngine);
+        $composer = new ColumnComposer($provider, $this->versionEngine);
         return $composer;
     }
 

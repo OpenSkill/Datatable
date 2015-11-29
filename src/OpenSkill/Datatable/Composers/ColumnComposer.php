@@ -4,18 +4,20 @@ namespace OpenSkill\Datatable\Composers;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\Columns\Orderable\Orderable;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
 use OpenSkill\Datatable\DatatableService;
 use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\VersionEngine;
 
 /**
- * Class DataComposer
+ * Class ColumnComposer
  * @package OpenSkill\Datatable\Composers
  *
  * The composer is responsible to collect all column configuration as well as view configurations and to pass them
  * to the DTProvider when the data needs to be collected.
  */
-class DataComposer
+class ColumnComposer
 {
     /**
      * @var Provider The Provider for the underlying data.
@@ -67,11 +69,11 @@ class DataComposer
      *
      * @param string $name The name of the configuration, required for the configuration
      * @param callable $callable The function to execute, defaults to null which means the default will be set.
-     * @param bool $searchable If the column should be searchable or not
-     * @param bool $orderable If the column should be orderable or not
+     * @param Searchable $searchable If the column should be searchable or not
+     * @param Orderable $orderable If the column should be orderable or not
      * @return $this
      */
-    public function column($name, callable $callable = null, $searchable = true, $orderable = true)
+    public function column($name, callable $callable = null, Searchable $searchable = null, Orderable $orderable = null)
     {
         /**
          * @var ColumnConfigurationBuilder
@@ -89,16 +91,12 @@ class DataComposer
             $config->withCallable($callable);
         }
 
-        if (is_bool($searchable)) {
-            $config->searchable($searchable);
-        } else {
-            throw new \InvalidArgumentException('$searchable needs to be a boolean value');
+        if (is_null($searchable)) {
+            $config->searchable(Searchable::NORMAL());
         }
 
-        if (is_bool($orderable)) {
-            $config->orderable($orderable);
-        } else {
-            throw new \InvalidArgumentException('$orderable needs to be a boolean value');
+        if (is_null($orderable)) {
+            $config->orderable(Orderable::BOTH());
         }
 
         $this->columnConfiguration[] = $config->build();
