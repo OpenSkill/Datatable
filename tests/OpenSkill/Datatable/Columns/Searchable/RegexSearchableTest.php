@@ -2,14 +2,13 @@
 
 namespace packages\OpenSkill\Datatable\tests\OpenSkill\Datatable\Columns\Searchable;
 
-
-use OpenSkill\Datatable\Columns\Searchable\RegexSearchable;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
 
 class RegexSearchableTest extends \PHPUnit_Framework_TestCase
 {
     public function testClass()
     {
-        $t = new RegexSearchable();
+        $t = Searchable::REGEX();
         $this->assertTrue($t->isSearchable());
     }
 }

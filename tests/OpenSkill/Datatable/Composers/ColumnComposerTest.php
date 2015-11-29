@@ -10,7 +10,7 @@ use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
 
-class DTDataComposerTest extends PHPUnit_Framework_TestCase
+class ColumnComposerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -35,6 +35,14 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
 
     /** @var Request */
     private $request;
+
+    /**
+     * Will test if the service can be built without problems
+     */
+    public function testBuild()
+    {
+        $service = $this->composer->build();
+    }
 
     /**
      * Will set up a mocked provider and the class to test
@@ -225,4 +233,6 @@ class DTDataComposerTest extends PHPUnit_Framework_TestCase
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func(["fooBar" => "bar"]));
     }
+
+
 }

@@ -2,14 +2,14 @@
 
 namespace packages\OpenSkill\Datatable\tests\OpenSkill\Datatable\Columns\Orderable;
 
-use OpenSkill\Datatable\Columns\Orderable\AscOrderable;
+use OpenSkill\Datatable\Columns\Orderable\Orderable;
 
 class AscOrderableTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testClass()
     {
-        $t = new AscOrderable();
+        $t = Orderable::ASC();
         $this->assertTrue($t->isOrderable());
     }
 }

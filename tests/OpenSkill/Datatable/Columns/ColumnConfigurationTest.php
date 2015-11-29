@@ -3,7 +3,6 @@
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
 use OpenSkill\Datatable\Columns\Searchable\Searchable;
-use OpenSkill\Datatable\FooClass;
 
 class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
 {
@@ -73,5 +72,22 @@ class ColumnConfigurationTest extends \PHPUnit_Framework_TestCase
         $func = $cc->getCallable();
 
         $this->assertSame("barMethod", $func($obj));
+    }
+}
+
+class FooClass
+{
+    /**
+     * FooClass constructor.
+     */
+    public function __construct()
+    {
+    }
+
+    public $fooProperty = "barProperty";
+
+    public function fooMethod()
+    {
+        return "barMethod";
     }
 }

@@ -45,7 +45,7 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
      * http://legacy.datatables.net/usage/server-side
      *
      */
-    public function testParsing()
+    public function testCorrectParsing()
     {
         // create columnconfiguration
         $column = ColumnConfigurationBuilder::create()
@@ -59,14 +59,5 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(103, $conf->length());
         $this->assertSame('fooBar', $conf->searchValue());
         $this->assertTrue($conf->isGlobalRegex());
-    }
-
-    /**
-     * Will test if the query parser returns the correct response for datatable 1.9
-     * http://legacy.datatables.net/usage/server-side
-     *
-     */
-    public function testResponse()
-    {
     }
 }
