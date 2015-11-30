@@ -59,5 +59,16 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(103, $conf->length());
         $this->assertSame('fooBar', $conf->searchValue());
         $this->assertTrue($conf->isGlobalRegex());
+
+
+        // assert column search
+        $this->assertSame(1,count($conf->searchColumns()));
+        $def = $conf->searchColumns()['fooBar'];
+        $this->assertSame("fooBar_1", $def);
+
+        // assert column order
+        $this->assertSame(1,count($conf->orderColumns()));
+        $def = $conf->orderColumns()['fooBar'];
+        $this->assertSame("desc", $def);
     }
 }

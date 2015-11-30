@@ -1,6 +1,8 @@
 <?php
 
 namespace OpenSkill\Datatable\Queries;
+use OpenSkill\Datatable\Columns\ColumnSearch;
+use OpenSkill\Datatable\Columns\ColumnOrder;
 
 /**
  * Class DTQueryConfiguration
@@ -19,13 +21,17 @@ class QueryConfiguration
      * @param int $length the amount of items that should be returned
      * @param string $searchValue the global search value that should be searched for
      * @param bool $searchRegex true if the search value should be evaluated as a regex expression
+     * @param ColumnSearch[] $columnSearches all search values for the individual columns if available and allowed
+     * @param ColumnOrder[] $columnOrders the order for each column if available and allowed
      */
     public function __construct(
         $drawCall,
         $start,
         $length,
         $searchValue,
-        $searchRegex
+        $searchRegex,
+        array $columnSearches,
+        array $columnOrders
     )
     {
         $this->drawCall = $drawCall;
@@ -33,6 +39,8 @@ class QueryConfiguration
         $this->length = $length;
         $this->searchValue = $searchValue;
         $this->searchRegex = $searchRegex;
+        $this->searchColumns = $columnSearches;
+        $this->orderColumns = $columnOrders;
     }
 
     /**
@@ -54,9 +62,10 @@ class QueryConfiguration
     protected $searchValue = null;
 
     /**
-     * @var array the columns that we are searching, the content that has been put in
+     * @var ColumnSearch[] the columns that we are searching, the content that has been put in
      */
-    protected $searchColumn = [];
+    /* [    [ 'id' => Object ], [ 'name', Object ]    ] */
+    protected $searchColumns = [];
 
     /**
      * @var bool the search is a regular expression
@@ -64,20 +73,10 @@ class QueryConfiguration
     protected $searchRegex = true;
 
     /**
-     * @var int the number of columns we are showing in the datatable
+     * @var ColumnOrder[] a list of the columns we are sorting by, with their direction
      */
-    protected $numberOfColumns = 0;
-
-    /**
-     * @var array a list of all the columns we are showing
-     */
-    protected $columns = [];
-
-    /**
-     * @var array a list of the columns we are sorting by, with their direction
-     */
-    /* [    [ 'id' => 'desc' ], [ 'name', 'asc' ]    ] */
-    protected $order = [];
+    /* [    [ 'id' => Object ], [ 'name', Object ]    ] */
+    protected $orderColumns = [];
 
     /**
      * @var int which result to start from
@@ -129,4 +128,19 @@ class QueryConfiguration
         return $this->searchRegex;
     }
 
+    /**
+     * @return ColumnSearch[]
+     */
+    public function searchColumns()
+    {
+        return $this->searchColumns;
+    }
+
+    /**
+     * @return ColumnOrder[]
+     */
+    public function orderColumns()
+    {
+        return $this->orderColumns;
+    }
 }

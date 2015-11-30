@@ -65,7 +65,22 @@ class Datatable19QueryParser extends QueryParser
             $builder->searchRegex($query->get('bRegex'));
         }
 
-        return $builder->build();
+        // for each column we need to see if there is a search value
+        foreach ($columnConfiguration as $i => $c) {
+            // increment the index as we are 0 based but data tables is not
+            $i++;
+            // check if there is something search related
+            if($query->has("sSearch_".$i)) {
+                // search for this column is available
+                $builder->columnSearch($c->getName(), $query->get("sSearch_".$i));
+            }
+            // check if there is something order related
+            if($query->has("iSortCol_".$i)) {
+                // order for this column is available
+                $builder->columnOrder($c->getName(), $query->get("sSortDir_".$i));
+            }
+        }
 
+        return $builder->build();
     }
 }

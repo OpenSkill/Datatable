@@ -4,8 +4,8 @@ namespace OpenSkill\Datatable\Versions;
 
 
 use Illuminate\Http\Request;
-use OpenSkill\Datatable\Queries\Datatable19QueryParser;
-use OpenSkill\Datatable\Queries\QueryParser;
+use OpenSkill\Datatable\Queries\Parser\Datatable19QueryParser;
+use OpenSkill\Datatable\Queries\Parser\QueryParser;
 use OpenSkill\Datatable\Responses\Datatable19ResponseCreator;
 use OpenSkill\Datatable\Responses\ResponseCreator;
 use OpenSkill\Datatable\Views\Datatable19ViewCreator;
@@ -21,33 +21,33 @@ use OpenSkill\Datatable\Views\ViewCreator;
  */
 class Datatable19Version extends Version
 {
-    /** @var Datatable19QueryParser  */
+    /** @var QueryParser  */
     private $queryParser;
 
-    /** @var Datatable19ResponseCreator  */
+    /** @var ResponseCreator */
     private $responseCreator;
 
-    /** @var  Datatable19ViewCreator */
+    /** @var  ViewCreator */
     private $viewCreator;
 
     /**
      * Datatable19Version constructor.
      *
      * @param Request $request The current request
-     * @param Datatable19QueryParser $queryParser a custom subclass for the query parser
-     * @param Datatable19ResponseCreator $responseCreator a custom subclass for the response
-     * @param Datatable19ViewCreator $viewCreator a custom subclass for the view
+     * @param QueryParser$queryParser a custom subclass for the query parser
+     * @param ResponseCreator $responseCreator a custom subclass for the response
+     * @param ViewCreator $viewCreator a custom subclass for the view
      */
     public function __construct(
         Request $request,
-        Datatable19QueryParser $queryParser = null,
-        Datatable19ResponseCreator $responseCreator = null,
-        Datatable19ViewCreator $viewCreator = null
+        QueryParser $queryParser = null,
+        ResponseCreator $responseCreator = null,
+        ViewCreator $viewCreator = null
     )
     {
         parent::__construct($request);
         if(is_null($queryParser)) {
-            $this->queryParser = new Datatable19QueryParser();
+            $this->queryParser = new Datatable19QueryParser($request);
         } else {
             $this->queryParser = $queryParser;
         }

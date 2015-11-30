@@ -20,6 +20,12 @@ class QueryConfigurationBuilder
     /** @var bool */
     protected $searchRegex = false;
 
+    /** @var array */
+    protected $columSearches = [];
+
+    /** @var array */
+    protected $columnOrders = [];
+
     /**
      * DTQueryConfigurationBuilder constructor, private by default, so new instances are created using the builder
      * pattern
@@ -97,6 +103,33 @@ class QueryConfigurationBuilder
     }
 
     /**
+     * Will add the given search value to the given column which indicates that the frontend wants to search on the
+     * given column for the given value
+     * @param string $columnName The name of the column that will be searched
+     * @param string $searchValue The value to search for
+     */
+    public function columnSearch($columnName, $searchValue)
+    {
+        if(!is_string($searchValue)) {
+            throw new \InvalidArgumentException('$searchValue needs to be a string');
+        }
+        $this->columSearches[$columnName] = $searchValue;
+    }
+
+    /**
+     * Will set the ordering of the column to the given direction if possible
+     * @param string $columnName The column name that should be ordered
+     * @param string $orderDirection the direction that the column should be ordered by
+     */
+    public function columnOrder($columnName, $orderDirection)
+    {
+        if(!is_string($orderDirection)) {
+            throw new \InvalidArgumentException('$orderDirection "'.$orderDirection.'" needs to be a string');
+        }
+        $this->columnOrders[$columnName] = $orderDirection;
+    }
+
+    /**
      * Will build the final QueryConfiguration that will be used later in the process pipeline
      * @return QueryConfiguration
      */
@@ -107,7 +140,11 @@ class QueryConfigurationBuilder
             $this->start,
             $this->length,
             $this->searchValue,
-            $this->searchRegex
+            $this->searchRegex,
+            $this->columSearches,
+            $this->columnOrders
         );
     }
+
+
 }

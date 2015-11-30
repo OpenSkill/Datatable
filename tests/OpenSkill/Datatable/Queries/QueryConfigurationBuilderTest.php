@@ -51,4 +51,22 @@ class QueryConfigurationBuilderTest extends \PHPUnit_Framework_TestCase
         $b = QueryConfigurationBuilder::create();
         $b->searchRegex(123);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testOrderException()
+    {
+        $b = QueryConfigurationBuilder::create();
+        $b->columnOrder('foo', 123);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testSearchOrderException()
+    {
+        $b = QueryConfigurationBuilder::create();
+        $b->columnSearch("foo", 123);
+    }
 }
