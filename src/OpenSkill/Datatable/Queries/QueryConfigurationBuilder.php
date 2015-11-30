@@ -46,17 +46,20 @@ class QueryConfigurationBuilder
     /**
      * Will set the drawCall parameter send by the frontend.
      * @param string|int $drawCall The draw call parameter
+     * @return $this
      */
     public function drawCall($drawCall) {
         if(!is_string($drawCall) && !is_numeric($drawCall)) {
             throw new \InvalidArgumentException('$drawCall needs to be a string or numeric');
         }
         $this->drawCall = $drawCall;
+        return $this;
     }
 
     /**
      * Will set the start parameter which indicates how many items should be skipped at the start
      * @param int $start
+     * @return $this
      */
     public function start($start)
     {
@@ -64,11 +67,13 @@ class QueryConfigurationBuilder
             throw new \InvalidArgumentException('$start needs to be numeric');
         }
         $this->start = $start;
+        return $this;
     }
 
     /**
      * Will set the length parameter which indicates how many items should be returned by this request.
      * @param int $length
+     * @return $this
      */
     public function length($length)
     {
@@ -76,11 +81,13 @@ class QueryConfigurationBuilder
             throw new \InvalidArgumentException('$length needs to be numeric');
         }
         $this->length = $length;
+        return $this;
     }
 
     /**
      * Will set the search value the frontend send that should be used for the global search
      * @param string $searchValue
+     * @return $this
      */
     public function searchValue($searchValue)
     {
@@ -88,11 +95,13 @@ class QueryConfigurationBuilder
             throw new \InvalidArgumentException('$searchValue needs to be a string');
         }
         $this->searchValue = $searchValue;
+        return $this;
     }
 
     /**
      * Will indicate if the global search value should be used as a regular expression
      * @param bool $searchRegex
+     * @return $this
      */
     public function searchRegex($searchRegex)
     {
@@ -100,6 +109,7 @@ class QueryConfigurationBuilder
             throw new \InvalidArgumentException('$searchRegex needs to be a boolean');
         }
         $this->searchRegex = $searchRegex;
+        return $this;
     }
 
     /**
@@ -107,6 +117,7 @@ class QueryConfigurationBuilder
      * given column for the given value
      * @param string $columnName The name of the column that will be searched
      * @param string $searchValue The value to search for
+     * @return $this
      */
     public function columnSearch($columnName, $searchValue)
     {
@@ -114,12 +125,14 @@ class QueryConfigurationBuilder
             throw new \InvalidArgumentException('$searchValue needs to be a string');
         }
         $this->columSearches[$columnName] = $searchValue;
+        return $this;
     }
 
     /**
      * Will set the ordering of the column to the given direction if possible
      * @param string $columnName The column name that should be ordered
      * @param string $orderDirection the direction that the column should be ordered by
+     * @return $this
      */
     public function columnOrder($columnName, $orderDirection)
     {
@@ -127,6 +140,7 @@ class QueryConfigurationBuilder
             throw new \InvalidArgumentException('$orderDirection "'.$orderDirection.'" needs to be a string');
         }
         $this->columnOrders[$columnName] = $orderDirection;
+        return $this;
     }
 
     /**

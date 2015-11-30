@@ -122,7 +122,7 @@ class ColumnConfigurationBuilder
     private function checkOrderable()
     {
         if($this->orderable == null) {
-            $this->orderable = Orderable::NONE();
+            $this->orderable = Orderable::BOTH();
         }
     }
 
@@ -132,7 +132,7 @@ class ColumnConfigurationBuilder
     private function checkSearchable()
     {
         if($this->searchable == null) {
-            $this->searchable = Searchable::NONE();
+            $this->searchable = Searchable::NORMAL();
         }
     }
 

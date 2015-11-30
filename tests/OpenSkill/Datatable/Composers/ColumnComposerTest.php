@@ -156,7 +156,7 @@ class ColumnComposerTest extends PHPUnit_Framework_TestCase
          */
         $func = $cc->getCallable();
 
-        $this->assertFalse($cc->getSearch()->isSearchable(), "The column should not be searchable");
+        $this->assertTrue($cc->getSearch()->isSearchable(), "The column should not be searchable");
         $this->assertTrue($cc->getOrder()->isOrderable(), "The column should be orderable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func("fooBar"));
@@ -189,8 +189,8 @@ class ColumnComposerTest extends PHPUnit_Framework_TestCase
          */
         $func = $cc->getCallable();
 
-        $this->assertFalse($cc->getSearch()->isSearchable(), "The column should not be searchable");
-        $this->assertFalse($cc->getOrder()->isOrderable(), "The column should be orderable");
+        $this->assertTrue($cc->getSearch()->isSearchable(), "The column should not be searchable");
+        $this->assertTrue($cc->getOrder()->isOrderable(), "The column should be orderable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func("fooBar"));
     }
@@ -228,8 +228,8 @@ class ColumnComposerTest extends PHPUnit_Framework_TestCase
 
         $func = $cc->getCallable();
 
-        $this->assertFalse($cc->getSearch()->isSearchable(), "The column should not be searchable");
-        $this->assertFalse($cc->getOrder()->isOrderable(), "The column should be orderable");
+        $this->assertTrue($cc->getSearch()->isSearchable(), "The column should not be searchable");
+        $this->assertTrue($cc->getOrder()->isOrderable(), "The column should be orderable");
         $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
         $this->assertSame("bar", $func(["fooBar" => "bar"]));
     }

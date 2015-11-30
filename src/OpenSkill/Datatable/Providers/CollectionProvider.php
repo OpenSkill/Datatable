@@ -4,7 +4,6 @@ namespace OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Interfaces\Data;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 
 /**
@@ -45,6 +44,7 @@ class CollectionProvider implements Provider
     public function prepareForProcessing(QueryConfiguration $queryConfiguration)
     {
         $this->queryConfiguration = $queryConfiguration;
+        // do stuff that is needed before the actual processing should be done
     }
 
     /**
@@ -54,11 +54,44 @@ class CollectionProvider implements Provider
      * a DTData object so the Composer can further handle the data.
      *
      * @param ColumnConfiguration[] $columnConfiguration
-     * @return Data The processed data
+     * @return Collection The processed data
      *
      */
     public function process(array $columnConfiguration)
     {
-        // prepare the data here
+        // check if the query configuration is set
+        if(is_null($this->queryConfiguration)) {
+            throw new \InvalidArgumentException("No query configuration found. Did you call prepareForProcessing first?");
+        }
+
+        // compile the collection first
+        $this->compileCollection($columnConfiguration);
+
+        // search
+        // sort
+
+        // slice the result into the right size
+        return $this->collection->slice(
+            $this->queryConfiguration->start(),
+            $this->queryConfiguration->length()
+        );
+    }
+
+
+    /**
+     * Will compile the collection into the final collection where operations like search and order can be applied.
+     * @param ColumnConfiguration[] $columnConfiguration
+     */
+    private function compileCollection(array $columnConfiguration) {
+        $this->collection->transform(function($data) use ($columnConfiguration){
+            $entry = [];
+            // for each column call the callback
+            foreach ($columnConfiguration as $i => $col)
+            {
+                $func = $col->getCallable();
+                $entry[$col->getName()] =  $func($data);
+            }
+            return $entry;
+        });
     }
 }

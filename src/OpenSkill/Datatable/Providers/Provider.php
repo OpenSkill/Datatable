@@ -2,8 +2,8 @@
 
 namespace OpenSkill\Datatable\Providers;
 
+use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Interfaces\Data;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 
 /**
@@ -32,7 +32,7 @@ interface Provider
      * a DTData object so the Composer can further handle the data.
      *
      * @param ColumnConfiguration[] $columnConfiguration
-     * @return Data The processed data
+     * @return Collection The processed data
      *
      */
     public function process(array $columnConfiguration);

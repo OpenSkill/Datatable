@@ -5,6 +5,8 @@ namespace OpenSkill\Datatable\Queries;
 
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\Columns\Orderable\Orderable;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
 use OpenSkill\Datatable\Queries\Parser\Datatable19QueryParser;
 
 class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
@@ -62,13 +64,35 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
 
 
         // assert column search
-        $this->assertSame(1,count($conf->searchColumns()));
+        $this->assertCount(1,$conf->searchColumns());
         $def = $conf->searchColumns()['fooBar'];
         $this->assertSame("fooBar_1", $def);
 
         // assert column order
-        $this->assertSame(1,count($conf->orderColumns()));
+        $this->assertCount(1,$conf->orderColumns());
         $def = $conf->orderColumns()['fooBar'];
         $this->assertSame("desc", $def);
+    }
+
+    /**
+     * Will test if the query parser will ignore search and order advise if the columns forbid them
+     *
+     */
+    public function testWrongParsing()
+    {
+        // create columnconfiguration
+        $column = ColumnConfigurationBuilder::create()
+            ->name("fooBar")
+            ->orderable(Orderable::NONE())
+            ->searchable(Searchable::NONE())
+            ->build();
+
+        $conf = $this->parser->parse([$column]);
+
+        // assert column search
+        $this->assertCount(0,$conf->searchColumns());
+
+        // assert column order
+        $this->assertCount(0,$conf->orderColumns());
     }
 }
