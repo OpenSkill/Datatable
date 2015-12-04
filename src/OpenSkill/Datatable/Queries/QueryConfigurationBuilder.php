@@ -48,8 +48,9 @@ class QueryConfigurationBuilder
      * @param string|int $drawCall The draw call parameter
      * @return $this
      */
-    public function drawCall($drawCall) {
-        if(!is_string($drawCall) && !is_numeric($drawCall)) {
+    public function drawCall($drawCall)
+    {
+        if (!is_string($drawCall) && !is_numeric($drawCall)) {
             throw new \InvalidArgumentException('$drawCall needs to be a string or numeric');
         }
         $this->drawCall = $drawCall;
@@ -63,7 +64,7 @@ class QueryConfigurationBuilder
      */
     public function start($start)
     {
-        if(!is_numeric($start)) {
+        if (!is_numeric($start)) {
             throw new \InvalidArgumentException('$start needs to be numeric');
         }
         $this->start = $start;
@@ -77,7 +78,7 @@ class QueryConfigurationBuilder
      */
     public function length($length)
     {
-        if(!is_numeric($length)) {
+        if (!is_numeric($length)) {
             throw new \InvalidArgumentException('$length needs to be numeric');
         }
         $this->length = $length;
@@ -91,7 +92,7 @@ class QueryConfigurationBuilder
      */
     public function searchValue($searchValue)
     {
-        if(!is_string($searchValue)) {
+        if (!is_string($searchValue)) {
             throw new \InvalidArgumentException('$searchValue needs to be a string');
         }
         $this->searchValue = $searchValue;
@@ -105,7 +106,7 @@ class QueryConfigurationBuilder
      */
     public function searchRegex($searchRegex)
     {
-        if(!is_bool($searchRegex)) {
+        if (!is_bool($searchRegex)) {
             throw new \InvalidArgumentException('$searchRegex needs to be a boolean');
         }
         $this->searchRegex = $searchRegex;
@@ -121,7 +122,7 @@ class QueryConfigurationBuilder
      */
     public function columnSearch($columnName, $searchValue)
     {
-        if(!is_string($searchValue)) {
+        if (!is_string($searchValue)) {
             throw new \InvalidArgumentException('$searchValue needs to be a string');
         }
         $this->columSearches[$columnName] = $searchValue;
@@ -136,8 +137,8 @@ class QueryConfigurationBuilder
      */
     public function columnOrder($columnName, $orderDirection)
     {
-        if(!is_string($orderDirection)) {
-            throw new \InvalidArgumentException('$orderDirection "'.$orderDirection.'" needs to be a string');
+        if (!is_string($orderDirection)) {
+            throw new \InvalidArgumentException('$orderDirection "' . $orderDirection . '" needs to be a string');
         }
         $this->columnOrders[$columnName] = $orderDirection;
         return $this;

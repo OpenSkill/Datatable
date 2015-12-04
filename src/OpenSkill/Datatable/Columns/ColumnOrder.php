@@ -2,7 +2,8 @@
 
 namespace OpenSkill\Datatable\Columns;
 
-class ColumnOrder {
+class ColumnOrder
+{
 
     /** @var string */
     private $columnName;

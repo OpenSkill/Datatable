@@ -125,7 +125,8 @@ class ColumnComposer
     /**
      * @return DatatableService Will return the fully built DatatableService that will contain the ColumnConfiguration
      */
-    public function build() {
+    public function build()
+    {
         return new DatatableService($this->request, $this->provider, $this->columnConfiguration, $this->version);
     }
 

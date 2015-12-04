@@ -8,13 +8,15 @@ namespace OpenSkill\Datatable\Columns\Searchable;
  *
  * Enum class that indicates the search option for the column
  */
-abstract class Searchable {
+abstract class Searchable
+{
 
     /**
      * Will construct a new searchable instance that is not searchable and is not regex searchable.
      * @return NoneSearchable
      */
-    public static function NONE() {
+    public static function NONE()
+    {
         return new NoneSearchable();
     }
 
@@ -22,7 +24,8 @@ abstract class Searchable {
      * Will construct a new searchable that will allow normal searching but not regex searching.
      * @return DefaultSearchable
      */
-    public static function NORMAL() {
+    public static function NORMAL()
+    {
         return new DefaultSearchable();
     }
 
@@ -30,7 +33,8 @@ abstract class Searchable {
      * Will return a new searchable that will allow normal searching which also allows regex searching.
      * @return RegexSearchable
      */
-    public static function REGEX() {
+    public static function REGEX()
+    {
         return new RegexSearchable();
     }
 

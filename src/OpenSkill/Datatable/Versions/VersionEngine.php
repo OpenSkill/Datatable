@@ -43,14 +43,16 @@ class VersionEngine
     /**
      * @return Version Will return the version that is currently selected to handle the request.
      */
-    public function getVersion() {
+    public function getVersion()
+    {
         return $this->version;
     }
 
     /**
      * @return bool true if one of the versions can handle the request, false otherwise
      */
-    public function hasVersion() {
+    public function hasVersion()
+    {
         return $this->version != null;
     }
 }

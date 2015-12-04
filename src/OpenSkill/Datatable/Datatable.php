@@ -2,9 +2,9 @@
 
 namespace OpenSkill\Datatable;
 
-use OpenSkill\Datatable\Providers\Provider;
-use OpenSkill\Datatable\Composers\ColumnComposer;
 use Illuminate\Http\Request;
+use OpenSkill\Datatable\Composers\ColumnComposer;
+use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\VersionEngine;
 
 /**

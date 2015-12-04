@@ -1,8 +1,9 @@
 <?php
 
 namespace OpenSkill\Datatable\Queries;
-use OpenSkill\Datatable\Columns\ColumnSearch;
+
 use OpenSkill\Datatable\Columns\ColumnOrder;
+use OpenSkill\Datatable\Columns\ColumnSearch;
 
 /**
  * Class DTQueryConfiguration

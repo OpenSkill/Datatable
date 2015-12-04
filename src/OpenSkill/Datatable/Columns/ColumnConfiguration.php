@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable\Columns;
+
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
 use OpenSkill\Datatable\Columns\Searchable\Searchable;
 

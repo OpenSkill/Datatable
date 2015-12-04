@@ -24,19 +24,19 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
     {
         // create request
         $this->request = new Request([
-            'sEcho'             => 13,
-            'iDisplayStart'     => 11,
-            'iDisplayLength'    => 103,
-            'iColumns'          => 1, // will be ignored, the column number is already set on the server side
-            'sSearch'           => 'fooBar',
-            'bRegex'            => true,
-            'bSearchable_1'     => true, // will be ignored, the configuration is already set on the server side
-            'sSearch_1'         => 'fooBar_1',
-            'bRegex_1'          => true, // will be ignored, the configuration is already set on the server side
-            'bSortable_1'       => true, // will be ignored, the configuration is already set on the server side
-            'iSortingCols'      => 1, // will be ignored, the configuration is already set on the server side
-            'iSortCol_1'        => true,
-            'sSortDir_1'        => 'desc',
+            'sEcho' => 13,
+            'iDisplayStart' => 11,
+            'iDisplayLength' => 103,
+            'iColumns' => 1, // will be ignored, the column number is already set on the server side
+            'sSearch' => 'fooBar',
+            'bRegex' => true,
+            'bSearchable_1' => true, // will be ignored, the configuration is already set on the server side
+            'sSearch_1' => 'fooBar_1',
+            'bRegex_1' => true, // will be ignored, the configuration is already set on the server side
+            'bSortable_1' => true, // will be ignored, the configuration is already set on the server side
+            'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
+            'iSortCol_1' => true,
+            'sSortDir_1' => 'desc',
         ]);
 
         $this->parser = new Datatable19QueryParser($this->request);
@@ -64,12 +64,12 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
 
 
         // assert column search
-        $this->assertCount(1,$conf->searchColumns());
+        $this->assertCount(1, $conf->searchColumns());
         $def = $conf->searchColumns()['fooBar'];
         $this->assertSame("fooBar_1", $def);
 
         // assert column order
-        $this->assertCount(1,$conf->orderColumns());
+        $this->assertCount(1, $conf->orderColumns());
         $def = $conf->orderColumns()['fooBar'];
         $this->assertSame("desc", $def);
     }
@@ -90,9 +90,9 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
         $conf = $this->parser->parse([$column]);
 
         // assert column search
-        $this->assertCount(0,$conf->searchColumns());
+        $this->assertCount(0, $conf->searchColumns());
 
         // assert column order
-        $this->assertCount(0,$conf->orderColumns());
+        $this->assertCount(0, $conf->orderColumns());
     }
 }

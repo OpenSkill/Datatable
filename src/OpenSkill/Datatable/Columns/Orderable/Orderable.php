@@ -14,7 +14,8 @@ abstract class Orderable
      * Will return an orderable configuration that does not allow ordering.
      * @return NoneOrderable
      */
-    public static function NONE() {
+    public static function NONE()
+    {
         return new NoneOrderable();
     }
 
@@ -22,7 +23,8 @@ abstract class Orderable
      * Will return an orderable configuration that does allow ordering but only on asc.
      * @return AscOrderable
      */
-    public static function ASC() {
+    public static function ASC()
+    {
         return new AscOrderable();
     }
 
@@ -30,7 +32,8 @@ abstract class Orderable
      * Will return an orderable configuration that does allow ordering but only on desc.
      * @return DescOrderable
      */
-    public static function DESC() {
+    public static function DESC()
+    {
         return new DescOrderable();
     }
 
@@ -38,7 +41,8 @@ abstract class Orderable
      * Will return an orderable configuration that does allow ordering on both directions.
      * @return BothOrderable
      */
-    public static function BOTH() {
+    public static function BOTH()
+    {
         return new BothOrderable();
     }
 

@@ -66,7 +66,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request([
             "sEcho" => 1,
-            "draw"  => 2
+            "draw" => 2
         ]);
         $engine = new QueryEngine($request, [new Datatable19QueryParser($request), new Datatable110QueryParser($request)]);
 
@@ -81,7 +81,7 @@ class DTQueryEngineTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request([
             "sEcho" => 1,
-            "draw"  => 2
+            "draw" => 2
         ]);
         $engine = new QueryEngine($request, [new Datatable19QueryParser($request), new Datatable110QueryParser($request)]);
 

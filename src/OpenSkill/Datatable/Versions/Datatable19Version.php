@@ -21,7 +21,7 @@ use OpenSkill\Datatable\Views\ViewCreator;
  */
 class Datatable19Version extends Version
 {
-    /** @var QueryParser  */
+    /** @var QueryParser */
     private $queryParser;
 
     /** @var ResponseCreator */
@@ -34,7 +34,7 @@ class Datatable19Version extends Version
      * Datatable19Version constructor.
      *
      * @param Request $request The current request
-     * @param QueryParser$queryParser a custom subclass for the query parser
+     * @param QueryParser $queryParser a custom subclass for the query parser
      * @param ResponseCreator $responseCreator a custom subclass for the response
      * @param ViewCreator $viewCreator a custom subclass for the view
      */
@@ -46,19 +46,19 @@ class Datatable19Version extends Version
     )
     {
         parent::__construct($request);
-        if(is_null($queryParser)) {
+        if (is_null($queryParser)) {
             $this->queryParser = new Datatable19QueryParser($request);
         } else {
             $this->queryParser = $queryParser;
         }
 
-        if(is_null($responseCreator)) {
+        if (is_null($responseCreator)) {
             $this->responseCreator = new Datatable19ResponseCreator();
         } else {
-            $this->responseCreator= $responseCreator;
+            $this->responseCreator = $responseCreator;
         }
 
-        if(is_null($viewCreator)) {
+        if (is_null($viewCreator)) {
             $this->viewCreator = new Datatable19ViewCreator();
         } else {
             $this->viewCreator = $viewCreator;

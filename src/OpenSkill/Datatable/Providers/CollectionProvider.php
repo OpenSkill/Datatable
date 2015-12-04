@@ -60,7 +60,7 @@ class CollectionProvider implements Provider
     public function process(array $columnConfiguration)
     {
         // check if the query configuration is set
-        if(is_null($this->queryConfiguration)) {
+        if (is_null($this->queryConfiguration)) {
             throw new \InvalidArgumentException("No query configuration found. Did you call prepareForProcessing first?");
         }
 
@@ -82,16 +82,40 @@ class CollectionProvider implements Provider
      * Will compile the collection into the final collection where operations like search and order can be applied.
      * @param ColumnConfiguration[] $columnConfiguration
      */
-    private function compileCollection(array $columnConfiguration) {
-        $this->collection->transform(function($data) use ($columnConfiguration){
+    private function compileCollection(array $columnConfiguration)
+    {
+        $this->collection->transform(function ($data) use ($columnConfiguration) {
             $entry = [];
             // for each column call the callback
-            foreach ($columnConfiguration as $i => $col)
-            {
+            foreach ($columnConfiguration as $i => $col) {
                 $func = $col->getCallable();
-                $entry[$col->getName()] =  $func($data);
+                $entry[$col->getName()] = $func($data);
+                // also do search right away
             }
             return $entry;
         });
+        $this->collection = $this->collection->reject(function ($data) {
+            if (empty($data)) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Will accept a search function that should be called for the column with the given name.
+     * If the function returns true, it will be accepted as search matching
+     * @param string $columnName the name of the column to pass this function to
+     * @param callable $searchFunction the function for the searching
+     */
+    public function searchColumn($columnName, callable $searchFunction)
+    {
+
+    }
+
+    public function search($columnName, callable $searchFunction)
+    {
+
     }
 }

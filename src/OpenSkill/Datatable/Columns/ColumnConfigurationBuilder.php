@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable\Columns;
+
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
 use OpenSkill\Datatable\Columns\Searchable\Searchable;
 
@@ -110,8 +111,7 @@ class ColumnConfigurationBuilder
      */
     private function checkName()
     {
-        if(empty($this->name))
-        {
+        if (empty($this->name)) {
             throw new \InvalidArgumentException("The name can not be empty");
         }
     }
@@ -121,7 +121,7 @@ class ColumnConfigurationBuilder
      */
     private function checkOrderable()
     {
-        if($this->orderable == null) {
+        if ($this->orderable == null) {
             $this->orderable = Orderable::BOTH();
         }
     }
@@ -131,7 +131,7 @@ class ColumnConfigurationBuilder
      */
     private function checkSearchable()
     {
-        if($this->searchable == null) {
+        if ($this->searchable == null) {
             $this->searchable = Searchable::NORMAL();
         }
     }
@@ -141,20 +141,16 @@ class ColumnConfigurationBuilder
      */
     private function checkCallable()
     {
-        if(is_null($this->callable) || !is_callable($this->callable))
-        {
+        if (is_null($this->callable) || !is_callable($this->callable)) {
             $self = $this;
-            $this->callable = function($data) use (&$self) {
+            $this->callable = function ($data) use (&$self) {
                 $name = $self->name;
 
-                if(is_array($data) && array_key_exists($name, $data))
-                {
+                if (is_array($data) && array_key_exists($name, $data)) {
                     return $data[$name];
-                } else if(is_object($data) && property_exists($data, $name))
-                {
+                } else if (is_object($data) && property_exists($data, $name)) {
                     return $data->$name;
-                } else if(is_object($data) && method_exists($data, $name))
-                {
+                } else if (is_object($data) && method_exists($data, $name)) {
                     return $data->$name();
                 } else {
                     return "";

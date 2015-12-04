@@ -48,8 +48,9 @@ class QueryEngine
      *
      * @return \Symfony\Component\HttpFoundation\Response the response to deliver to the frontend
      */
-    public function createResponse(Data $data) {
-        if($this->parser == null) {
+    public function createResponse(Data $data)
+    {
+        if ($this->parser == null) {
             throw new \InvalidArgumentException("There is no parser that can handle the request.");
         }
         return $this->parser->respond($data);

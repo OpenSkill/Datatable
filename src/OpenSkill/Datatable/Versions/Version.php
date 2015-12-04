@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable\Versions;
+
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Queries\Parser\QueryParser;
 use OpenSkill\Datatable\Responses\ResponseCreator;

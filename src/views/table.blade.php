@@ -1,7 +1,7 @@
 <table id="{{ $id }}" class="{{ $class }}">
     <colgroup>
         @for ($i = 0; $i < count($columns); $i++)
-            <col class="con{{ $i }}" />
+            <col class="con{{ $i }}"/>
         @endfor
     </colgroup>
     <thead>
@@ -15,7 +15,8 @@
         <tfoot>
         <tr>
             @foreach($columns as $i => $c)
-                <th align="center" valign="middle" class="footer{{ $i }}">@if($footerMode === 'columns') {{ $c }} @endif</th>
+                <th align="center" valign="middle"
+                    class="footer{{ $i }}">@if($footerMode === 'columns') {{ $c }} @endif</th>
             @endforeach
         </tr>
         </tfoot>

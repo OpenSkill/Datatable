@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable\Queries\Parser;
+
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;

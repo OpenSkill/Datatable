@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable;
+
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Providers\Provider;
@@ -14,7 +15,7 @@ use OpenSkill\Datatable\Versions\VersionEngine;
  */
 class DatatableService
 {
-    /** @var Request  */
+    /** @var Request */
     private $request;
 
     /** @var Provider */
@@ -44,14 +45,16 @@ class DatatableService
     /**
      * @return bool True if any version should handle the current request
      */
-    public function shouldHandle() {
+    public function shouldHandle()
+    {
         return $this->versionEngine->hasVersion();
     }
 
     /**
      * Will handle the current request and returns the correct response
      */
-    public function handleRequest() {
+    public function handleRequest()
+    {
         $version = $this->versionEngine->getVersion();
         $queryConfiguration = $version->queryParser()->parse($this->columnConfigurations);
         $this->provider->prepareForProcessing($queryConfiguration);
@@ -62,7 +65,8 @@ class DatatableService
     /**
      * @param string $view
      */
-    public function view($view = null) {
+    public function view($view = null)
+    {
 
     }
 }

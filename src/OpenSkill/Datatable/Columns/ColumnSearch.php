@@ -2,7 +2,8 @@
 
 namespace OpenSkill\Datatable\Columns;
 
-class ColumnSearch {
+class ColumnSearch
+{
 
     /** @var string */
     private $columnName;

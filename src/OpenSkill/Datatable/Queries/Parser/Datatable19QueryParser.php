@@ -45,23 +45,23 @@ class Datatable19QueryParser extends QueryParser
         $query = $this->request->query;
         $builder = QueryConfigurationBuilder::create();
 
-        if($query->has('sEcho')) {
+        if ($query->has('sEcho')) {
             $builder->drawCall($query->get('sEcho'));
         }
 
-        if($query->has('iDisplayStart')) {
+        if ($query->has('iDisplayStart')) {
             $builder->start($query->get('iDisplayStart'));
         }
 
-        if($query->has('iDisplayLength')) {
+        if ($query->has('iDisplayLength')) {
             $builder->length($query->get('iDisplayLength'));
         }
 
-        if($query->has('sSearch')) {
+        if ($query->has('sSearch')) {
             $builder->searchValue($query->get('sSearch'));
         }
 
-        if($query->has('bRegex')) {
+        if ($query->has('bRegex')) {
             $builder->searchRegex($query->get('bRegex'));
         }
 
@@ -70,14 +70,14 @@ class Datatable19QueryParser extends QueryParser
             // increment the index as we are 0 based but data tables is not
             $i++;
             // check if there is something search related
-            if($c->getSearch()->isSearchable() && $query->has("sSearch_".$i)) {
+            if ($c->getSearch()->isSearchable() && $query->has("sSearch_" . $i)) {
                 // search for this column is available
-                $builder->columnSearch($c->getName(), $query->get("sSearch_".$i));
+                $builder->columnSearch($c->getName(), $query->get("sSearch_" . $i));
             }
             // check if there is something order related
-            if($c->getOrder()->isOrderable() && $query->has("iSortCol_".$i)) {
+            if ($c->getOrder()->isOrderable() && $query->has("iSortCol_" . $i)) {
                 // order for this column is available
-                $builder->columnOrder($c->getName(), $query->get("sSortDir_".$i));
+                $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
             }
         }
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable\Versions;
+
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Queries\Parser\Datatable110QueryParser;
 use OpenSkill\Datatable\Queries\Parser\QueryParser;
@@ -44,19 +45,19 @@ class Datatable110Version extends Version
     )
     {
         parent::__construct($request);
-        if(is_null($queryParser)) {
+        if (is_null($queryParser)) {
             $this->queryParser = new Datatable110QueryParser($request);
         } else {
             $this->queryParser = $queryParser;
         }
 
-        if(is_null($responseCreator)) {
+        if (is_null($responseCreator)) {
             $this->responseCreator = new Datatable110ResponseCreator();
         } else {
-            $this->responseCreator= $responseCreator;
+            $this->responseCreator = $responseCreator;
         }
 
-        if(is_null($viewCreator)) {
+        if (is_null($viewCreator)) {
             $this->viewCreator = new Datatable110ViewCreator();
         } else {
             $this->viewCreator = $viewCreator;
