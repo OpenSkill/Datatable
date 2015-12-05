@@ -4,6 +4,7 @@ namespace OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Data\ResponseData;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 
 /**
@@ -95,7 +96,7 @@ class CollectionProvider implements Provider
      * It will be called after {@link #prepareForProcessing} has been called and needs to return the processed data in
      * a DTData object so the Composer can further handle the data.
      *
-     * @return Collection The processed data
+     * @return ResponseData The processed data
      *
      */
     public function process()

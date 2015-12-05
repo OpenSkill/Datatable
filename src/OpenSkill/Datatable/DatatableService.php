@@ -57,8 +57,8 @@ class DatatableService
     {
         $version = $this->versionEngine->getVersion();
         $queryConfiguration = $version->queryParser()->parse($this->columnConfigurations);
-        $this->provider->prepareForProcessing($queryConfiguration);
-        $data = $this->provider->process($this->columnConfigurations);
+        $this->provider->prepareForProcessing($queryConfiguration, $this->columnConfigurations);
+        $data = $this->provider->process();
         return $version->responseCreator()->createResponse($data, $queryConfiguration, $this->columnConfigurations);
     }
 
