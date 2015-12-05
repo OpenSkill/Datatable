@@ -14,8 +14,8 @@ class ColumnOrderTest extends \PHPUnit_Framework_TestCase
 
     public function testClazz()
     {
-        $t = new ColumnOrder('fooBar', 'fooOrder');
+        $t = new ColumnOrder('fooBar', true);
         $this->assertSame('fooBar', $t->columnName());
-        $this->assertSame('fooOrder', $t->orderValue());
+        $this->assertTrue($t->isAscending());
     }
 }

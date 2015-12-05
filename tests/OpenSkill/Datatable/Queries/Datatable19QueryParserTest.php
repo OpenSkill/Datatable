@@ -70,8 +70,9 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
 
         // assert column order
         $this->assertCount(1, $conf->orderColumns());
-        $def = $conf->orderColumns()['fooBar'];
-        $this->assertSame("desc", $def);
+        $def = $conf->orderColumns()[0];
+        $this->assertSame('fooBar', $def->columnName());
+        $this->assertFalse($def->isAscending());
     }
 
     /**
@@ -94,5 +95,46 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
 
         // assert column order
         $this->assertCount(0, $conf->orderColumns());
+    }
+
+    /**
+     * Will test that the sorting order from the query can be used to sort the data in the correct order.
+     */
+    public function testSortingOrder()
+    {
+        $this->request = new Request([
+            'sEcho' => 13,
+            'iDisplayStart' => 11,
+            'iDisplayLength' => 103,
+            'iColumns' => 1, // will be ignored, the column number is already set on the server side
+            'sSearch' => 'fooBar',
+            'bRegex' => true,
+            'bSearchable_1' => true, // will be ignored, the configuration is already set on the server side
+            'sSearch_1' => 'fooBar_1',
+            'bRegex_1' => true, // will be ignored, the configuration is already set on the server side
+            'bSortable_1' => true, // will be ignored, the configuration is already set on the server side
+            'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
+            'iSortCol_2' => true,
+            'sSortDir_2' => 'desc',
+            'iSortCol_1' => true,
+            'sSortDir_1' => 'desc',
+        ]);
+
+        $this->parser = new Datatable19QueryParser($this->request);
+
+        $column = ColumnConfigurationBuilder::create()
+            ->name("id")
+            ->build();
+        $column1 = ColumnConfigurationBuilder::create()
+            ->name("name")
+            ->build();
+
+        $conf = $this->parser->parse([$column, $column1]);
+
+        // assert column order
+        $this->assertCount(2, $conf->orderColumns());
+        $def = $conf->orderColumns()[0];
+        $this->assertSame('id', $def->columnName());
+        $this->assertFalse($def->isAscending());
     }
 }

@@ -2,6 +2,8 @@
 
 namespace OpenSkill\Datatable\Queries;
 
+use OpenSkill\Datatable\Columns\ColumnOrder;
+
 class QueryConfigurationBuilder
 {
 
@@ -140,7 +142,8 @@ class QueryConfigurationBuilder
         if (!is_string($orderDirection)) {
             throw new \InvalidArgumentException('$orderDirection "' . $orderDirection . '" needs to be a string');
         }
-        $this->columnOrders[$columnName] = $orderDirection;
+        $isAscOrdering = $orderDirection === "asc" ? true : false;
+        $this->columnOrders[] = new ColumnOrder($columnName, $isAscOrdering);
         return $this;
     }
 

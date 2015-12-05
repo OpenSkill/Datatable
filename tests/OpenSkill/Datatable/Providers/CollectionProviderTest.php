@@ -23,7 +23,6 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->process();
     }
 
-
     public function testProcess()
     {
         $data = [
@@ -67,7 +66,6 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
             ->length(2)
             ->drawCall(1)
             ->searchValue("fooBar")
-            ->columnOrder('name', 'desc')
             ->build();
 
         $columnConfiguration = ColumnConfigurationBuilder::create()
@@ -99,7 +97,6 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
             ->length(2)
             ->searchValue('foo')
             ->drawCall(1)
-            ->columnOrder('name', 'desc')
             ->build();
 
         $columnConfiguration = ColumnConfigurationBuilder::create()
@@ -129,7 +126,6 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
             ->length(2)
             ->columnSearch('name', 'foo')
             ->drawCall(1)
-            ->columnOrder('name', 'desc')
             ->build();
 
         $columnConfiguration = ColumnConfigurationBuilder::create()
@@ -156,7 +152,6 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
             ->length(2)
             ->columnSearch('id', '2')
             ->drawCall(1)
-            ->columnOrder('name', 'desc')
             ->build();
 
         $columnConfiguration = ColumnConfigurationBuilder::create()

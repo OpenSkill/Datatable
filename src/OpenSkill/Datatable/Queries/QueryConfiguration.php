@@ -76,7 +76,7 @@ class QueryConfiguration
     /**
      * @var ColumnOrder[] a list of the columns we are sorting by, with their direction
      */
-    /* [    [ 'id' => Object ], [ 'name', Object ]    ] */
+    /* [    [ Object ], [ Object ]    ] */
     protected $orderColumns = [];
 
     /**
@@ -160,5 +160,10 @@ class QueryConfiguration
     public function hasSearchColumn($columnName)
     {
         return array_key_exists($columnName, $this->searchColumns);
+    }
+
+    public function hasOrderColumn()
+    {
+        return !empty($this->orderColumns);
     }
 }

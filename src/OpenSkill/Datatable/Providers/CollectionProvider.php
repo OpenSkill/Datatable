@@ -101,17 +101,15 @@ class CollectionProvider implements Provider
     public function process()
     {
         // check if the query configuration is set
-        if (is_null($this->queryConfiguration)) {
-            throw new \InvalidArgumentException("No query configuration found. Did you call prepareForProcessing first?");
-        }
-        if (empty($this->columnConfiguration)) {
-            throw new \InvalidArgumentException("No column configuration found. Did you call prepareForProcessing first?");
+        if (is_null($this->queryConfiguration) || empty($this->columnConfiguration)) {
+            throw new \InvalidArgumentException("Provider was not configured. Did you call prepareForProcessing first?");
         }
 
         // compile the collection first
         $this->compileCollection($this->columnConfiguration);
 
         // sort
+        $this->sortCollection();
 
         // slice the result into the right size
         return $this->collection->slice(
@@ -188,5 +186,22 @@ class CollectionProvider implements Provider
     {
         $this->defaultGlobalSearchFunction = $searchFunction;
         return $this;
+    }
+
+    /**
+     * Will sort the internal collection based on the given query configuration.
+     * All tables only support the ordering by just one column, so if there is ordering just take the first ordering
+     */
+    private function sortCollection()
+    {
+        if ($this->queryConfiguration->hasOrderColumn()) {
+            $order = $this->queryConfiguration->orderColumns()[0];
+            $this->collection->sort(function ($first, $second) use ($order) {
+                return strnatcmp($first[$order->columnName()], $second[$order->columnName()]);
+            });
+            if(!$order->isAscending()) {
+                $this->collection->reverse();
+            }
+        }
     }
 }

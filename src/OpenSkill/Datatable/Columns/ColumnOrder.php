@@ -9,17 +9,17 @@ class ColumnOrder
     private $columnName;
 
     /** @var string */
-    private $orderValue;
+    private $isAscOrdering;
 
     /**
      * ColumnOrder constructor.
-     * @param string $columnName
-     * @param string $orderValue
+     * @param string $columnName the internal name of the column
+     * @param bool $isAscOrdering true if the ordering is ascending
      */
-    public function __construct($columnName, $orderValue)
+    public function __construct($columnName, $isAscOrdering)
     {
         $this->columnName = $columnName;
-        $this->orderValue = $orderValue;
+        $this->isAscOrdering = $isAscOrdering;
     }
 
     /**
@@ -31,11 +31,10 @@ class ColumnOrder
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function orderValue()
+    public function isAscending()
     {
-        return $this->orderValue;
+        return $this->isAscOrdering;
     }
-
 }
