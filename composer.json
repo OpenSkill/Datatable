@@ -1,0 +1,33 @@
+{
+  "description": "This is a Laravel 5 package for the server and client side of DataTables (http://datatables.net/)",
+  "keywords": [
+    "laravel",
+    "datatables",
+    "ajax",
+    "jquery"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/OpenSkill/Datatable",
+  "authors": [
+    {
+      "name": "Nils Plaschke",
+      "email": "github@nilsplaschke.de",
+      "homepage": "http://nilsplaschke.de",
+      "role": "Developer"
+    }
+  ],
+  "name": "openskill/datatable",
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/http": ">=4.2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.8.*",
+    "mockery/mockery": "0.9.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "OpenSkill\\Datatable\\": "src/OpenSkill/Datatable"
+    }
+  }
+}
