@@ -13,5 +13,6 @@ use OpenSkill\Datatable\Columns\ColumnConfiguration;
  */
 interface ViewCreator
 {
+    public function createTable(ColumnConfiguration $columnConfiguration);
     public function createJavascript(ColumnConfiguration $columnConfiguration);
 }

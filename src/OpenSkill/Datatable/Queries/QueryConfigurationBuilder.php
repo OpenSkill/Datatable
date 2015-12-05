@@ -11,8 +11,8 @@ class QueryConfigurationBuilder
     /** @var string */
     protected $drawCall = 1;
 
-    /** @var int */
-    protected $start = 1;
+    /** @var int zero based */
+    protected $start = 0;
 
     /** @var int */
     protected $length = 10;

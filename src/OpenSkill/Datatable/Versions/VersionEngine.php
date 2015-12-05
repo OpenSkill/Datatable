@@ -55,4 +55,12 @@ class VersionEngine
     {
         return $this->version != null;
     }
+
+    /**
+     * @param Version $version The version that should be used in this request.
+     */
+    public function setVersion(Version $version)
+    {
+        $this->version = $version;
+    }
 }

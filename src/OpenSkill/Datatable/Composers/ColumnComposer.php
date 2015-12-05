@@ -74,12 +74,12 @@ class ColumnComposer
      * Will create a new ColumnConfiguration with all defaults but allows overriding of all properties through the method.
      *
      * @param string $name The name of the configuration, required for the configuration
-     * @param callable $callable The function to execute, defaults to null which means the default will be set.
+     * @param string|callable $callable The function to execute, defaults to null which means the default will be set.
      * @param Searchable $searchable If the column should be searchable or not
      * @param Orderable $orderable If the column should be orderable or not
      * @return $this
      */
-    public function column($name, callable $callable = null, Searchable $searchable = null, Orderable $orderable = null)
+    public function column($name, $callable = null, Searchable $searchable = null, Orderable $orderable = null)
     {
         /**
          * @var ColumnConfigurationBuilder
@@ -93,8 +93,12 @@ class ColumnComposer
             throw new \InvalidArgumentException('$name must be a string');
         }
 
-        if (!is_null($callable) && is_callable($callable)) {
-            $config->withCallable($callable);
+        if (!is_null($callable)) {
+            if (is_callable($callable)) {
+                $config->withCallable($callable);
+            } elseif (is_string($callable)){
+                $config->withCallable(function($data) use ($callable) { return $callable; });
+            }
         }
 
         if (is_null($searchable)) {

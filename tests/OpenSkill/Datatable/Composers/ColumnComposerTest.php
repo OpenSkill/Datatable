@@ -234,5 +234,32 @@ class ColumnComposerTest extends PHPUnit_Framework_TestCase
         $this->assertSame("bar", $func(["fooBar" => "bar"]));
     }
 
+    /**
+     * Will check if the column method with a string works
+     */
+    public function testNameCallableColumn()
+    {
+        $name = "fooBar";
 
+        $this->composer->column($name, $name);
+
+        // get configuration and verify
+        $numberOfColumns = count($this->composer->getColumnConfiguration());
+        $this->assertSame($numberOfColumns, 1, "There should only be one column configuration");
+
+        /**
+         * @var ColumnConfiguration
+         */
+        $cc = $this->composer->getColumnConfiguration()[0];
+
+        /**
+         * @var callable
+         */
+        $func = $cc->getCallable();
+
+        $this->assertTrue($cc->getOrder()->isOrderable(), "The column should be orderable");
+        $this->assertTrue($cc->getSearch()->isSearchable(), "The column should be searchable");
+        $this->assertSame($name, $cc->getName(), "The name should be set to 'fooBar'");
+        $this->assertSame($name, $func($name));
+    }
 }

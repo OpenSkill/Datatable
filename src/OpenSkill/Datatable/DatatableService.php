@@ -5,6 +5,7 @@ namespace OpenSkill\Datatable;
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Providers\Provider;
+use OpenSkill\Datatable\Versions\Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
 
 /**
@@ -43,6 +44,13 @@ class DatatableService
     }
 
     /**
+     * @param Version $version The version that should be used to generate the view and the responses
+     */
+    public function setVersion(Version $version) {
+        $this->versionEngine->setVersion($version);
+    }
+
+    /**
      * @return bool True if any version should handle the current request
      */
     public function shouldHandle()
@@ -67,6 +75,6 @@ class DatatableService
      */
     public function view($view = null)
     {
-
+        $version = $this->versionEngine->getVersion();
     }
 }

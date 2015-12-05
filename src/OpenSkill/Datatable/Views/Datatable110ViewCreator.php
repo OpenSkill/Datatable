@@ -9,6 +9,11 @@ use OpenSkill\Datatable\Views\DTViewCreator;
 class Datatable110ViewCreator implements ViewCreator
 {
 
+    public function createTable(ColumnConfiguration $columnConfiguration)
+    {
+        // TODO: Implement createTable() method.
+    }
+
     public function createJavascript(ColumnConfiguration $columnConfiguration)
     {
         // TODO: Implement createJavascript() method.
