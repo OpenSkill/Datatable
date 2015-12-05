@@ -22,8 +22,9 @@ interface Provider
      * It will never be called when the DTProvider does not need to handle the request.
      *
      * @param QueryConfiguration $queryConfiguration
+     * @param ColumnConfiguration[] $columnConfiguration
      */
-    public function prepareForProcessing(QueryConfiguration $queryConfiguration);
+    public function prepareForProcessing(QueryConfiguration $queryConfiguration, array $columnConfiguration);
 
     /**
      * This method should process all configurations and prepare the underlying data for the view. It will arrange the
@@ -31,9 +32,7 @@ interface Provider
      * It will be called after {@link #prepareForProcessing} has been called and needs to return the processed data in
      * a DTData object so the Composer can further handle the data.
      *
-     * @param ColumnConfiguration[] $columnConfiguration
      * @return Collection The processed data
-     *
      */
-    public function process(array $columnConfiguration);
+    public function process();
 }

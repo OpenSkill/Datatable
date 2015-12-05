@@ -144,4 +144,21 @@ class QueryConfiguration
     {
         return $this->orderColumns;
     }
+
+    /**
+     * @return bool true if global search is enabled
+     */
+    public function isGlobalSearch()
+    {
+        return !empty($this->searchValue);
+    }
+
+    /**
+     * @param string $columnName the name of the column
+     * @return bool
+     */
+    public function hasSearchColumn($columnName)
+    {
+        return array_key_exists($columnName, $this->searchColumns);
+    }
 }
