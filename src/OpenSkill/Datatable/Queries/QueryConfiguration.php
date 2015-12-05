@@ -53,11 +53,6 @@ class QueryConfiguration
     protected $drawCall;
 
     /**
-     * @var bool are we using a plugin to search individual plugins
-     */
-    protected $searchIndividualColumns = true;
-
-    /**
      * @var string The string we are searching for (note: for searchColumns)
      */
     protected $searchValue = null;
@@ -165,5 +160,13 @@ class QueryConfiguration
     public function hasOrderColumn()
     {
         return !empty($this->orderColumns);
+    }
+
+    /**
+     * @return bool will return true if the query asks for a column search, false otherwise
+     */
+    public function isColumnSearch()
+    {
+        return count($this->searchColumns) != 0;
     }
 }

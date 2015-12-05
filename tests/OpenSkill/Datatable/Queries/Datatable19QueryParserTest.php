@@ -66,7 +66,8 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
         // assert column search
         $this->assertCount(1, $conf->searchColumns());
         $def = $conf->searchColumns()['fooBar'];
-        $this->assertSame("fooBar_1", $def);
+        $this->assertSame("fooBar_1", $def->searchValue());
+        $this->assertSame("fooBar", $def->columnName());
 
         // assert column order
         $this->assertCount(1, $conf->orderColumns());
@@ -136,5 +137,32 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
         $def = $conf->orderColumns()[0];
         $this->assertSame('id', $def->columnName());
         $this->assertFalse($def->isAscending());
+    }
+
+    /**
+     * Will test that an empty search will not trigger a search.
+     */
+    public function testEmptySearch()
+    {
+        $this->request = new Request([
+            'sEcho' => 13,
+            'iDisplayStart' => 11,
+            'iDisplayLength' => 103,
+            'sSearch' => '',
+            'sSearch_0' => ''
+        ]);
+
+        $this->parser = new Datatable19QueryParser($this->request);
+
+        $column = ColumnConfigurationBuilder::create()
+            ->name("id")
+            ->build();
+
+        $conf = $this->parser->parse([$column]);
+
+        // assert column order
+        $this->assertFalse($conf->isGlobalSearch());
+        $this->assertCount(0, $conf->searchColumns());
+        $this->assertFalse($conf->isColumnSearch());
     }
 }

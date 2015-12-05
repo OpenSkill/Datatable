@@ -45,9 +45,9 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $data = $provider->process();
 
-        $this->assertSame(2, $data->count());
+        $this->assertSame(2, $data->data()->count());
 
-        $first = $data->first();
+        $first = $data->data()->first();
         $this->assertSame(['name' => 'foo'], $first);
     }
 
@@ -79,7 +79,7 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $data = $provider->process();
 
-        $this->assertSame(0, $data->count());
+        $this->assertSame(0, $data->data()->count());
     }
 
     /**
@@ -111,7 +111,7 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $data = $provider->process();
 
-        $this->assertSame(1, $data->count());
+        $this->assertSame(1, $data->data()->count());
     }
 
     public function testColumnSearch()
@@ -137,7 +137,7 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $data = $provider->process();
 
-        $this->assertSame(1, $data->count());
+        $this->assertSame(1, $data->data()->count());
     }
 
     public function testColumnSearch2()
@@ -163,7 +163,7 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $data = $provider->process();
 
-        $this->assertSame(1, $data->count());
+        $this->assertSame(1, $data->data()->count());
     }
 
     public function testCustomColumn()
@@ -193,6 +193,6 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $data = $provider->process();
 
-        $this->assertSame(1, $data->count());
+        $this->assertSame(1, $data->data()->count());
     }
 }

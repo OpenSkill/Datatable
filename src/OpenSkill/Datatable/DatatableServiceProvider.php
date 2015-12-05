@@ -3,6 +3,7 @@
 namespace OpenSkill\Datatable;
 
 use App;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use OpenSkill\Datatable\Versions\VersionEngine;
 
@@ -29,7 +30,7 @@ class DatatableServiceProvider extends ServiceProvider
 
         $this->app->tag(['DT19Version', 'dt.default.version'], 'dt.query.versions');
 
-        $this->app->singleton("datatable", function (App $app) {
+        $this->app->singleton("datatable", function (Application $app) {
             return new Datatable(
                 $app->make('request'),
                 new VersionEngine($app->tagged('dt.query.versions'))

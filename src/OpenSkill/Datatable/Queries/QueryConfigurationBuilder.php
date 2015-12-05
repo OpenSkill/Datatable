@@ -3,6 +3,7 @@
 namespace OpenSkill\Datatable\Queries;
 
 use OpenSkill\Datatable\Columns\ColumnOrder;
+use OpenSkill\Datatable\Columns\ColumnSearch;
 
 class QueryConfigurationBuilder
 {
@@ -108,7 +109,7 @@ class QueryConfigurationBuilder
      */
     public function searchRegex($searchRegex)
     {
-        if (!is_bool($searchRegex)) {
+        if (!is_bool($searchRegex) && $searchRegex !== 'false' && $searchRegex !== 'true') {
             throw new \InvalidArgumentException('$searchRegex needs to be a boolean');
         }
         $this->searchRegex = $searchRegex;
@@ -127,7 +128,7 @@ class QueryConfigurationBuilder
         if (!is_string($searchValue)) {
             throw new \InvalidArgumentException('$searchValue needs to be a string');
         }
-        $this->columSearches[$columnName] = $searchValue;
+        $this->columSearches[$columnName] = new ColumnSearch($columnName, $searchValue);
         return $this;
     }
 

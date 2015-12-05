@@ -4,6 +4,7 @@ namespace OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Columns\ColumnSearch;
 use OpenSkill\Datatable\Data\ResponseData;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 
@@ -31,11 +32,6 @@ class CollectionProvider implements Provider
     private $defaultGlobalSearchFunction;
 
     /**
-     * @var callable the default column search function to check if a row should be included
-     */
-    private $defaultColumnSearchFunction;
-
-    /**
      * @var array an array of callables with local search functions to check if the row should be included
      */
     private $columnSearchFunction = [];
@@ -46,12 +42,18 @@ class CollectionProvider implements Provider
     private $columnConfiguration = [];
 
     /**
+     * @var int the initial count of the items before processing
+     */
+    private $totalInitialDataCount;
+
+    /**
      * CollectionProvider constructor.
      * @param Collection $collection The collection with the initial data
      */
     public function __construct(Collection $collection)
     {
         $this->collection = $collection;
+        $this->totalInitialDataCount = $collection->count();
         // define search functions
         $this->globalSearchFunction = function ($data, $search) {
             foreach ($data as $item) {
@@ -80,8 +82,8 @@ class CollectionProvider implements Provider
         // generate a custom search function for each column
         foreach ($this->columnConfiguration as $col) {
             if (!array_key_exists($col->getName(), $this->columnSearchFunction)) {
-                $this->columnSearchFunction[$col->getName()] = function ($data, $search) use ($col) {
-                    if (str_contains(mb_strtolower($data[$col->getName()]), mb_strtolower($search))) {
+                $this->columnSearchFunction[$col->getName()] = function ($data, ColumnSearch $search) use ($col) {
+                    if (str_contains(mb_strtolower($data[$col->getName()]), mb_strtolower($search->searchValue()))) {
                         return true;
                     }
                     return false;
@@ -113,9 +115,13 @@ class CollectionProvider implements Provider
         $this->sortCollection();
 
         // slice the result into the right size
-        return $this->collection->slice(
-            $this->queryConfiguration->start(),
-            $this->queryConfiguration->length()
+        return new ResponseData(
+            $this->collection->slice(
+                $this->queryConfiguration->start(),
+                $this->queryConfiguration->length()
+            ),
+            $this->totalInitialDataCount
+
         );
     }
 
@@ -127,7 +133,7 @@ class CollectionProvider implements Provider
     private function compileCollection(array $columnConfiguration)
     {
         $searchFunc = null;
-        if ($this->queryConfiguration->isGlobalSearch() && !is_null($this->globalSearchFunction)) {
+        if ($this->queryConfiguration->isGlobalSearch()) {
             $searchFunc = $this->globalSearchFunction;
         }
 
@@ -147,7 +153,7 @@ class CollectionProvider implements Provider
                 }
             }
             // also do search right away
-            if (!is_null($searchFunc)) {
+            if ($this->queryConfiguration->isGlobalSearch()) {
                 if (!$searchFunc($entry, $this->queryConfiguration->searchValue())) {
                     $entry = [];
                 }
