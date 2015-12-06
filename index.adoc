@@ -1,3 +1,11 @@
+---
+layout: default
+title: OpenSkill/Datatable Documentation
+description: The documentation for OpenSkill/Datatable
+documentationExpanded: false
+postsExpanded: false
+---
+
 = RESTful Notes Getting Started Guide
 Andy Wilkinson;
 :doctype: book
