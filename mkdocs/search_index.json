@@ -2,53 +2,38 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "text": "Introduction\n\n\nOpenSkill/Datatable is a package for \nlaravel4\n and \nlaravel5\n as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.\n\n\nCurrently it supports the following frontend tables:\n\n\n\n\nDatatables 1.9\n\n\nDatatables 1.10\n\n\nDynatable 0.3.1\n\n\n\n\nFeatures\n\n\nDatatable\n has a number of features:\n\n\n\n\nSupport \nEloquent Models\n, \nCollections\n, \nEloquent Query Builder\n and \nDoctrine Query\n\n\nEasy to use interface with fully configurable behaviour\n\n\nSupports \nDatatables 1.9\n, \nDatatables 1.10\n and \nDynatable 0.3.1\n\n\nAutomatically generates html tables and the appropriate javascript on the side\n\n\nFully tested\n\n\nFully configurable\n\n\nExtensible\n\n\n\n\nQuickstart\n\n\nComposer\n\n\nThis package is available on \nhttp://packagist.org\n, just add it to your composer.json\n\n\nopenSkill/datatable\n: \n0.1\n\n\n\n\n\nAlternatively, you can install it using the composer command:\n\n\ncomposer require openSkill/datatable \n0.1\n\n\n\n\n\nLaravel\n\n\nThe package is built with Laravel in mind, so just add the following lines to app.php\n\n\nLaravel 4\n\n\nno idea, please update\n\n\n\n\nLaravel 5\n\n\n    'providers' =\n [\n\n        ...\n        OpenSkill\\Datatable\\DatatableServiceProvider::class,\n        ...\n    ],\n    'aliases' =\n [\n\n        ...\n        'Datatable'=\n OpenSkill\\Datatable\\Facades\\DatatableFacade::class,\n        ...\n    ],\n\n\n\n\nTo override the default configuration options you can publish the config file.\n\n\nphp artisan config:publish openSkill/datatable\n\n\n\n\nCogratulation\n, you are now able to use \nDatatable\n in your project. \n\n\nHead on\n to the next section", 
             "title": "Home"
         }, 
         {
-            "location": "/#welcome-to-mkdocs", 
-            "text": "For full documentation visit  mkdocs.org .", 
-            "title": "Welcome to MkDocs"
+            "location": "/#introduction", 
+            "text": "OpenSkill/Datatable is a package for  laravel4  and  laravel5  as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.  Currently it supports the following frontend tables:   Datatables 1.9  Datatables 1.10  Dynatable 0.3.1", 
+            "title": "Introduction"
         }, 
         {
-            "location": "/#commands", 
-            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.", 
-            "title": "Commands"
+            "location": "/#features", 
+            "text": "Datatable  has a number of features:   Support  Eloquent Models ,  Collections ,  Eloquent Query Builder  and  Doctrine Query  Easy to use interface with fully configurable behaviour  Supports  Datatables 1.9 ,  Datatables 1.10  and  Dynatable 0.3.1  Automatically generates html tables and the appropriate javascript on the side  Fully tested  Fully configurable  Extensible", 
+            "title": "Features"
         }, 
         {
-            "location": "/#project-layout", 
-            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
-            "title": "Project layout"
+            "location": "/#quickstart", 
+            "text": "Composer  This package is available on  http://packagist.org , just add it to your composer.json  openSkill/datatable :  0.1   Alternatively, you can install it using the composer command:  composer require openSkill/datatable  0.1   Laravel  The package is built with Laravel in mind, so just add the following lines to app.php  Laravel 4  no idea, please update  Laravel 5      'providers' =  [\n\n        ...\n        OpenSkill\\Datatable\\DatatableServiceProvider::class,\n        ...\n    ],\n    'aliases' =  [\n\n        ...\n        'Datatable'=  OpenSkill\\Datatable\\Facades\\DatatableFacade::class,\n        ...\n    ],  To override the default configuration options you can publish the config file.  php artisan config:publish openSkill/datatable  Cogratulation , you are now able to use  Datatable  in your project.   Head on  to the next section", 
+            "title": "Quickstart"
         }, 
         {
-            "location": "/about/", 
-            "text": "Deos nuper\n\n\nQuidem in iamque fervoribus Ceae\n\n\nLorem markdownum Dicta proxima segetes Cereremque vigore viva cepit dolore\ncircumdata Crenaee Agenorides moratos rectoque tempora luce. Media venas\ninvidiaque et buxus virga iussisque coronis edidit tecum, indicium me illa\ntraxit. Summasque conpulit volitare, tarda, velamina at omnes aderisque metuo\nquod herbas, quoque in momordit quia.\n\n\nDixit mei pelle dolores sua sumus damus\n\n\nEt nonne paulatim vellet. Suis sit talibus pavit aqua dum exosae illo Iove\nvenatibus ullas.\n\n\n\n\nNarve perdidit\n\n\nNec et continuam Aegides tibi apta cum\n\n\nMemorantur haut\n\n\nEt eventus tantum sacerdos rostroque super venabula\n\n\nAnguigenae amnis sublimis reverentia cultros\n\n\n\n\nRipas vulnera adversum adulter\n\n\nSilenus adiere hanc cruento dearum cornibus nautae eripui. Omnem gente, exit\nmetus aetherium tamen, fecit fortis.\n\n\nif (isdnDirectxBrowser(animated_memory)) {\n    skinHardLanguage = service;\n    socialTableSafe.panel_wildcard_signature(3, 44);\n} else {\n    exifBackboneManet(systemGuidJsp(57));\n}\nvar nullErgonomics = honeypot * 5;\ndriver.volumeSan = 715279;\n\n\n\nEt mortale Nestor\n\n\nFugit Venerem gentis est dare, tardi inde per. Annum puer coierunt, fuga tandem\nnam deum odores nec, pennis, te sunt Amphrysos Theseos \nlapidem onerosa\n!\n\n\nQuondam insula, cum dum caelestia claudor. Ille quod totoque vel lacrimas radice\net quorum. Opus iacent sanguine partimque aspexit tulit, \nneve tamen venis\n iuga\ngentibus venitque hospitium in intexere aera et dare et. Non et sceleris, ut\nmonstri invidiosa extemplo; odioque caelumque \npotiere\n dea flebat, tantum\nauctor confidit vasto.", 
-            "title": "About"
+            "location": "/basic-usage/", 
+            "text": "Basic Usage\n\n\nSimple Datatable\n\n\nThe simplest \nDatatable\n you can create looks like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all())\n    -\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t));\n\n\n\n\nand on the view side\n\n\nuser-view.blade.php", 
+            "title": "Basic Usage"
         }, 
         {
-            "location": "/about/#deos-nuper", 
+            "location": "/basic-usage/#basic-usage", 
             "text": "", 
-            "title": "Deos nuper"
+            "title": "Basic Usage"
         }, 
         {
-            "location": "/about/#quidem-in-iamque-fervoribus-ceae", 
-            "text": "Lorem markdownum Dicta proxima segetes Cereremque vigore viva cepit dolore\ncircumdata Crenaee Agenorides moratos rectoque tempora luce. Media venas\ninvidiaque et buxus virga iussisque coronis edidit tecum, indicium me illa\ntraxit. Summasque conpulit volitare, tarda, velamina at omnes aderisque metuo\nquod herbas, quoque in momordit quia.", 
-            "title": "Quidem in iamque fervoribus Ceae"
-        }, 
-        {
-            "location": "/about/#dixit-mei-pelle-dolores-sua-sumus-damus", 
-            "text": "Et nonne paulatim vellet. Suis sit talibus pavit aqua dum exosae illo Iove\nvenatibus ullas.   Narve perdidit  Nec et continuam Aegides tibi apta cum  Memorantur haut  Et eventus tantum sacerdos rostroque super venabula  Anguigenae amnis sublimis reverentia cultros", 
-            "title": "Dixit mei pelle dolores sua sumus damus"
-        }, 
-        {
-            "location": "/about/#ripas-vulnera-adversum-adulter", 
-            "text": "Silenus adiere hanc cruento dearum cornibus nautae eripui. Omnem gente, exit\nmetus aetherium tamen, fecit fortis.  if (isdnDirectxBrowser(animated_memory)) {\n    skinHardLanguage = service;\n    socialTableSafe.panel_wildcard_signature(3, 44);\n} else {\n    exifBackboneManet(systemGuidJsp(57));\n}\nvar nullErgonomics = honeypot * 5;\ndriver.volumeSan = 715279;", 
-            "title": "Ripas vulnera adversum adulter"
-        }, 
-        {
-            "location": "/about/#et-mortale-nestor", 
-            "text": "Fugit Venerem gentis est dare, tardi inde per. Annum puer coierunt, fuga tandem\nnam deum odores nec, pennis, te sunt Amphrysos Theseos  lapidem onerosa !  Quondam insula, cum dum caelestia claudor. Ille quod totoque vel lacrimas radice\net quorum. Opus iacent sanguine partimque aspexit tulit,  neve tamen venis  iuga\ngentibus venitque hospitium in intexere aera et dare et. Non et sceleris, ut\nmonstri invidiosa extemplo; odioque caelumque  potiere  dea flebat, tantum\nauctor confidit vasto.", 
-            "title": "Et mortale Nestor"
+            "location": "/basic-usage/#simple-datatable", 
+            "text": "The simplest  Datatable  you can create looks like this:  $t = Datatable::make(new CollectionProvider(User::all())\n    - build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t));  and on the view side  user-view.blade.php", 
+            "title": "Simple Datatable"
         }
     ]
 }
