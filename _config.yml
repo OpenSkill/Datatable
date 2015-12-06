@@ -4,8 +4,6 @@ title: "OpenSkill/Datatable Documentation"
 
 asciidoctor:
   attributes:
-    - idseparator=_
-    - source-highlighter=coderay
-    - icons=font-awesome
+    - hardbreaks!
 
 # end of configuration

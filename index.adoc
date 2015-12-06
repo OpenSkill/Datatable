@@ -1,9 +1,4 @@
 ---
-layout: default
-title: OpenSkill/Datatable Documentation
-description: The documentation for OpenSkill/Datatable
-documentationExpanded: false
-postsExpanded: false
 ---
 
 = RESTful Notes Getting Started Guide
@@ -24,8 +19,6 @@ to describe the relationships between resources and to allow navigation between 
 
 [getting-started]
 = Getting started
-
-
 
 [getting-started-running-the-service]
 == Running the service
