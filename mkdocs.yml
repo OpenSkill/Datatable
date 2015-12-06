@@ -1,5 +1,5 @@
 site_name: OpenSkill/Datatable Documentation
 pages:
 - Home: index.md
-- About: about.md
+- Basic Usage: basic-usage.md
 theme: readthedocs
