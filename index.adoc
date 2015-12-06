@@ -11,6 +11,7 @@ Andy Wilkinson;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
+:toc: macro
 :toc: left
 :toclevels: 4
 :sectlinks:
