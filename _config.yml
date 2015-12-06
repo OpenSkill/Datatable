@@ -1,9 +1,0 @@
-# jekyll configuration
-
-title: "OpenSkill/Datatable Documentation"
-
-asciidoctor:
-  attributes:
-    - hardbreaks!
-
-# end of configuration
