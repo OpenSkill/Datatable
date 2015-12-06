@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>OpenSkill/Datatable Documentation</title>
+    <title>RESTful Notes Getting Started Guide</title>
 
 
     <meta name="description"
@@ -32,7 +32,7 @@
         <li class="name">
             <h1>
                 <a href="">
-                    OpenSkill/Datatable Documentation
+                    RESTful Notes Getting Started Guide
                 </a>
             </h1>
         </li>
@@ -69,15 +69,15 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#getting_started">Getting started</a>
+<li><a href="#getting-started">Getting started</a>
 <ul class="sectlevel1">
-<li><a href="#running_the_service">Running the service</a></li>
-<li><a href="#creating_a_note">Creating a note</a></li>
-<li><a href="#creating_a_tag">Creating a tag</a></li>
-<li><a href="#tagging_a_note">Tagging a note</a>
+<li><a href="#running-the-service">Running the service</a></li>
+<li><a href="#creating-a-note">Creating a note</a></li>
+<li><a href="#creating-a-tag">Creating a tag</a></li>
+<li><a href="#tagging-a-note">Tagging a note</a>
 <ul class="sectlevel2">
-<li><a href="#creating_a_tagged_note">Creating a tagged note</a></li>
-<li><a href="#tagging_an_existing_note">Tagging an existing note</a></li>
+<li><a href="#creating-a-tagged-note">Creating a tagged note</a></li>
+<li><a href="#tagging-an-existing-note">Tagging an existing note</a></li>
 </ul>
 </li>
 </ul>
@@ -88,19 +88,19 @@
 <h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>RESTful Notes is a RESTful web service for creating and storing notes. It uses hypermedia<br>
+<p>RESTful Notes is a RESTful web service for creating and storing notes. It uses hypermedia
 to describe the relationships between resources and to allow navigation between them.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="getting_started"><a class="link" href="#getting_started">Getting started</a></h2>
+<h2 id="getting-started"><a class="link" href="#getting-started">Getting started</a></h2>
 <div class="sectionbody">
 <div class="sect1">
-<h2 id="running_the_service"><a class="link" href="#running_the_service">Running the service</a></h2>
+<h2 id="running-the-service"><a class="link" href="#running-the-service">Running the service</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>RESTful Notes is written using <a href="http://projects.spring.io/spring-boot">Spring Boot</a> which<br>
+<p>RESTful Notes is written using <a href="http://projects.spring.io/spring-boot">Spring Boot</a> which
 makes it easy to get it up and running so that you can start exploring the REST API.</p>
 </div>
 <div class="paragraph">
@@ -108,7 +108,7 @@ makes it easy to get it up and running so that you can start exploring the REST 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ git clone https://github.com/spring-projects/spring-restdocs</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ git clone https://github.com/spring-projects/spring-restdocs</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -116,13 +116,13 @@ makes it easy to get it up and running so that you can start exploring the REST 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">$ cd samples/rest-notes-spring-hateoas
+<pre class="highlightjs highlight"><code class="language-bash" data-lang="bash">$ cd samples/rest-notes-spring-hateoas
 $ ./gradlew build
 $ java -jar build/libs/*.jar</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can check that the service is up and running by executing a simple request using<br>
+<p>You can check that the service is up and running by executing a simple request using
 cURL:</p>
 </div>
 <div class="paragraph">
@@ -140,32 +140,32 @@ cURL:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="creating_a_note"><a class="link" href="#creating_a_note">Creating a note</a></h2>
+<h2 id="creating-a-note"><a class="link" href="#creating-a-note">Creating a note</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Now that you&#8217;ve started the service and verified that it works, the next step is to use<br>
-it to create a new note. As you saw above, the URI for working with notes is included as<br>
+<p>Now that you&#8217;ve started the service and verified that it works, the next step is to use
+it to create a new note. As you saw above, the URI for working with notes is included as
 a link when you perform a <code>GET</code> request against the root of the service:</p>
 </div>
 <div class="paragraph">
 <p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/index/1/http-response.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>To create a note you need to execute a <code>POST</code> request to this URI, including a JSON<br>
+<p>To create a note you need to execute a <code>POST</code> request to this URI, including a JSON
 payload containing the title and body of the note:</p>
 </div>
 <div class="paragraph">
 <p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/1/curl-request.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>The response from this request should have a status code of <code>201 Created</code> and contain a<br>
+<p>The response from this request should have a status code of <code>201 Created</code> and contain a
 <code>Location</code> header whose value is the URI of the newly created note:</p>
 </div>
 <div class="paragraph">
 <p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/1/http-response.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>To work with the newly created note you use the URI in the <code>Location</code> header. For example<br>
+<p>To work with the newly created note you use the URI in the <code>Location</code> header. For example
 you can access the note&#8217;s details by performing a <code>GET</code> request:</p>
 </div>
 <div class="paragraph">
@@ -183,35 +183,35 @@ you can access the note&#8217;s details by performing a <code>GET</code> request
 </div>
 </div>
 <div class="sect1">
-<h2 id="creating_a_tag"><a class="link" href="#creating_a_tag">Creating a tag</a></h2>
+<h2 id="creating-a-tag"><a class="link" href="#creating-a-tag">Creating a tag</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To make a note easier to find, it can be associated with any number of tags. To be able<br>
+<p>To make a note easier to find, it can be associated with any number of tags. To be able
 to tag a note, you must first create the tag.</p>
 </div>
 <div class="paragraph">
-<p>Referring back to the response for the service&#8217;s index, the URI for working with tags is<br>
+<p>Referring back to the response for the service&#8217;s index, the URI for working with tags is
 include as a link:</p>
 </div>
 <div class="paragraph">
 <p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/index/1/http-response.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>To create a tag you need to execute a <code>POST</code> request to this URI, including a JSON<br>
+<p>To create a tag you need to execute a <code>POST</code> request to this URI, including a JSON
 payload containing the name of the tag:</p>
 </div>
 <div class="paragraph">
 <p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/3/curl-request.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>The response from this request should have a status code of <code>201 Created</code> and contain a<br>
+<p>The response from this request should have a status code of <code>201 Created</code> and contain a
 <code>Location</code> header whose value is the URI of the newly created tag:</p>
 </div>
 <div class="paragraph">
 <p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/3/http-response.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>To work with the newly created tag you use the URI in the <code>Location</code> header. For example<br>
+<p>To work with the newly created tag you use the URI in the <code>Location</code> header. For example
 you can access the tag&#8217;s details by performing a <code>GET</code> request:</p>
 </div>
 <div class="paragraph">
@@ -226,22 +226,22 @@ you can access the tag&#8217;s details by performing a <code>GET</code> request:
 </div>
 </div>
 <div class="sect1">
-<h2 id="tagging_a_note"><a class="link" href="#tagging_a_note">Tagging a note</a></h2>
+<h2 id="tagging-a-note"><a class="link" href="#tagging-a-note">Tagging a note</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A tag isn&#8217;t particularly useful until it&#8217;s been associated with one or more notes. There<br>
-are two ways to tag a note: when the note is first created or by updating an existing<br>
+<p>A tag isn&#8217;t particularly useful until it&#8217;s been associated with one or more notes. There
+are two ways to tag a note: when the note is first created or by updating an existing
 note. We&#8217;ll look at both of these in turn.</p>
 </div>
 <div class="sect2">
-<h3 id="creating_a_tagged_note"><a class="link" href="#creating_a_tagged_note">Creating a tagged note</a></h3>
+<h3 id="creating-a-tagged-note"><a class="link" href="#creating-a-tagged-note">Creating a tagged note</a></h3>
 <div class="paragraph">
-<p>The process is largely the same as we saw before, but this time, in addition to providing<br>
-a title and body for the note, we&#8217;ll also provide the tag that we want to be associated<br>
+<p>The process is largely the same as we saw before, but this time, in addition to providing
+a title and body for the note, we&#8217;ll also provide the tag that we want to be associated
 with it.</p>
 </div>
 <div class="paragraph">
-<p>Once again we execute a <code>POST</code> request, but this time, in an array named tags, we include<br>
+<p>Once again we execute a <code>POST</code> request, but this time, in an array named tags, we include
 the URI of the tag we just created:</p>
 </div>
 <div class="paragraph">
@@ -257,11 +257,11 @@ the URI of the tag we just created:</p>
 <p>As before, a <code>GET</code> request executed against this URI will retrieve the note&#8217;s details:</p>
 </div>
 <div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/6/curl-request.adoc[]<br>
+<p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/6/curl-request.adoc[]
 Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/6/http-response.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>To see the note&#8217;s tags, execute a <code>GET</code> request against the URI of the note&#8217;s<br>
+<p>To see the note&#8217;s tags, execute a <code>GET</code> request against the URI of the note&#8217;s
 <code>note-tags</code> link:</p>
 </div>
 <div class="paragraph">
@@ -275,10 +275,10 @@ Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/6/ht
 </div>
 </div>
 <div class="sect2">
-<h3 id="tagging_an_existing_note"><a class="link" href="#tagging_an_existing_note">Tagging an existing note</a></h3>
+<h3 id="tagging-an-existing-note"><a class="link" href="#tagging-an-existing-note">Tagging an existing note</a></h3>
 <div class="paragraph">
-<p>An existing note can be tagged by executing a <code>PATCH</code> request against the note&#8217;s URI with<br>
-a body that contains the array of tags to be associated with the note. We&#8217;ll use the<br>
+<p>An existing note can be tagged by executing a <code>PATCH</code> request against the note&#8217;s URI with
+a body that contains the array of tags to be associated with the note. We&#8217;ll use the
 URI of the untagged note that we created earlier:</p>
 </div>
 <div class="paragraph">
@@ -297,11 +297,11 @@ URI of the untagged note that we created earlier:</p>
 <p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/2/http-response.adoc[]</p>
 </div>
 <div class="paragraph">
-<p>We can use that link now and execute a <code>GET</code> request to see that the note now has a<br>
+<p>We can use that link now and execute a <code>GET</code> request to see that the note now has a
 single tag:</p>
 </div>
 <div class="paragraph">
-<p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/9/curl-request.adoc[]<br>
+<p>Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/9/curl-request.adoc[]
 Unresolved directive in &lt;stdin&gt; - include::{snippets}/creating-a-note/9/http-response.adoc[]</p>
 </div>
 </div>
