@@ -1,3 +1,0 @@
-= OpenSkill/Datatable Documentation
-
-This branch will host the documentation for the Datatable plugin

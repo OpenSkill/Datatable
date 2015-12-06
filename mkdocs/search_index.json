@@ -1,0 +1,54 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#welcome-to-mkdocs", 
+            "text": "For full documentation visit  mkdocs.org .", 
+            "title": "Welcome to MkDocs"
+        }, 
+        {
+            "location": "/#commands", 
+            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.", 
+            "title": "Commands"
+        }, 
+        {
+            "location": "/#project-layout", 
+            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "title": "Project layout"
+        }, 
+        {
+            "location": "/about/", 
+            "text": "Deos nuper\n\n\nQuidem in iamque fervoribus Ceae\n\n\nLorem markdownum Dicta proxima segetes Cereremque vigore viva cepit dolore\ncircumdata Crenaee Agenorides moratos rectoque tempora luce. Media venas\ninvidiaque et buxus virga iussisque coronis edidit tecum, indicium me illa\ntraxit. Summasque conpulit volitare, tarda, velamina at omnes aderisque metuo\nquod herbas, quoque in momordit quia.\n\n\nDixit mei pelle dolores sua sumus damus\n\n\nEt nonne paulatim vellet. Suis sit talibus pavit aqua dum exosae illo Iove\nvenatibus ullas.\n\n\n\n\nNarve perdidit\n\n\nNec et continuam Aegides tibi apta cum\n\n\nMemorantur haut\n\n\nEt eventus tantum sacerdos rostroque super venabula\n\n\nAnguigenae amnis sublimis reverentia cultros\n\n\n\n\nRipas vulnera adversum adulter\n\n\nSilenus adiere hanc cruento dearum cornibus nautae eripui. Omnem gente, exit\nmetus aetherium tamen, fecit fortis.\n\n\nif (isdnDirectxBrowser(animated_memory)) {\n    skinHardLanguage = service;\n    socialTableSafe.panel_wildcard_signature(3, 44);\n} else {\n    exifBackboneManet(systemGuidJsp(57));\n}\nvar nullErgonomics = honeypot * 5;\ndriver.volumeSan = 715279;\n\n\n\nEt mortale Nestor\n\n\nFugit Venerem gentis est dare, tardi inde per. Annum puer coierunt, fuga tandem\nnam deum odores nec, pennis, te sunt Amphrysos Theseos \nlapidem onerosa\n!\n\n\nQuondam insula, cum dum caelestia claudor. Ille quod totoque vel lacrimas radice\net quorum. Opus iacent sanguine partimque aspexit tulit, \nneve tamen venis\n iuga\ngentibus venitque hospitium in intexere aera et dare et. Non et sceleris, ut\nmonstri invidiosa extemplo; odioque caelumque \npotiere\n dea flebat, tantum\nauctor confidit vasto.", 
+            "title": "About"
+        }, 
+        {
+            "location": "/about/#deos-nuper", 
+            "text": "", 
+            "title": "Deos nuper"
+        }, 
+        {
+            "location": "/about/#quidem-in-iamque-fervoribus-ceae", 
+            "text": "Lorem markdownum Dicta proxima segetes Cereremque vigore viva cepit dolore\ncircumdata Crenaee Agenorides moratos rectoque tempora luce. Media venas\ninvidiaque et buxus virga iussisque coronis edidit tecum, indicium me illa\ntraxit. Summasque conpulit volitare, tarda, velamina at omnes aderisque metuo\nquod herbas, quoque in momordit quia.", 
+            "title": "Quidem in iamque fervoribus Ceae"
+        }, 
+        {
+            "location": "/about/#dixit-mei-pelle-dolores-sua-sumus-damus", 
+            "text": "Et nonne paulatim vellet. Suis sit talibus pavit aqua dum exosae illo Iove\nvenatibus ullas.   Narve perdidit  Nec et continuam Aegides tibi apta cum  Memorantur haut  Et eventus tantum sacerdos rostroque super venabula  Anguigenae amnis sublimis reverentia cultros", 
+            "title": "Dixit mei pelle dolores sua sumus damus"
+        }, 
+        {
+            "location": "/about/#ripas-vulnera-adversum-adulter", 
+            "text": "Silenus adiere hanc cruento dearum cornibus nautae eripui. Omnem gente, exit\nmetus aetherium tamen, fecit fortis.  if (isdnDirectxBrowser(animated_memory)) {\n    skinHardLanguage = service;\n    socialTableSafe.panel_wildcard_signature(3, 44);\n} else {\n    exifBackboneManet(systemGuidJsp(57));\n}\nvar nullErgonomics = honeypot * 5;\ndriver.volumeSan = 715279;", 
+            "title": "Ripas vulnera adversum adulter"
+        }, 
+        {
+            "location": "/about/#et-mortale-nestor", 
+            "text": "Fugit Venerem gentis est dare, tardi inde per. Annum puer coierunt, fuga tandem\nnam deum odores nec, pennis, te sunt Amphrysos Theseos  lapidem onerosa !  Quondam insula, cum dum caelestia claudor. Ille quod totoque vel lacrimas radice\net quorum. Opus iacent sanguine partimque aspexit tulit,  neve tamen venis  iuga\ngentibus venitque hospitium in intexere aera et dare et. Non et sceleris, ut\nmonstri invidiosa extemplo; odioque caelumque  potiere  dea flebat, tantum\nauctor confidit vasto.", 
+            "title": "Et mortale Nestor"
+        }
+    ]
+}
