@@ -7,6 +7,7 @@
 :sectlinks:
 
 image:https://travis-ci.org/OpenSkill/Datatable.svg?branch=master["Build Status", link="https://travis-ci.org/OpenSkill/Datatable"]
+image:https://coveralls.io/repos/OpenSkill/Datatable/badge.svg?branch=master&service=github[Coverage Status, link="https://coveralls.io/github/OpenSkill/Datatable?branch=master"]
 
 == Introduction
 
