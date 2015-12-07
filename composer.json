@@ -1,11 +1,6 @@
 {
   "description": "This is a Laravel 5 package for the server and client side of DataTables (http://datatables.net/)",
-  "keywords": [
-    "laravel",
-    "datatables",
-    "ajax",
-    "jquery"
-  ],
+  "keywords": ["laravel", "datatables", "ajax", "jquery", "dynatable"],
   "license": "MIT",
   "homepage": "http://github.com/OpenSkill/Datatable",
   "authors": [
