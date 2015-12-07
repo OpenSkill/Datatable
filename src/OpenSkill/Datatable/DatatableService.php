@@ -71,7 +71,7 @@ class DatatableService
     }
 
     /**
-     * @param string $view
+     * @param string $view the view to use or null if the standard view should be used for the table and the script
      */
     public function view($view = null)
     {
