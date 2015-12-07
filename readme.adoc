@@ -1,4 +1,4 @@
-= Chumper/Datatable
+= OpenSkill/Datatable
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -14,7 +14,7 @@ image:https://poser.pugx.org/openskill/datatable/v/unstable[Latest Unstable Vers
 
 == Introduction
 
-This is the development repository for the refactor of Chumper/Datatable for Laravel 5.
+This is the development repository for the refactor of Openskill/Datatable for Laravel 5 and 4.
 In this repository we are developing and discussing the structure of the new version.
 
 == Todo List
