@@ -55,7 +55,7 @@ class CollectionProvider implements Provider
         $this->collection = $collection;
         $this->totalInitialDataCount = $collection->count();
         // define search functions
-        $this->globalSearchFunction = function ($data, $search) {
+        $this->globalSearchFunction = function($data, $search) {
             foreach ($data as $item) {
                 if (str_contains(mb_strtolower($item), mb_strtolower($search))) {
                     return true;
@@ -82,7 +82,7 @@ class CollectionProvider implements Provider
         // generate a custom search function for each column
         foreach ($this->columnConfiguration as $col) {
             if (!array_key_exists($col->getName(), $this->columnSearchFunction)) {
-                $this->columnSearchFunction[$col->getName()] = function ($data, ColumnSearch $search) use ($col) {
+                $this->columnSearchFunction[$col->getName()] = function($data, ColumnSearch $search) use ($col) {
                     if (str_contains(mb_strtolower($data[$col->getName()]), mb_strtolower($search->searchValue()))) {
                         return true;
                     }
@@ -137,7 +137,7 @@ class CollectionProvider implements Provider
             $searchFunc = $this->globalSearchFunction;
         }
 
-        $this->collection->transform(function ($data) use ($columnConfiguration, $searchFunc) {
+        $this->collection->transform(function($data) use ($columnConfiguration, $searchFunc) {
             $entry = [];
             // for each column call the callback
             foreach ($columnConfiguration as $i => $col) {
@@ -161,7 +161,7 @@ class CollectionProvider implements Provider
             return $entry;
         });
 
-        $this->collection = $this->collection->reject(function ($data) {
+        $this->collection = $this->collection->reject(function($data) {
             if (empty($data)) {
                 return true;
             } else {
@@ -203,10 +203,10 @@ class CollectionProvider implements Provider
     {
         if ($this->queryConfiguration->hasOrderColumn()) {
             $order = $this->queryConfiguration->orderColumns()[0];
-            $this->collection->sort(function ($first, $second) use ($order) {
+            $this->collection->sort(function($first, $second) use ($order) {
                 return strnatcmp($first[$order->columnName()], $second[$order->columnName()]);
             });
-            if(!$order->isAscending()) {
+            if (!$order->isAscending()) {
                 $this->collection->reverse();
             }
         }
