@@ -22,18 +22,18 @@
         }, 
         {
             "location": "/basic-usage/", 
-            "text": "Basic Usage\n\n\nSimple Datatable\n\n\nThe simplest \nDatatable\n you can create looks like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all())\n    -\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t));\n\n\n\n\nand on the view side\n\n\nuser-view.blade.php", 
-            "title": "Basic Usage"
-        }, 
-        {
-            "location": "/basic-usage/#basic-usage", 
-            "text": "", 
+            "text": "Simple Datatable\n\n\nThe simplest \nDatatable\n you can create looks like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all())-\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t-\nview()-\nbuild()));\n\n\n\n\nand on the view side\n\n\n{{\n    $view-\ntable();\n}}\n...\n{{\n    $view-\nscript();\n}}\n\n\n\n\n\nIn this example we do the following:\n\n\n\n\nGet all users with \nUser::all()\n \n\n\nPass the user collection to a \nCollectionProvider\n\n\nBuild the \nDatatableService\n \n\n\n\n\nWe then check if the \nDatatableService\n should handle the result and if so return the \n$t-\nhandleRequest()\n.\n\n\nPlease Note\n: We are using the default coumns of the \nUser\n model which means all columns by default.\nOn the view side we then just render the \ntable\n and the \njavascript\n part\n\n\nMore advanced example\n\n\nA more sophicticated example could look like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all())\n    -\ncolumns('id') // show the id column of the user model\n    -\ncolumns('name') // also show the full name of the user\n    -\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t-\nview()-\nbuild()));", 
             "title": "Basic Usage"
         }, 
         {
             "location": "/basic-usage/#simple-datatable", 
-            "text": "The simplest  Datatable  you can create looks like this:  $t = Datatable::make(new CollectionProvider(User::all())\n    - build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t));  and on the view side  user-view.blade.php", 
+            "text": "The simplest  Datatable  you can create looks like this:  $t = Datatable::make(new CollectionProvider(User::all())- build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t- view()- build()));  and on the view side  {{\n    $view- table();\n}}\n...\n{{\n    $view- script();\n}}  In this example we do the following:   Get all users with  User::all()    Pass the user collection to a  CollectionProvider  Build the  DatatableService     We then check if the  DatatableService  should handle the result and if so return the  $t- handleRequest() .  Please Note : We are using the default coumns of the  User  model which means all columns by default.\nOn the view side we then just render the  table  and the  javascript  part", 
             "title": "Simple Datatable"
+        }, 
+        {
+            "location": "/basic-usage/#more-advanced-example", 
+            "text": "A more sophicticated example could look like this:  $t = Datatable::make(new CollectionProvider(User::all())\n    - columns('id') // show the id column of the user model\n    - columns('name') // also show the full name of the user\n    - build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t- view()- build()));", 
+            "title": "More advanced example"
         }
     ]
 }
