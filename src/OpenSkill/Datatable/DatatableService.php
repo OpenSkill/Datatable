@@ -76,6 +76,6 @@ class DatatableService
      */
     public function view($view = null)
     {
-        new DatatableView($this->columnConfigurations, $this->versionEngine->getVersion(), $view);
+        new DatatableView($view, $this->versionEngine->getVersion(), $this->columnConfigurations);
     }
 }

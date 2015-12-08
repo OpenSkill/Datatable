@@ -22,4 +22,19 @@ class DatatableTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($provider, $clazz->getProvider());
     }
+
+    /**
+     * Will test if a new ColumnComposer will be instantiated correctly
+     */
+    public function testViewConstruction()
+    {
+        $request = Mockery::mock('Illuminate\Http\Request');
+        $versionEngine = Mockery::mock('OpenSkill\Datatable\Versions\VersionEngine');
+
+        $versionEngine->shouldReceive('getVersion')->andReturn();
+
+        $dt = new Datatable($request, $versionEngine);
+
+        $dtv = $dt->view();
+    }
 }
