@@ -71,7 +71,8 @@ class Datatable19QueryParser
      * @param mixed $string
      * @return bool true if empty, false otherwise
      */
-    private function isEmpty($string) {
+    private function isEmpty($string)
+    {
         return empty($string);
     }
 

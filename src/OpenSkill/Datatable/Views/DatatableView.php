@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable\Views;
+
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Versions\Version;
 
@@ -40,8 +41,9 @@ class DatatableView
      * Will set the columns for the view
      * @param $asHeader
      */
-    public function columns($asHeader = true, $names) {
-        if($this->resetColumns) {
+    public function columns($asHeader = true, $names)
+    {
+        if ($this->resetColumns) {
             $this->columnConfigurations = [];
             $this->resetColumns = false;
         }
@@ -50,7 +52,8 @@ class DatatableView
     /**
      * Will render the table
      */
-    public function table() {
+    public function table()
+    {
         if (empty($this->columnConfigurations)) {
             throw new \InvalidArgumentException("There are no columns defined");
         }
@@ -59,7 +62,8 @@ class DatatableView
     /**
      * Will render the javascript for the table
      */
-    public function script() {
+    public function script()
+    {
         if (empty($this->columnConfigurations)) {
             throw new \InvalidArgumentException("There are no columns defined");
         }

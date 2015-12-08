@@ -2,7 +2,6 @@
 
 namespace OpenSkill\Datatable\Composers;
 
-use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
@@ -91,7 +90,9 @@ class ColumnComposer
             if (is_callable($callable)) {
                 $config->withCallable($callable);
             } elseif (is_string($callable)) {
-                $config->withCallable(function() use ($callable) { return $callable; });
+                $config->withCallable(function () use ($callable) {
+                    return $callable;
+                });
             }
         }
 

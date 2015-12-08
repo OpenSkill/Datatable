@@ -54,7 +54,11 @@ abstract class Version
      * @param ColumnConfiguration[] $columnConfigurations the column configurations for the current data table.
      * @return JsonResponse the response that should be returned to the client.
      */
-    abstract public function createResponse(ResponseData $data, QueryConfiguration $queryConfiguration, array $columnConfigurations);
+    abstract public function createResponse(
+        ResponseData $data,
+        QueryConfiguration $queryConfiguration,
+        array $columnConfigurations
+    );
 
     /**
      * @return string The name of the view that this version should use fot the table.

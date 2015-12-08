@@ -1,6 +1,7 @@
 <?php
 
 namespace OpenSkill\Datatable\Data;
+
 use Illuminate\Support\Collection;
 
 
@@ -44,8 +45,6 @@ class ResponseData
     {
         return $this->totalDataCount;
     }
-
-
 
 
 }

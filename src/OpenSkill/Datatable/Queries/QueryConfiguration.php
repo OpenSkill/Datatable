@@ -33,8 +33,7 @@ class QueryConfiguration
         $searchRegex,
         array $columnSearches,
         array $columnOrders
-    )
-    {
+    ) {
         $this->drawCall = $drawCall;
         $this->start = $start;
         $this->length = $length;

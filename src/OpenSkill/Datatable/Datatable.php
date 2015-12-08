@@ -48,7 +48,8 @@ class Datatable
      * @param string $view the view for the table
      * @return DatatableView the view to work with
      */
-    public function view($view = null) {
+    public function view($view = null)
+    {
         return new DatatableView($view, $this->versionEngine->getVersion());
     }
 }

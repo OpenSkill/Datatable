@@ -72,8 +72,11 @@ class Datatable19Version extends Version
      * @param ColumnConfiguration[] $columnConfigurations the column configurations for the current data table.
      * @return JsonResponse the response that should be returned to the client.
      */
-    public function createResponse(ResponseData $data, QueryConfiguration $queryConfiguration, array $columnConfigurations)
-    {
+    public function createResponse(
+        ResponseData $data,
+        QueryConfiguration $queryConfiguration,
+        array $columnConfigurations
+    ) {
         $responseData = [
             'sEcho' => $queryConfiguration->drawCall(),
             'iTotalRecords' => $data->totalDataCount(),
