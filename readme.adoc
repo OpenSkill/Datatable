@@ -11,6 +11,7 @@ image:https://coveralls.io/repos/OpenSkill/Datatable/badge.svg?branch=master&ser
 image:https://poser.pugx.org/openskill/datatable/license[License, link="https://packagist.org/packages/openskill/datatable"]
 image:https://poser.pugx.org/openskill/datatable/version[Latest Stable Version, link="https://packagist.org/packages/openskill/datatable"]
 image:https://poser.pugx.org/openskill/datatable/v/unstable[Latest Unstable Version, link="https://packagist.org/packages/openskill/datatable"]
+image:https://scrutinizer-ci.com/g/OpenSkill/Datatable/badges/quality-score.png?b=master["Scrutinizer Code Quality", link="https://scrutinizer-ci.com/g/OpenSkill/Datatable/?branch=master"]
 
 == Introduction
 
