@@ -4,16 +4,19 @@ namespace OpenSkill\Datatable;
 
 
 use Mockery;
+use OpenSkill\Datatable\Data\ResponseData;
 
 class DatatableServiceTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testMethods()
     {
-        $request = Mockery::mock('Illuminate\Http\Request');
+        $rspData = Mockery::mock('OpenSkill\Datatable\Data\ResponseData');
+
         $provider = Mockery::mock('OpenSkill\Datatable\Providers\Provider');
         $provider->shouldReceive('prepareForProcessing')->andReturn();
-        $provider->shouldReceive('process')->andReturn();
+
+        $provider->shouldReceive('process')->andReturn($rspData);
 
         $version = Mockery::mock('OpenSkill\Datatable\Versions\Version');
 
@@ -24,10 +27,10 @@ class DatatableServiceTest extends \PHPUnit_Framework_TestCase
 
         $queryConfig = Mockery::mock('OpenSkill\Datatable\Queries\QueryConfiguration');
 
-        $version->shouldReceive('queryParser->parse')->andReturn($queryConfig);
-        $version->shouldReceive('responseCreator->createResponse')->andReturn();
+        $version->shouldReceive('parseRequest')->andReturn($queryConfig);
+        $version->shouldReceive('createResponse')->andReturn();
 
-        $dts = new DatatableService($request, $provider, [], $versionEngine);
+        $dts = new DatatableService($provider, [], $versionEngine);
 
         $dts->setVersion($version);
 

@@ -2,9 +2,11 @@
 
 namespace packages\OpenSkill\Datatable\tests\OpenSkill\Datatable\Versions;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Mockery;
+use OpenSkill\Datatable\Data\ResponseData;
 use OpenSkill\Datatable\Versions\Datatable19Version;
+use Symfony\Component\HttpFoundation\Request;
 
 class Datatable19VersionTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,37 +14,46 @@ class Datatable19VersionTest extends \PHPUnit_Framework_TestCase
     /** @var Request */
     private $request;
 
-    /**
-     * Will set up the mock request
-     */
+    /** @var Datatable19Version */
+    private $version;
+
     public function setUp()
     {
-        $this->request = Mockery::mock('Illuminate\Http\Request');
+        $this->request = new Request([
+            'sEcho' => 13,
+            'iDisplayStart' => 11,
+            'iDisplayLength' => 103,
+            'iColumns' => 1, // will be ignored, the column number is already set on the server side
+            'sSearch' => 'fooBar',
+            'bRegex' => true,
+            'bSearchable_1' => true, // will be ignored, the configuration is already set on the server side
+            'sSearch_1' => 'fooBar_1',
+            'bRegex_1' => true, // will be ignored, the configuration is already set on the server side
+            'bSortable_1' => true, // will be ignored, the configuration is already set on the server side
+            'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
+            'iSortCol_2' => true,
+            'sSortDir_2' => 'desc',
+            'iSortCol_1' => true,
+            'sSortDir_1' => 'desc',
+        ]);
+        $requestStack = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack->shouldReceive('getCurrentRequest')->andReturn($this->request);
+        $this->version = new Datatable19Version($requestStack);
     }
 
-    /**
-     * Will test if the 1.9 version can be constructed and behaves correctly
-     */
-    public function testManualConstruction()
+    public function testCanParseRequest()
     {
-        $parser = Mockery::mock('OpenSkill\Datatable\Queries\Parser\QueryParser');
-        $response = Mockery::mock('OpenSkill\Datatable\Responses\ResponseCreator');
-        $view = Mockery::mock('OpenSkill\Datatable\Views\ViewCreator');
-
-        $version = new Datatable19Version($this->request, $parser, $response, $view);
-
-        $this->assertEquals($parser, $version->queryParser());
-        $this->assertEquals($response, $version->responseCreator());
-        $this->assertEquals($view, $version->viewCreator());
+        $this->assertTrue($this->version->canParseRequest());
     }
 
-    public function testAutomaticContstruction()
+    public function testParse()
     {
-        $version = new Datatable19Version($this->request);
+        $cc = $this->version->parseRequest([]);
+        $this->assertNotNull($cc);
 
-        $this->assertNotNull($version->queryParser());
-        $this->assertNotNull($version->responseCreator());
-        $this->assertNotNull($version->viewCreator());
+        $rsp = $this->version->createResponse(new ResponseData(new Collection([]), 123), $cc, []);
+
+        $this->assertNotNull($rsp);
     }
 
 

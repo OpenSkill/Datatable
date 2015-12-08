@@ -19,12 +19,17 @@ class DatatableView
     private $columnConfigurations;
 
     /**
+     * Indicates if the columnConfigurations should be reset on a call to columns.
+     */
+    private $resetColumns = true;
+
+    /**
      * DatatableView constructor, will take a view as a string if a custom one should be used. will also take the
      * column configurations to provide out of the box headers for the view.
      * If no columns are given the user must provide them before building the view.
-     * @param string|null $columnConfiguration The columnConfiguration of the the server side if available
-     * @param Version $version The version that supports the current request
-     * @param string $view the name of the view that should be rendered
+     * @param string|null $view the name of the view that should be rendered
+     * @param Version|null $version The version that supports the current request
+     * @param array|null $columnConfiguration The columnConfiguration of the the server side if available
      */
     public function __construct($view = null, Version $version = null, array $columnConfiguration = [])
     {
@@ -36,7 +41,10 @@ class DatatableView
      * @param $asHeader
      */
     public function columns($asHeader = true, $names) {
-
+        if($this->resetColumns) {
+            $this->columnConfigurations = [];
+            $this->resetColumns = false;
+        }
     }
 
     /**

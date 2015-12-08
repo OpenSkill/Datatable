@@ -7,6 +7,7 @@ use OpenSkill\Datatable\Composers\ColumnComposer;
 use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\VersionEngine;
 use OpenSkill\Datatable\Views\DatatableView;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class Datatable
@@ -19,17 +20,13 @@ class Datatable
     /** @var VersionEngine */
     private $versionEngine;
 
-    /** @var Request */
-    private $request;
-
     /**
      * Datatable constructor.
-     * @param Request $request The current request
+     * @param RequestStack $requestStack The current request
      * @param VersionEngine $versionEngine The version engine that determines the correct version
      */
-    public function __construct(Request $request, VersionEngine $versionEngine)
+    public function __construct(VersionEngine $versionEngine)
     {
-        $this->request = $request;
         $this->versionEngine = $versionEngine;
     }
 
@@ -41,7 +38,7 @@ class Datatable
      */
     public function make(Provider $provider)
     {
-        $composer = new ColumnComposer($provider, $this->versionEngine, $this->request);
+        $composer = new ColumnComposer($provider, $this->versionEngine);
         return $composer;
     }
 

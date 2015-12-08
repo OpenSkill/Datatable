@@ -3,13 +3,12 @@
 namespace OpenSkill\Datatable\Versions;
 
 
-use Illuminate\Http\Request;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Data\ResponseData;
 use OpenSkill\Datatable\Queries\Parser\Datatable19QueryParser;
-use OpenSkill\Datatable\Queries\Parser\QueryParser;
-use OpenSkill\Datatable\Responses\Datatable19ResponseCreator;
-use OpenSkill\Datatable\Responses\ResponseCreator;
-use OpenSkill\Datatable\Views\Datatable19ViewCreator;
-use OpenSkill\Datatable\Views\ViewCreator;
+use OpenSkill\Datatable\Queries\QueryConfiguration;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class Datatable19Version
@@ -21,77 +20,74 @@ use OpenSkill\Datatable\Views\ViewCreator;
  */
 class Datatable19Version extends Version
 {
-    /** @var QueryParser */
+    /** @var Datatable19QueryParser */
     private $queryParser;
-
-    /** @var ResponseCreator */
-    private $responseCreator;
-
-    /** @var  ViewCreator */
-    private $viewCreator;
 
     /**
      * Datatable19Version constructor.
      *
-     * @param Request $request The current request
-     * @param QueryParser $queryParser a custom subclass for the query parser
-     * @param ResponseCreator $responseCreator a custom subclass for the response
-     * @param ViewCreator $viewCreator a custom subclass for the view
+     * @param RequestStack $requestStack The current request
      */
-    public function __construct(
-        Request $request,
-        QueryParser $queryParser = null,
-        ResponseCreator $responseCreator = null,
-        ViewCreator $viewCreator = null
-    )
+    public function __construct(RequestStack $requestStack)
     {
-        parent::__construct($request);
-        if (is_null($queryParser)) {
-            $this->queryParser = new Datatable19QueryParser($request);
-        } else {
-            $this->queryParser = $queryParser;
-        }
-
-        if (is_null($responseCreator)) {
-            $this->responseCreator = new Datatable19ResponseCreator();
-        } else {
-            $this->responseCreator = $responseCreator;
-        }
-
-        if (is_null($viewCreator)) {
-            $this->viewCreator = new Datatable19ViewCreator();
-        } else {
-            $this->viewCreator = $viewCreator;
-        }
+        parent::__construct($requestStack);
+        $this->queryParser = new Datatable19QueryParser();
     }
 
     /**
-     * Will get the QueryParser that is used to support this version of the data table
+     * Method to determine if this parser can handle the query parameters. If so then the parser should return true
+     * and be able to return a DTQueryConfiguration
      *
-     * @return QueryParser
+     * @return bool true if the parser is able to parse the query parameters and to return a DTQueryConfiguration
      */
-    public function queryParser()
+    public function canParseRequest()
     {
-        return $this->queryParser;
+        return $this->queryParser->canParse($this->requestStack->getCurrentRequest());
     }
 
     /**
-     * Will return the ResponseCreator that is used to support this version of the data table
+     * Method that should parse the request and return a DTQueryConfiguration
      *
-     * @return ResponseCreator
+     * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
+     *
+     * @return QueryConfiguration the configuration the provider can use to prepare the data
      */
-    public function responseCreator()
+    public function parseRequest(array $columnConfiguration)
     {
-        return $this->responseCreator;
+        return $this->queryParser->parse($this->requestStack->getCurrentRequest(), $columnConfiguration);
     }
 
     /**
-     * Will return the ViewCreator that is used to support this version of the data table
-     *
-     * @return ViewCreator
+     * Is responsible to take the generated data and prepare a response for it.
+     * @param ResponseData $data The processed data.
+     * @param QueryConfiguration $queryConfiguration the query configuration for the current request.
+     * @param ColumnConfiguration[] $columnConfigurations the column configurations for the current data table.
+     * @return JsonResponse the response that should be returned to the client.
      */
-    public function viewCreator()
+    public function createResponse(ResponseData $data, QueryConfiguration $queryConfiguration, array $columnConfigurations)
     {
-        return $this->viewCreator;
+        $responseData = [
+            'sEcho'                 => $queryConfiguration->drawCall(),
+            'iTotalRecords'         => $data->totalDataCount(),
+            'iTotalDisplayRecords'  => $data->data()->count(),
+            'aaData'                => $data->data()->toArray()
+        ];
+        return new JsonResponse($responseData);
+    }
+
+    /**
+     * @return string The name of the view that this version should use fot the table.
+     */
+    public function getTableView()
+    {
+        return "viewTableStuff";
+    }
+
+    /**
+     * @return string The name of the view that this version should use for the script.
+     */
+    public function getScriptView()
+    {
+        return "scriptViewStuff";
     }
 }

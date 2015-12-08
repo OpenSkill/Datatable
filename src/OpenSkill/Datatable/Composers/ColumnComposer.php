@@ -35,20 +35,15 @@ class ColumnComposer
      */
     private $columnConfiguration = [];
 
-    /** @var Request */
-    private $request;
-
     /**
      * Will create a new datatable composer instance with the given provider
      * @param Provider $provider the provider that will process the underlying data
      * @param VersionEngine $versionEngine The version engine to handle the request data
-     * @param Request $request The current request
      */
-    public function __construct(Provider $provider, VersionEngine $versionEngine, Request $request)
+    public function __construct(Provider $provider, VersionEngine $versionEngine)
     {
         $this->provider = $provider;
         $this->version = $versionEngine;
-        $this->request = $request;
     }
 
     /**
@@ -84,11 +79,10 @@ class ColumnComposer
         /**
          * @var ColumnConfigurationBuilder
          */
-        $config = null;
+        $config = ColumnConfigurationBuilder::create();
 
         if (is_string($name)) {
-            $config = ColumnConfigurationBuilder::create()
-                ->name($name);
+            $config->name($name);
         } else {
             throw new \InvalidArgumentException('$name must be a string');
         }
@@ -131,7 +125,7 @@ class ColumnComposer
      */
     public function build()
     {
-        return new DatatableService($this->request, $this->provider, $this->columnConfiguration, $this->version);
+        return new DatatableService($this->provider, $this->columnConfiguration, $this->version);
     }
 
 }

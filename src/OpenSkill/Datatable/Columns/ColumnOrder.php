@@ -8,7 +8,7 @@ class ColumnOrder
     /** @var string */
     private $columnName;
 
-    /** @var string */
+    /** @var bool */
     private $isAscOrdering;
 
     /**

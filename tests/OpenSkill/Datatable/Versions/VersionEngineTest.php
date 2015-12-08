@@ -12,11 +12,12 @@ class VersionEngineTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstruct()
     {
-        $version = Mockery::mock('OpenSkill\Datatable\Versions\Datatable19Version');
-        $queryParser = Mockery::mock('OpenSkill\Datatable\Queries\Parser\QueryParser');
+        $request = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $request->shouldReceive('getCurrentRequest')->andReturn();
 
-        $version->shouldReceive('queryParser')->andReturn($queryParser);
-        $queryParser->shouldReceive('canParse')->andReturn(true);
+        $version = Mockery::mock('OpenSkill\Datatable\Versions\Datatable19Version');
+
+        $version->shouldReceive('canParseRequest')->andReturn(true);
 
         $versionEngine = new VersionEngine([$version]);
 

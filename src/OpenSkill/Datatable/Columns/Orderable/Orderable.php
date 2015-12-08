@@ -50,5 +50,5 @@ abstract class Orderable
      * Will determine if the current configuration allows ordering.
      * @return bool True if the column can be ordered, false if not.
      */
-    public abstract function isOrderable();
+    abstract public function isOrderable();
 }

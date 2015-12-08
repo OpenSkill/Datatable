@@ -3,67 +3,49 @@
 namespace OpenSkill\Datatable\Queries\Parser;
 
 
-use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 use OpenSkill\Datatable\Queries\QueryConfigurationBuilder;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
 
-class Datatable19QueryParser extends QueryParser
+class Datatable19QueryParser
 {
-
-    /**
-     * Datatable19QueryParser constructor.
-     * @param Request $request
-     */
-    public function __construct(Request $request)
-    {
-        parent::__construct($request);
-    }
 
     /**
      * Method to determine if this parser can handle the query parameters. If so then the parser should return true
      * and be able to return a DTQueryConfiguration
      *
+     * @param Request $request The current request, that should be investigated
      * @return bool true if the parser is able to parse the query parameters and to return a DTQueryConfiguration
      */
-    public function canParse()
+    public function canParse(Request $request)
     {
-        // check if sEcho is set and draw not
-        return $this->request->query->has("sEcho") && !$this->request->query->has("draw");
+        return $request->query->has("sEcho");
     }
 
     /**
      * Method that should parse the request and return a DTQueryConfiguration
      *
+     * @param Request $request The current request that should be investigated
      * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
-     *
      * @return QueryConfiguration the configuration the provider can use to prepare the data
      */
-    public function parse(array $columnConfiguration)
+    public function parse(Request $request, array $columnConfiguration)
     {
-        $query = $this->request->query;
+        $query = $request->query;
         $builder = QueryConfigurationBuilder::create();
 
-        if ($query->has('sEcho')) {
-            $builder->drawCall($query->get('sEcho'));
-        }
+        $this->getDrawCall($query, $builder);
 
-        if ($query->has('iDisplayStart')) {
-            $builder->start($query->get('iDisplayStart'));
-        }
+        $this->getStart($query, $builder);
 
-        if ($query->has('iDisplayLength')) {
-            $builder->length($query->get('iDisplayLength'));
-        }
+        $this->getLength($query, $builder);
 
-        if ($query->has('sSearch') && !$this->isEmpty($query->get('sSearch'))) {
-            $builder->searchValue($query->get('sSearch'));
-        }
+        $this->getSearch($query, $builder);
 
-        if ($query->has('bRegex')) {
-            $builder->searchRegex($query->get('bRegex'));
-        }
+        $this->getRegex($query, $builder);
 
         // for each column we need to see if there is a search value
         foreach ($columnConfiguration as $i => $c) {
@@ -84,7 +66,67 @@ class Datatable19QueryParser extends QueryParser
         return $builder->build();
     }
 
+    /**
+     * Helper function that will check if a variable is empty
+     * @param mixed $string
+     * @return bool true if empty, false otherwise
+     */
     private function isEmpty($string) {
         return empty($string);
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     */
+    public function getDrawCall($query, $builder)
+    {
+        if ($query->has('sEcho')) {
+            $builder->drawCall($query->get('sEcho'));
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     */
+    public function getStart($query, $builder)
+    {
+        if ($query->has('iDisplayStart')) {
+            $builder->start($query->get('iDisplayStart'));
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     */
+    public function getLength($query, $builder)
+    {
+        if ($query->has('iDisplayLength')) {
+            $builder->length($query->get('iDisplayLength'));
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     */
+    public function getSearch($query, $builder)
+    {
+        if ($query->has('sSearch') && !$this->isEmpty($query->get('sSearch'))) {
+            $builder->searchValue($query->get('sSearch'));
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     */
+    public function getRegex($query, $builder)
+    {
+        if ($query->has('bRegex')) {
+            $builder->searchRegex($query->get('bRegex'));
+        }
     }
 }

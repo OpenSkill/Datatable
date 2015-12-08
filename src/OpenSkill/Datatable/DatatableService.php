@@ -2,12 +2,12 @@
 
 namespace OpenSkill\Datatable;
 
-use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
 use OpenSkill\Datatable\Views\DatatableView;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class DatatableService
@@ -17,9 +17,6 @@ use OpenSkill\Datatable\Views\DatatableView;
  */
 class DatatableService
 {
-    /** @var Request */
-    private $request;
-
     /** @var Provider */
     private $provider;
 
@@ -29,16 +26,17 @@ class DatatableService
     /** @var VersionEngine */
     private $versionEngine;
 
+    /** @var RequestStack */
+    private $requestStack;
+
     /**
      * DatatableService constructor.
-     * @param Request $request The current request that should be handled
      * @param Provider $provider The provider that will prepare the data
      * @param ColumnConfiguration[] $columnConfigurations
      * @param VersionEngine $versionEngine
      */
-    public function __construct(Request $request, Provider $provider, $columnConfigurations, VersionEngine $versionEngine)
+    public function __construct(Provider $provider, $columnConfigurations, VersionEngine $versionEngine)
     {
-        $this->request = $request;
         $this->provider = $provider;
         $this->columnConfigurations = $columnConfigurations;
         $this->versionEngine = $versionEngine;
@@ -47,7 +45,8 @@ class DatatableService
     /**
      * @param Version $version The version that should be used to generate the view and the responses
      */
-    public function setVersion(Version $version) {
+    public function setVersion(Version $version)
+    {
         $this->versionEngine->setVersion($version);
     }
 
@@ -65,10 +64,10 @@ class DatatableService
     public function handleRequest()
     {
         $version = $this->versionEngine->getVersion();
-        $queryConfiguration = $version->queryParser()->parse($this->columnConfigurations);
+        $queryConfiguration = $version->parseRequest($this->columnConfigurations);
         $this->provider->prepareForProcessing($queryConfiguration, $this->columnConfigurations);
         $data = $this->provider->process();
-        return $version->responseCreator()->createResponse($data, $queryConfiguration, $this->columnConfigurations);
+        return $version->createResponse($data, $queryConfiguration, $this->columnConfigurations);
     }
 
     /**

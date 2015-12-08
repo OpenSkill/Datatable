@@ -58,9 +58,9 @@ class QueryConfiguration
     protected $searchValue = null;
 
     /**
-     * @var ColumnSearch[] the columns that we are searching, the content that has been put in
+     * @var ColumnSearch[] the columns that we are searching, the content that has been put in.
+     * It is a map with the following structure: ['id' => column]
      */
-    /* [    [ 'id' => Object ], [ 'name', Object ]    ] */
     protected $searchColumns = [];
 
     /**
@@ -69,9 +69,8 @@ class QueryConfiguration
     protected $searchRegex = true;
 
     /**
-     * @var ColumnOrder[] a list of the columns we are sorting by, with their direction
+     * @var ColumnOrder[] a list of the columns we are sorting by, with their direction, this is just a list of objects
      */
-    /* [    [ Object ], [ Object ]    ] */
     protected $orderColumns = [];
 
     /**

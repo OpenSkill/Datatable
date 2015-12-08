@@ -3,19 +3,24 @@
 namespace OpenSkill\Datatable\Queries;
 
 
-use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
 use OpenSkill\Datatable\Columns\Searchable\Searchable;
 use OpenSkill\Datatable\Queries\Parser\Datatable19QueryParser;
+use Symfony\Component\HttpFoundation\Request;
 
-class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
+class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Datatable19QueryParser */
     private $parser;
 
     /** @var Request */
     private $request;
+
+    public function testCanParse()
+    {
+        $this->assertTrue($this->parser->canParse($this->request));
+    }
 
     /**
      * Will set up a the parser to test
@@ -39,7 +44,7 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
             'sSortDir_1' => 'desc',
         ]);
 
-        $this->parser = new Datatable19QueryParser($this->request);
+        $this->parser = new Datatable19QueryParser();
     }
 
     /**
@@ -54,7 +59,7 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
             ->name("fooBar")
             ->build();
 
-        $conf = $this->parser->parse([$column]);
+        $conf = $this->parser->parse($this->request, [$column]);
 
         $this->assertSame(13, $conf->drawCall());
         $this->assertSame(11, $conf->start());
@@ -89,7 +94,7 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
             ->searchable(Searchable::NONE())
             ->build();
 
-        $conf = $this->parser->parse([$column]);
+        $conf = $this->parser->parse($this->request, [$column]);
 
         // assert column search
         $this->assertCount(0, $conf->searchColumns());
@@ -130,7 +135,7 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
             ->name("name")
             ->build();
 
-        $conf = $this->parser->parse([$column, $column1]);
+        $conf = $this->parser->parse($this->request, [$column, $column1]);
 
         // assert column order
         $this->assertCount(2, $conf->orderColumns());
@@ -158,11 +163,13 @@ class DT19QueryParserTest extends \PHPUnit_Framework_TestCase
             ->name("id")
             ->build();
 
-        $conf = $this->parser->parse([$column]);
+        $conf = $this->parser->parse($this->request, [$column]);
 
         // assert column order
         $this->assertFalse($conf->isGlobalSearch());
         $this->assertCount(0, $conf->searchColumns());
         $this->assertFalse($conf->isColumnSearch());
     }
+
+
 }

@@ -2,50 +2,67 @@
 
 namespace OpenSkill\Datatable\Versions;
 
-use Illuminate\Http\Request;
-use OpenSkill\Datatable\Queries\Parser\QueryParser;
-use OpenSkill\Datatable\Responses\ResponseCreator;
-use OpenSkill\Datatable\Views\ViewCreator;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Data\ResponseData;
+use OpenSkill\Datatable\Queries\QueryConfiguration;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Interface DTVersion
+ * Class Version
  * @package OpenSkill\Datatable\Versions
  *
  * Base interface that is used to support different frontend views from this data table plugin
  */
 abstract class Version
 {
-
-    /** @var Request */
-    protected $request;
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
 
     /**
      * Version constructor.
-     * @param Request $request The current request
      */
-    public function __construct($request)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->request = $request;
+        $this->requestStack = $requestStack;
     }
 
     /**
-     * Will get the QueryParser that is used to support this version of the data table
+     * Method to determine if this parser can handle the query parameters. If so then the parser should return true
+     * and be able to return a DTQueryConfiguration
      *
-     * @return QueryParser
+     * @return bool true if the parser is able to parse the query parameters and to return a DTQueryConfiguration
      */
-    public abstract function queryParser();
+    abstract public function canParseRequest();
 
     /**
-     * Will return the ResponseCreator that is used to support this version of the data table
+     * Method that should parse the request and return a DTQueryConfiguration
      *
-     * @return ResponseCreator
+     * @param ColumnConfiguration[] $columnConfiguration The configuration of the columns
+     * @return QueryConfiguration the configuration the provider can use to prepare the data
      */
-    public abstract function responseCreator();
+    abstract public function parseRequest(array $columnConfiguration);
+
 
     /**
-     * Will return the ViewCreator that is used to support this version of the data table
-     *
-     * @return ViewCreator
+     * Is responsible to take the generated data and prepare a response for it.
+     * @param ResponseData $data The processed data.
+     * @param QueryConfiguration $queryConfiguration the query configuration for the current request.
+     * @param ColumnConfiguration[] $columnConfigurations the column configurations for the current data table.
+     * @return JsonResponse the response that should be returned to the client.
      */
-    public abstract function viewCreator();
+    abstract public function createResponse(ResponseData $data, QueryConfiguration $queryConfiguration, array $columnConfigurations);
+
+    /**
+     * @return string The name of the view that this version should use fot the table.
+     */
+    abstract public function getTableView();
+
+    /**
+     * @return string The name of the view that this version should use for the script.
+     */
+    abstract public function getScriptView();
 }

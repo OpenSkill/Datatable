@@ -3,7 +3,7 @@
 namespace OpenSkill\Datatable\Versions;
 
 
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class DTVersionEngine
@@ -14,10 +14,6 @@ use Illuminate\Http\Request;
  */
 class VersionEngine
 {
-
-    /** @var array */
-    private $versions = [];
-
     /** @var Version The version for the request if it can be determined */
     private $version = null;
 
@@ -28,12 +24,8 @@ class VersionEngine
      */
     public function __construct(array $versions)
     {
-        foreach ($versions as $version) {
-            $this->versions[get_class($version)] = $version;
-        }
-
         foreach ($versions as $v) {
-            if ($v->queryParser()->canParse()) {
+            if ($v->canParseRequest()) {
                 $this->version = $v;
                 break;
             }

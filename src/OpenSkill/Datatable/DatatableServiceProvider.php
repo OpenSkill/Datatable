@@ -5,7 +5,9 @@ namespace OpenSkill\Datatable;
 use App;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use OpenSkill\Datatable\Versions\Datatable19Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class DatatableServiceProvider extends ServiceProvider
 {
@@ -24,16 +26,20 @@ class DatatableServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        /** @var RequestStack $requestStack */
+        $requestStack = $this->app->make('Symfony\Component\HttpFoundation\RequestStack');
+        if($requestStack->getCurrentRequest() == null) {
+            $requestStack->push($this->app->make('request'));
+        }
 
-        $this->app->bind('DT19Version', 'OpenSkill\Datatable\Versions\Datatable19Version');
-        $this->app->bind('dt.default.version', 'OpenSkill\Datatable\Versions\Datatable110Version');
+//        $this->app->bind('DT19Version', new Datatable19Version($requestStack));
+//        $this->app->bind('DT110Version', new Datatable19Version($requestStack));
+//
+//        $this->app->tag(['DT19Version', 'DT110Version'], 'dt.query.versions');
 
-        $this->app->tag(['DT19Version', 'dt.default.version'], 'dt.query.versions');
-
-        $this->app->singleton("datatable", function(Application $app) {
+        $this->app->singleton("datatable", function(Application $app) use ($requestStack) {
             return new Datatable(
-                $app->make('request'),
-                new VersionEngine($app->tagged('dt.query.versions'))
+                new VersionEngine([new Datatable19Version($requestStack)])
             );
         });
     }
@@ -47,7 +53,9 @@ class DatatableServiceProvider extends ServiceProvider
     {
         return [
             'datatable',
-            'dt.default.version'
+            'DT19Version',
+            'DT110Version',
+            'dt.query.versions'
         ];
     }
 }
