@@ -26,5 +26,8 @@
     "psr-4": {
       "OpenSkill\\Datatable\\": "src/OpenSkill/Datatable"
     }
+  },
+  "scripts": {
+    "test": "phpunit"
   }
 }

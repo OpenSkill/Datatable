@@ -63,10 +63,10 @@ abstract class Version
     /**
      * @return string The name of the view that this version should use fot the table.
      */
-    abstract public function getTableView();
+    abstract public function tableView();
 
     /**
      * @return string The name of the view that this version should use for the script.
      */
-    abstract public function getScriptView();
+    abstract public function scriptView();
 }

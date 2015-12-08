@@ -89,7 +89,7 @@ class Datatable19Version extends Version
     /**
      * @return string The name of the view that this version should use fot the table.
      */
-    public function getTableView()
+    public function tableView()
     {
         return "viewTableStuff";
     }
@@ -97,7 +97,7 @@ class Datatable19Version extends Version
     /**
      * @return string The name of the view that this version should use for the script.
      */
-    public function getScriptView()
+    public function scriptView()
     {
         return "scriptViewStuff";
     }

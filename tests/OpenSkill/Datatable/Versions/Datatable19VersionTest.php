@@ -56,5 +56,33 @@ class Datatable19VersionTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($rsp);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testNullRequest()
+    {
+        $requestStack = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack->shouldReceive('getCurrentRequest')->andReturnNull();
+        $this->version = new Datatable19Version($requestStack);
+        $this->version->canParseRequest();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testNull2Request()
+    {
+        $requestStack = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack');
+        $requestStack->shouldReceive('getCurrentRequest')->andReturnNull();
+        $this->version = new Datatable19Version($requestStack);
+        $this->version->parseRequest([]);
+    }
+
+    public function testViewString()
+    {
+        $this->assertNotNull($this->version->tableView());
+        $this->assertNotNull($this->version->scriptView());
+    }
+
 
 }

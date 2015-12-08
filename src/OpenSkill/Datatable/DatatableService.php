@@ -68,10 +68,11 @@ class DatatableService
     }
 
     /**
-     * @param string $view the view to use or null if the standard view should be used for the table and the script
+     * @param string $tableView the view to use or null if the standard view should be used for the table and the script
+     * @param string $scriptView the view to use or null if the standard view should be used for the table and the script
      */
-    public function view($view = null)
+    public function view($tableView = null, $scriptView = null)
     {
-        new DatatableView($view, $this->versionEngine->getVersion(), $this->columnConfigurations);
+        new DatatableView($tableView, $scriptView, $this->versionEngine->getVersion(), $this->columnConfigurations);
     }
 }

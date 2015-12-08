@@ -65,6 +65,35 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
             ->start(0)
             ->length(2)
             ->drawCall(1)
+            ->searchValue("foo2")
+            ->build();
+
+        $columnConfiguration = ColumnConfigurationBuilder::create()
+            ->name('name')
+            ->build();
+
+        $provider = new CollectionProvider(new Collection($data));
+
+        $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
+        $data = $provider->process();
+
+        $this->assertSame(1, $data->data()->count());
+    }
+
+    /**
+     * Will test if a global custom search will return all results
+     */
+    public function testDefaultGlobalSearch()
+    {
+        $data = [
+            ['id' => 1, 'name' => 'foo'],
+            ['id' => 2, 'name' => 'foo2'],
+        ];
+
+        $queryConfiguration = QueryConfigurationBuilder::create()
+            ->start(0)
+            ->length(2)
+            ->drawCall(1)
             ->searchValue("fooBar")
             ->build();
 

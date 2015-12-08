@@ -28,11 +28,12 @@ class DatatableView
      * DatatableView constructor, will take a view as a string if a custom one should be used. will also take the
      * column configurations to provide out of the box headers for the view.
      * If no columns are given the user must provide them before building the view.
-     * @param string|null $view the name of the view that should be rendered
+     * @param string|null $tableView the name of the view that should be rendered for the table
+     * @param string|null $scriptView the name of the view that should be rendered for the script
      * @param Version|null $version The version that supports the current request
      * @param array|null $columnConfiguration The columnConfiguration of the the server side if available
      */
-    public function __construct($view = null, Version $version = null, array $columnConfiguration = [])
+    public function __construct($tableView = null, $scriptView = null, Version $version = null, array $columnConfiguration = [])
     {
         $this->columnConfigurations = $columnConfiguration;
     }
