@@ -27,10 +27,10 @@ list of current issues.
 
 == Usage
 
-Here i want to discuss the proposed usage of the API. In general i would prefer to concentrate on a single route
+Here I want to discuss the proposed usage of the API. In general I would prefer to concentrate on a single route
 functionality so we can transfer all server side settings into the view without declaring it twice.
 
-Nevertheless I would also offer the possibility for two routes, which will require more configuration from the developer
+Nevertheless I would also offer the possibility for two routes, which will require more configuration from the developer.
 
 === Single Usage
 
@@ -86,7 +86,7 @@ So all configurations from the server side are passed to the client side without
 <1> Render the html table
 <2> Render the javascript
 
-Maybe we need to drop the client side of the plugin if it is too much work, but i always liked the easy setup with the
+Maybe we need to drop the client side of the plugin if it is too much work, but I always liked the easy setup with the
 tables.
 
 === Server side
@@ -127,8 +127,8 @@ a `PresenterDetail` or similar which will include information on what the fronte
 
 === Internal usage
 
-Internally i would like to change the structure to be more flexible.
-E.g. we should only hve one method that will accept the data `Datatable::data($provider)`
+Internally I would like to change the structure to be more flexible.
+E.g. we should only have one method that will accept the data `Datatable::data($provider)`
 where the `$provider` will provide all the extra operations on the object.
 
 I would also like to make the api more fluent.
@@ -147,7 +147,7 @@ the frontend.
 
 Can we glue together the `data(...)` and `html(...)` method?::
 In my opinion it would be the best to declare the datable ones and get the same behaviour in the frontend and the
-backend, but i currently have no idea on how to achieve this.
+backend, but I currently have no idea on how to achieve this.
 
 Can we include some adapters into the library?::
 I would love to include some common adapters into the library, like DatePicker, SingleColumnSearch or even an Editor with live update.
@@ -168,4 +168,4 @@ Datatable::data(...)
     )
 ----
 
-Maybe we need to customize the javascript for that so we need to pacakge that with the plugin
+Maybe we need to customize the javascript for that so we need to package that with the plugin
