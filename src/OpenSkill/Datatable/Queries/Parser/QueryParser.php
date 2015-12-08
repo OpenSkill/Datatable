@@ -2,11 +2,9 @@
 
 namespace OpenSkill\Datatable\Queries\Parser;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Interface DTQueryParser

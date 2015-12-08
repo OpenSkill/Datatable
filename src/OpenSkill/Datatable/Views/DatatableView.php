@@ -22,7 +22,7 @@ class DatatableView
      * DatatableView constructor, will take a view as a string if a custom one should be used. will also take the
      * column configurations to provide out of the box headers for the view.
      * If no columns are given the user must provide them before building the view.
-     * @param array $columnConfiguration The columnConfiguration of the the server side if available
+     * @param string|null $columnConfiguration The columnConfiguration of the the server side if available
      * @param Version $version The version that supports the current request
      * @param string $view the name of the view that should be rendered
      */
@@ -43,7 +43,7 @@ class DatatableView
      * Will render the table
      */
     public function table() {
-        if(empty($this->columnConfigurations)) {
+        if (empty($this->columnConfigurations)) {
             throw new \InvalidArgumentException("There are no columns defined");
         }
     }
@@ -52,7 +52,7 @@ class DatatableView
      * Will render the javascript for the table
      */
     public function script() {
-        if(empty($this->columnConfigurations)) {
+        if (empty($this->columnConfigurations)) {
             throw new \InvalidArgumentException("There are no columns defined");
         }
     }

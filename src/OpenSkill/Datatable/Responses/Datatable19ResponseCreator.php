@@ -15,7 +15,7 @@ class Datatable19ResponseCreator implements ResponseCreator
      * @param ResponseData $data The processed data.
      * @param QueryConfiguration $queryConfiguration the query configuration for the current request.
      * @param array $columnConfiguration the column configurations for the current data table.
-     * @return Response the response that should be returned to the client.
+     * @return JsonResponse the response that should be returned to the client.
      */
     public function createResponse(ResponseData $data, QueryConfiguration $queryConfiguration, array $columnConfiguration)
     {

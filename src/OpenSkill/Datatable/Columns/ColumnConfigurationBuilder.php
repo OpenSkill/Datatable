@@ -143,7 +143,7 @@ class ColumnConfigurationBuilder
     {
         if (is_null($this->callable) || !is_callable($this->callable)) {
             $self = $this;
-            $this->callable = function ($data) use (&$self) {
+            $this->callable = function($data) use (&$self) {
                 $name = $self->name;
 
                 if (is_array($data) && array_key_exists($name, $data)) {

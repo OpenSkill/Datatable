@@ -30,7 +30,7 @@ class DatatableServiceProvider extends ServiceProvider
 
         $this->app->tag(['DT19Version', 'dt.default.version'], 'dt.query.versions');
 
-        $this->app->singleton("datatable", function (Application $app) {
+        $this->app->singleton("datatable", function(Application $app) {
             return new Datatable(
                 $app->make('request'),
                 new VersionEngine($app->tagged('dt.query.versions'))

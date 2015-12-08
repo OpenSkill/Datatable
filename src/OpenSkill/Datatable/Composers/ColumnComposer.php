@@ -96,7 +96,7 @@ class ColumnComposer
         if (!is_null($callable)) {
             if (is_callable($callable)) {
                 $config->withCallable($callable);
-            } elseif (is_string($callable)){
+            } elseif (is_string($callable)) {
                 $config->withCallable(function($data) use ($callable) { return $callable; });
             }
         }

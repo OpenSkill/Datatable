@@ -7,7 +7,6 @@ use OpenSkill\Datatable\Composers\ColumnComposer;
 use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\VersionEngine;
 use OpenSkill\Datatable\Views\DatatableView;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 /**
  * Class Datatable
@@ -55,6 +54,6 @@ class Datatable
      * @return DatatableView the view to work with
      */
     public function view($view = null) {
-       return new DatatableView($view, $this->versionEngine->getVersion());
+        return new DatatableView($view, $this->versionEngine->getVersion());
     }
 }
