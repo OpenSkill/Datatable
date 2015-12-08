@@ -7,6 +7,7 @@ use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
+use OpenSkill\Datatable\Views\DatatableView;
 
 /**
  * Class DatatableService
@@ -75,6 +76,6 @@ class DatatableService
      */
     public function view($view = null)
     {
-        $version = $this->versionEngine->getVersion();
+        new DatatableView($this->columnConfigurations, $this->versionEngine->getVersion(), $view);
     }
 }
