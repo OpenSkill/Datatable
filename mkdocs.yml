@@ -3,3 +3,6 @@ pages:
 - Home: index.md
 - Basic Usage: basic-usage.md
 theme: readthedocs
+repo_url: https://github.com/OpenSkill/Datatable/
+site_author: Nils Plaschke
+copyright: By OpenSkill

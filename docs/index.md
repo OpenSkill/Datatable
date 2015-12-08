@@ -1,5 +1,7 @@
 # Introduction
 
+**PLEASE NOTE**: This package is currently under development and not production ready yet!
+
 OpenSkill/Datatable is a package for `laravel4` and `laravel5` as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.
 
 Currently it supports the following frontend tables:
