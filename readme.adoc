@@ -13,6 +13,8 @@ image:https://poser.pugx.org/openskill/datatable/version[Latest Stable Version, 
 image:https://poser.pugx.org/openskill/datatable/v/unstable[Latest Unstable Version, link="https://packagist.org/packages/openskill/datatable"]
 image:https://scrutinizer-ci.com/g/OpenSkill/Datatable/badges/quality-score.png?b=master["Scrutinizer Code Quality", link="https://scrutinizer-ci.com/g/OpenSkill/Datatable/?branch=master"]
 
+WARNING: This package is not production ready yet. You can still use https://github.com/Chumper/Datatable but be aware that it will not receive any new updates.
+
 == Introduction
 
 This is the development repository for the refactor of Openskill/Datatable for Laravel 5 and 4.
