@@ -42,7 +42,11 @@ class Datatable19Version extends Version
      */
     public function canParseRequest()
     {
-        return $this->queryParser->canParse($this->requestStack->getCurrentRequest());
+        $request = $this->requestStack->getCurrentRequest();
+        if (is_null($request)) {
+            throw new \InvalidArgumentException("Can not determine a request that is null");
+        }
+        return $this->queryParser->canParse($request);
     }
 
     /**
@@ -54,7 +58,11 @@ class Datatable19Version extends Version
      */
     public function parseRequest(array $columnConfiguration)
     {
-        return $this->queryParser->parse($this->requestStack->getCurrentRequest(), $columnConfiguration);
+        $request = $this->requestStack->getCurrentRequest();
+        if (is_null($request)) {
+            throw new \InvalidArgumentException("Can not parse a request that is null");
+        }
+        return $this->queryParser->parse($request, $columnConfiguration);
     }
 
     /**
@@ -67,10 +75,10 @@ class Datatable19Version extends Version
     public function createResponse(ResponseData $data, QueryConfiguration $queryConfiguration, array $columnConfigurations)
     {
         $responseData = [
-            'sEcho'                 => $queryConfiguration->drawCall(),
-            'iTotalRecords'         => $data->totalDataCount(),
-            'iTotalDisplayRecords'  => $data->data()->count(),
-            'aaData'                => $data->data()->toArray()
+            'sEcho' => $queryConfiguration->drawCall(),
+            'iTotalRecords' => $data->totalDataCount(),
+            'iTotalDisplayRecords' => $data->data()->count(),
+            'aaData' => $data->data()->toArray()
         ];
         return new JsonResponse($responseData);
     }

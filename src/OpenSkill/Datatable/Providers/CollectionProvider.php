@@ -55,7 +55,7 @@ class CollectionProvider implements Provider
         $this->collection = $collection;
         $this->totalInitialDataCount = $collection->count();
         // define search functions
-        $this->globalSearchFunction = function($data, $search) {
+        $this->defaultGlobalSearchFunction = function($data, $search) {
             foreach ($data as $item) {
                 if (str_contains(mb_strtolower($item), mb_strtolower($search))) {
                     return true;
@@ -134,7 +134,7 @@ class CollectionProvider implements Provider
     {
         $searchFunc = null;
         if ($this->queryConfiguration->isGlobalSearch()) {
-            $searchFunc = $this->globalSearchFunction;
+            $searchFunc = $this->defaultGlobalSearchFunction;
         }
 
         $this->collection->transform(function($data) use ($columnConfiguration, $searchFunc) {

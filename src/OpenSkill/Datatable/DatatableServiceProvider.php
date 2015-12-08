@@ -32,12 +32,7 @@ class DatatableServiceProvider extends ServiceProvider
             $requestStack->push($this->app->make('request'));
         }
 
-//        $this->app->bind('DT19Version', new Datatable19Version($requestStack));
-//        $this->app->bind('DT110Version', new Datatable19Version($requestStack));
-//
-//        $this->app->tag(['DT19Version', 'DT110Version'], 'dt.query.versions');
-
-        $this->app->singleton("datatable", function(Application $app) use ($requestStack) {
+        $this->app->singleton("datatable", function() use ($requestStack) {
             return new Datatable(
                 new VersionEngine([new Datatable19Version($requestStack)])
             );

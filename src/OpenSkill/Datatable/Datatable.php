@@ -2,7 +2,6 @@
 
 namespace OpenSkill\Datatable;
 
-use Illuminate\Http\Request;
 use OpenSkill\Datatable\Composers\ColumnComposer;
 use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\VersionEngine;
@@ -22,7 +21,6 @@ class Datatable
 
     /**
      * Datatable constructor.
-     * @param RequestStack $requestStack The current request
      * @param VersionEngine $versionEngine The version engine that determines the correct version
      */
     public function __construct(VersionEngine $versionEngine)

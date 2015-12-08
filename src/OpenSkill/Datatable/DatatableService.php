@@ -26,9 +26,6 @@ class DatatableService
     /** @var VersionEngine */
     private $versionEngine;
 
-    /** @var RequestStack */
-    private $requestStack;
-
     /**
      * DatatableService constructor.
      * @param Provider $provider The provider that will prepare the data

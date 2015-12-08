@@ -8,13 +8,13 @@ use OpenSkill\Datatable\Columns\ColumnSearch;
 class QueryConfigurationBuilder
 {
 
-    /** @var string */
+    /** @var mixed */
     protected $drawCall = 1;
 
-    /** @var int zero based */
+    /** @var mixed zero based */
     protected $start = 0;
 
-    /** @var int */
+    /** @var mixed */
     protected $length = 10;
 
     /** @var string */
@@ -48,7 +48,7 @@ class QueryConfigurationBuilder
 
     /**
      * Will set the drawCall parameter send by the frontend.
-     * @param string|int $drawCall The draw call parameter
+     * @param mixed $drawCall The draw call parameter
      * @return $this
      */
     public function drawCall($drawCall)
@@ -62,7 +62,7 @@ class QueryConfigurationBuilder
 
     /**
      * Will set the start parameter which indicates how many items should be skipped at the start
-     * @param int $start
+     * @param mixed $start
      * @return $this
      */
     public function start($start)
@@ -76,7 +76,7 @@ class QueryConfigurationBuilder
 
     /**
      * Will set the length parameter which indicates how many items should be returned by this request.
-     * @param int $length
+     * @param mixed $length
      * @return $this
      */
     public function length($length)
