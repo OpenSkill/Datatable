@@ -16,7 +16,11 @@ class DatatableTest extends \PHPUnit_Framework_TestCase
         $versionEngine = Mockery::mock('OpenSkill\Datatable\Versions\VersionEngine');
         $provider = Mockery::mock('OpenSkill\Datatable\Providers\Provider');
 
-        $dt = new Datatable($versionEngine);
+        $viewFactory = Mockery::mock('Illuminate\Contracts\View\Factory');
+        $configRepository = Mockery::mock('Illuminate\Contracts\Config\Repository');
+
+
+        $dt = new Datatable($versionEngine, $viewFactory, $configRepository);
         $clazz = $dt->make($provider);
 
         $this->assertEquals($provider, $clazz->getProvider());
@@ -31,7 +35,10 @@ class DatatableTest extends \PHPUnit_Framework_TestCase
 
         $versionEngine->shouldReceive('getVersion')->andReturn();
 
-        $dt = new Datatable($versionEngine);
+        $viewFactory = Mockery::mock('Illuminate\Contracts\View\Factory');
+        $configRepository = Mockery::mock('Illuminate\Contracts\Config\Repository');
+
+        $dt = new Datatable($versionEngine, $viewFactory, $configRepository);
 
         $dtv = $dt->view();
     }

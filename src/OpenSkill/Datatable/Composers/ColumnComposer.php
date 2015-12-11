@@ -2,6 +2,8 @@
 
 namespace OpenSkill\Datatable\Composers;
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\View\Factory;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
@@ -35,14 +37,32 @@ class ColumnComposer
     private $columnConfiguration = [];
 
     /**
+     * @var Factory
+     */
+    private $viewFactory;
+
+    /**
+     * @var Repository
+     */
+    private $configRepository;
+
+    /**
      * Will create a new datatable composer instance with the given provider
      * @param Provider $provider the provider that will process the underlying data
      * @param VersionEngine $versionEngine The version engine to handle the request data
+     * @param Factory $viewFactory The factory providing the views
+     * @param Repository $configRepository The repository providing the user defined options
      */
-    public function __construct(Provider $provider, VersionEngine $versionEngine)
-    {
+    public function __construct(
+        Provider $provider,
+        VersionEngine $versionEngine,
+        Factory $viewFactory,
+        Repository $configRepository
+    ) {
         $this->provider = $provider;
         $this->version = $versionEngine;
+        $this->viewFactory = $viewFactory;
+        $this->configRepository = $configRepository;
     }
 
     /**
@@ -126,7 +146,13 @@ class ColumnComposer
      */
     public function build()
     {
-        return new DatatableService($this->provider, $this->columnConfiguration, $this->version);
+        return new DatatableService(
+            $this->provider,
+            $this->columnConfiguration,
+            $this->version,
+            $this->viewFactory,
+            $this->configRepository
+        );
     }
 
 }

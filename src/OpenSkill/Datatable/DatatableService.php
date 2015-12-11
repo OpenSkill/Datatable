@@ -2,6 +2,8 @@
 
 namespace OpenSkill\Datatable;
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\View\Factory;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\Version;
@@ -25,18 +27,35 @@ class DatatableService
 
     /** @var VersionEngine */
     private $versionEngine;
+    /**
+     * @var Factory
+     */
+    private $viewFactory;
+    /**
+     * @var Repository
+     */
+    private $configRepository;
 
     /**
      * DatatableService constructor.
      * @param Provider $provider The provider that will prepare the data
      * @param ColumnConfiguration[] $columnConfigurations
      * @param VersionEngine $versionEngine
+     * @param Factory $viewFactory The factory to render the views
+     * @param Repository $configRepository The repository to get the config values from
      */
-    public function __construct(Provider $provider, $columnConfigurations, VersionEngine $versionEngine)
-    {
+    public function __construct(
+        Provider $provider,
+        $columnConfigurations,
+        VersionEngine $versionEngine,
+        Factory $viewFactory,
+        Repository $configRepository
+    ) {
         $this->provider = $provider;
         $this->columnConfigurations = $columnConfigurations;
         $this->versionEngine = $versionEngine;
+        $this->viewFactory = $viewFactory;
+        $this->configRepository = $configRepository;
     }
 
     /**
@@ -73,6 +92,7 @@ class DatatableService
      */
     public function view($tableView = null, $scriptView = null)
     {
-        new DatatableView($tableView, $scriptView, $this->versionEngine->getVersion(), $this->columnConfigurations);
+        new DatatableView($tableView, $scriptView, $this->versionEngine->getVersion(), $this->viewFactory,
+            $this->columnConfigurations);
     }
 }

@@ -30,7 +30,10 @@ class DatatableServiceTest extends \PHPUnit_Framework_TestCase
         $version->shouldReceive('parseRequest')->andReturn($queryConfig);
         $version->shouldReceive('createResponse')->andReturn();
 
-        $dts = new DatatableService($provider, [], $versionEngine);
+        $viewFactory = Mockery::mock('Illuminate\Contracts\View\Factory');
+        $configRepository = Mockery::mock('Illuminate\Contracts\Config\Repository');
+
+        $dts = new DatatableService($provider, [], $versionEngine, $viewFactory, $configRepository);
 
         $dts->setVersion($version);
 

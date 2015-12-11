@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
@@ -36,6 +38,12 @@ class ColumnComposerTest extends PHPUnit_Framework_TestCase
     /** @var Request */
     private $request;
 
+    /** @var Factory */
+    private $viewFactory;
+
+    /** @var Repository */
+    private $configRepository;
+
     /**
      * Will test if the service can be built without problems
      */
@@ -52,8 +60,11 @@ class ColumnComposerTest extends PHPUnit_Framework_TestCase
         $this->provider = Mockery::mock('OpenSkill\Datatable\Providers\Provider');
         $this->version = Mockery::mock('OpenSkill\Datatable\Versions\Version');
         $this->versionEngine = Mockery::mock('OpenSkill\Datatable\Versions\VersionEngine');
-        $this->request = Mockery::mock('Illuminate\Http\Request');
-        $this->composer = new ColumnComposer($this->provider, $this->versionEngine, $this->request);
+
+        $this->viewFactory = Mockery::mock('Illuminate\Contracts\View\Factory');
+        $this->configRepository = Mockery::mock('Illuminate\Contracts\Config\Repository');
+        $this->composer = new ColumnComposer($this->provider, $this->versionEngine, $this->viewFactory,
+            $this->configRepository);
     }
 
     /**

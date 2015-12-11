@@ -3,6 +3,7 @@
 namespace OpenSkill\Datatable;
 
 use App;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use OpenSkill\Datatable\Versions\Datatable19Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
@@ -31,9 +32,11 @@ class DatatableServiceProvider extends ServiceProvider
             $requestStack->push($this->app->make('request'));
         }
 
-        $this->app->singleton("datatable", function () use ($requestStack) {
+        $this->app->singleton("datatable", function (Application $app) use ($requestStack) {
             return new Datatable(
-                new VersionEngine([new Datatable19Version($requestStack)])
+                new VersionEngine([new Datatable19Version($requestStack)]),
+                $app->make('Illuminate\Contracts\View\Factory'),
+                $app->make('Illuminate\Contracts\Config\Repository')
             );
         });
     }
