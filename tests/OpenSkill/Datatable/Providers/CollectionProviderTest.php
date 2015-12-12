@@ -4,6 +4,7 @@ namespace packages\OpenSkill\Datatable\tests\OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\Columns\Searchable\Searchable;
 use OpenSkill\Datatable\Providers\CollectionProvider;
 use OpenSkill\Datatable\Queries\QueryConfigurationBuilder;
 
@@ -141,6 +142,40 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $data = $provider->process();
 
         $this->assertSame(1, $data->data()->count());
+    }
+
+    /**
+     * Will test that the global search respects individual column settings
+     */
+    public function testGlobalSearchWithIndividualColumn()
+    {
+        $data = [
+            ['id' => 1, 'name' => 'foo'],
+            ['id' => 2, 'name' => 'bar'],
+        ];
+
+        $queryConfiguration = QueryConfigurationBuilder::create()
+            ->start(0)
+            ->length(2)
+            ->searchValue('foo')
+            ->drawCall(1)
+            ->build();
+
+        $columnConfiguration = ColumnConfigurationBuilder::create()
+            ->name('id')
+            ->build();
+
+        $columnConfiguration2 = ColumnConfigurationBuilder::create()
+            ->name('name')
+            ->searchable(Searchable::NONE())
+            ->build();
+
+        $provider = new CollectionProvider(new Collection($data));
+
+        $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration, $columnConfiguration2]);
+        $data = $provider->process();
+
+        $this->assertSame(0, $data->data()->count());
     }
 
     public function testColumnSearch()
