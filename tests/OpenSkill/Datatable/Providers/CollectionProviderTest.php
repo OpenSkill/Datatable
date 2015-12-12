@@ -351,6 +351,6 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(2, $data->data()->count());
         $first = $data->data()->first();
 
-        $this->assertSame(2, $first['id']);
+        $this->assertSame(1, $first['id']);
     }
 }
