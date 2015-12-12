@@ -212,9 +212,6 @@ class CollectionProvider implements Provider
      */
     public function search(callable $searchFunction)
     {
-        if(!is_callable($searchFunction)) {
-            throw new \InvalidArgumentException('$searchFunction should be a callable');
-        }
         $this->defaultGlobalSearchFunction = $searchFunction;
         return $this;
     }
@@ -226,9 +223,6 @@ class CollectionProvider implements Provider
      */
     public function order(callable $orderFunction)
     {
-        if(!is_callable($orderFunction)) {
-            throw new \InvalidArgumentException('$orderFunction should be a callable');
-        }
         $this->defaultGlobalOrderFunction = $orderFunction;
         return $this;
     }

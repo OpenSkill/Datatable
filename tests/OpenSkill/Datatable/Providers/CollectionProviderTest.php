@@ -280,6 +280,12 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         $provider = new CollectionProvider(new Collection($data));
+        $provider->order(function($first, $second, ColumnOrder $order){
+            if(!$order->isAscending()) {
+                return ($first['id'] < $second['id']) ? 1 : (($first['id'] > $second['id']) ? -1 : 0);
+            }
+            return ($first['id'] < $second['id']) ? -1 : (($first['id'] > $second['id']) ? 1 : 0);
+        });
 
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $data = $provider->process();
