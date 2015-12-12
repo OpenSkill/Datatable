@@ -60,4 +60,4 @@ return view('user-view', array('datatable' => $t->view()));
 	$datatable
 		->script() // now render the script
 }
-
+```
