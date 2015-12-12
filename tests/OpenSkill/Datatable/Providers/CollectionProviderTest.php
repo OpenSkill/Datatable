@@ -324,4 +324,33 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(2, $first['id']);
     }
+
+    public function testDefaultOrder()
+    {
+        $data = [
+            ['id' => 1, 'name' => 'foo'],
+            ['id' => 2, 'name' => 'bar'],
+        ];
+
+        $queryConfiguration = QueryConfigurationBuilder::create()
+            ->start(0)
+            ->length(2)
+            ->drawCall(1)
+            ->columnOrder('id', 'asc')
+            ->build();
+
+        $columnConfiguration = ColumnConfigurationBuilder::create()
+            ->name('id')
+            ->build();
+
+        $provider = new CollectionProvider(new Collection($data));
+
+        $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
+        $data = $provider->process();
+
+        $this->assertSame(2, $data->data()->count());
+        $first = $data->data()->first();
+
+        $this->assertSame(2, $first['id']);
+    }
 }
