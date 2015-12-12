@@ -3,9 +3,6 @@
 All Notable changes to `Datatable` will be documented in this file
 
 ## 0.1.1 - 2015-12-12
-
-First development version 
-
 ### Fixed
 * [CollectionProvider] Global searches will now respect individual column settings
 
