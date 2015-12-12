@@ -36,12 +36,12 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
             'sSearch' => 'fooBar',
             'bRegex' => true,
             'bSearchable_1' => true, // will be ignored, the configuration is already set on the server side
-            'sSearch_1' => 'fooBar_1',
-            'bRegex_1' => true, // will be ignored, the configuration is already set on the server side
-            'bSortable_1' => true, // will be ignored, the configuration is already set on the server side
+            'sSearch_0' => 'fooBar_1',
+            'bRegex_0' => true, // will be ignored, the configuration is already set on the server side
+            'bSortable_0' => true, // will be ignored, the configuration is already set on the server side
             'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
-            'iSortCol_1' => true,
-            'sSortDir_1' => 'desc',
+            'iSortCol_0' => true,
+            'sSortDir_0' => 'desc',
         ]);
 
         $this->parser = new Datatable19QueryParser();
@@ -115,15 +115,15 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
             'iColumns' => 1, // will be ignored, the column number is already set on the server side
             'sSearch' => 'fooBar',
             'bRegex' => true,
-            'bSearchable_1' => true, // will be ignored, the configuration is already set on the server side
-            'sSearch_1' => 'fooBar_1',
-            'bRegex_1' => true, // will be ignored, the configuration is already set on the server side
-            'bSortable_1' => true, // will be ignored, the configuration is already set on the server side
+            'bSearchable_0' => true, // will be ignored, the configuration is already set on the server side
+            'sSearch_0' => 'fooBar_1',
+            'bRegex_0' => true, // will be ignored, the configuration is already set on the server side
+            'bSortable_0' => true, // will be ignored, the configuration is already set on the server side
             'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
-            'iSortCol_2' => true,
-            'sSortDir_2' => 'desc',
             'iSortCol_1' => true,
             'sSortDir_1' => 'desc',
+            'iSortCol_0' => true,
+            'sSortDir_0' => 'desc',
         ]);
 
         $this->parser = new Datatable19QueryParser($this->request);

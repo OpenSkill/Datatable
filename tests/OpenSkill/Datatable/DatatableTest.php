@@ -31,12 +31,17 @@ class DatatableTest extends \PHPUnit_Framework_TestCase
      */
     public function testViewConstruction()
     {
+        $version = Mockery::mock('OpenSkill\Datatable\Versions\Version');
+        $version->shouldReceive('tableView')->andReturn('fooBar');
+        $version->shouldReceive('scriptView')->andReturn('fooBar');
+
         $versionEngine = Mockery::mock('OpenSkill\Datatable\Versions\VersionEngine');
 
-        $versionEngine->shouldReceive('getVersion')->andReturn();
+        $versionEngine->shouldReceive('getVersion')->andReturn($version);
 
         $viewFactory = Mockery::mock('Illuminate\Contracts\View\Factory');
         $configRepository = Mockery::mock('Illuminate\Contracts\Config\Repository');
+        $configRepository->shouldReceive('get')->andReturn("fooBar");
 
         $dt = new Datatable($versionEngine, $viewFactory, $configRepository);
 

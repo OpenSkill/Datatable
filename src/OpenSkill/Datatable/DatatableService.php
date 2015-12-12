@@ -27,13 +27,11 @@ class DatatableService
 
     /** @var VersionEngine */
     private $versionEngine;
-    /**
-     * @var Factory
-     */
+
+    /** @var Factory */
     private $viewFactory;
-    /**
-     * @var Repository
-     */
+
+    /** @var Repository */
     private $configRepository;
 
     /**
@@ -71,7 +69,7 @@ class DatatableService
      */
     public function shouldHandle()
     {
-        return $this->versionEngine->hasVersion();
+        return $this->versionEngine->hasVersion() && $this->versionEngine->getVersion()->canParseRequest();
     }
 
     /**
@@ -89,10 +87,18 @@ class DatatableService
     /**
      * @param string $tableView the view to use or null if the standard view should be used for the table and the script
      * @param string $scriptView the view to use or null if the standard view should be used for the table and the script
+     * @return DatatableView
      */
     public function view($tableView = null, $scriptView = null)
     {
-        new DatatableView($tableView, $scriptView, $this->versionEngine->getVersion(), $this->viewFactory,
+        if (is_null($tableView)) {
+            $tableView = $this->versionEngine->getVersion()->tableView();
+        }
+        if (is_null($scriptView)) {
+            $scriptView = $this->versionEngine->getVersion()->scriptView();
+        }
+
+        return new DatatableView($tableView, $scriptView, $this->viewFactory, $this->configRepository,
             $this->columnConfigurations);
     }
 }

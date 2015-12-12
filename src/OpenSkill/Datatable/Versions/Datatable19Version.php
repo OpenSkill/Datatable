@@ -91,7 +91,7 @@ class Datatable19Version extends Version
      */
     public function tableView()
     {
-        return "viewTableStuff";
+        return "datatable::table";
     }
 
     /**
@@ -99,6 +99,6 @@ class Datatable19Version extends Version
      */
     public function scriptView()
     {
-        return "scriptViewStuff";
+        return "datatable::datatable19";
     }
 }

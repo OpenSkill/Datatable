@@ -48,6 +48,7 @@ class Datatable
      * Will create a new DataComposer with the given provider as implementation.
      *
      * @param Provider $provider The provider for the underlying data.
+     *
      * @return ColumnComposer
      */
     public function make(Provider $provider)
@@ -63,11 +64,18 @@ class Datatable
      *
      * @param string $tableView the name of the table view to render
      * @param string $scriptView the name of the script view to render
+     *
      * @return DatatableView the view to work with
-     * @internal param string $view the view for the table
      */
     public function view($tableView = null, $scriptView = null)
     {
-        return new DatatableView($tableView, $scriptView, $this->versionEngine->getVersion(), $this->viewFactory, []);
+        if (is_null($tableView)) {
+            $tableView = $this->versionEngine->getVersion()->tableView();
+        }
+        if (is_null($scriptView)) {
+            $scriptView = $this->versionEngine->getVersion()->scriptView();
+        }
+
+        return new DatatableView($tableView, $scriptView, $this->viewFactory, $this->configRepository, []);
     }
 }

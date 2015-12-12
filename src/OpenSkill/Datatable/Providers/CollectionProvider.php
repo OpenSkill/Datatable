@@ -156,7 +156,8 @@ class CollectionProvider implements Provider
             }
             // also do search right away
             if ($this->queryConfiguration->isGlobalSearch()) {
-                if (!$searchFunc($entry, $this->queryConfiguration->searchValue())) {
+                if (!$searchFunc($entry, $this->queryConfiguration->searchValue())
+                ) {
                     $entry = [];
                 }
             }

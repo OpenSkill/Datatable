@@ -21,9 +21,11 @@ class VersionEngine
      * DTVersionEngine constructor.
      *
      * @param Version[] $versions an array of possible version this data table supports
+     * @param Version $defaultVersion The version that should be used as default
      */
-    public function __construct(array $versions)
+    public function __construct(array $versions, Version $defaultVersion)
     {
+        $this->version = $defaultVersion;
         foreach ($versions as $v) {
             if ($v->canParseRequest()) {
                 $this->version = $v;

@@ -33,8 +33,9 @@ class DatatableServiceProvider extends ServiceProvider
         }
 
         $this->app->singleton("datatable", function (Application $app) use ($requestStack) {
+            $dt = new Datatable19Version($requestStack);
             return new Datatable(
-                new VersionEngine([new Datatable19Version($requestStack)]),
+                new VersionEngine([$dt], $dt),
                 $app->make('Illuminate\Contracts\View\Factory'),
                 $app->make('Illuminate\Contracts\Config\Repository')
             );
@@ -50,9 +51,33 @@ class DatatableServiceProvider extends ServiceProvider
     {
         return [
             'datatable',
-            'DT19Version',
-            'DT110Version',
-            'dt.query.versions'
         ];
     }
+
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // load views
+        $this->loadViewsFrom(__DIR__.'/../../views', 'datatable');
+
+        // publish views if the user wants to
+        $this->publishes([
+            __DIR__.'/../../views' => base_path('resources/views/vendor/datatable'),
+        ]);
+
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/datatable.php', 'datatable'
+        );
+
+        // publish the configs if the user wants to
+        $this->publishes([
+            __DIR__.'/../../config/datatable.php' => config_path('datatable.php'),
+        ]);
+    }
+
+
 }

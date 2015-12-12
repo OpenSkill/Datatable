@@ -49,8 +49,6 @@ class Datatable19QueryParser
 
         // for each column we need to see if there is a search value
         foreach ($columnConfiguration as $i => $c) {
-            // increment the index as we are 0 based but data tables is not
-            $i++;
             // check if there is something search related
             if ($c->getSearch()->isSearchable() && $query->has("sSearch_" . $i) && !$this->isEmpty($query->get("sSearch_" . $i))) {
                 // search for this column is available

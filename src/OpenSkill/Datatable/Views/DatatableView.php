@@ -2,10 +2,10 @@
 
 namespace OpenSkill\Datatable\Views;
 
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
-use OpenSkill\Datatable\Versions\Version;
 
 /**
  * Class DatatableView
@@ -16,37 +16,35 @@ use OpenSkill\Datatable\Versions\Version;
 class DatatableView
 {
 
-    /**
-     * @var ColumnConfiguration[] the column configuration if any
-     */
-    private $columnConfigurations;
+    /** @var array the columns map with name -> label */
+    private $columns;
 
-    /**
-     * Indicates if the columnConfigurations should be reset on a call to columns.
-     */
+    /** @var bool Indicates if the columnConfigurations should be reset on a call to columns. */
     private $resetColumns = true;
-    /**
-     * @var null|string
-     */
-    private $tableView;
-    /**
-     * @var null|string
-     */
-    private $scriptView;
-    /**
-     * @var null|Version
-     */
-    private $version;
 
-    /**
-     * @var Factory
-     */
+    /** @var string The view that should be used to render the table */
+    private $tableView;
+
+    /** @var string The view that should be used to render the script */
+    private $scriptView;
+
+    /** @var string The id that the table will get in the DOM. Used to create a fitting script for the table */
+    private $tableId;
+
+    /** @var array An array of options that should be noted in the script view of the table */
+    private $scriptOptions = [];
+
+    /** @var array An array of callback that should be noted in the script view of the table. Only differs in encoding */
+    private $scriptCallbacks = [];
+
+    /** @var Factory The factory responsible to render the view with the given data */
     private $viewFactory;
 
-    /**
-     * @var bool true if the columns are also printed as headers on the table, false otherwise
-     */
-    private $printHeaders;
+    /** @var bool true if the columns are also printed as headers on the table, false otherwise */
+    private $printHeaders = false;
+
+    /** @var Repository The repository responsible for the config value resolution */
+    private $configRepository;
 
     /**
      * DatatableView constructor, will take a view as a string if a custom one should be used. will also take the
@@ -54,65 +52,144 @@ class DatatableView
      * If no columns are given the user must provide them before building the view.
      * @param string|null $tableView the name of the view that should be rendered for the table
      * @param string|null $scriptView the name of the view that should be rendered for the script
-     * @param Version|null $version The version that supports the current request
      * @param Factory $viewFactory The factory used to render the views
-     * @param array $columnConfiguration The columnConfiguration of the the server side if available
+     * @param Repository $configRepository The repository responsible for config resolution
+     * @param ColumnConfiguration[] $columnConfiguration The columnConfiguration of the the server side if available
      */
     public function __construct(
-        $tableView = null,
-        $scriptView = null,
-        Version $version = null,
+        $tableView,
+        $scriptView,
         Factory $viewFactory,
+        Repository $configRepository,
         array $columnConfiguration = []
     ) {
-        $this->columnConfigurations = $columnConfiguration;
         $this->tableView = $tableView;
         $this->scriptView = $scriptView;
-        $this->version = $version;
         $this->viewFactory = $viewFactory;
+        $this->configRepository = $configRepository;
+        foreach ($columnConfiguration as $item) {
+            $this->columns[$item->getName()] = $item->getName();
+        }
+        // set table id
+        $this->id($this->configRepository->get('datatable.defaultTableId'));
+    }
+
+    /**
+     * Will set a new id on the table.
+     * @param string $tableId The new id that should be used for the DOM table
+     * @return $this
+     */
+    public function id($tableId)
+    {
+        if (!is_string($tableId)) {
+            throw new \InvalidArgumentException('$tableId should be a string');
+        }
+        $this->tableId = $tableId;
+        return $this;
+    }
+
+    /**
+     * @param string $name the name of the option
+     * @param mixed $options an array of options
+     * @return $this
+     */
+    public function option($name, $options)
+    {
+        $this->scriptOptions[$name] = $options;
+        return $this;
+    }
+
+    /**
+     * @param string $name the name of the callback function
+     * @param string $callback the body of the callback function
+     * @return $this
+     */
+    public function callback($name, $callback)
+    {
+        $this->scriptCallbacks[$name] = $callback;
+        return $this;
     }
 
     /**
      * Indicates that the current columns should have a header on the table
+     * @return $this
      */
-    public function headers() {
+    public function headers()
+    {
         $this->printHeaders = true;
+        return $this;
     }
 
     /**
      * Will set the columns for the view
+     * @param string $columnName The name of the column
+     * @param string $label The label for this column
+     * @return $this
      */
-    public function columns()
+    public function columns($columnName, $label = null)
     {
+        if (!is_string($columnName)) {
+            throw new \InvalidArgumentException('$columnName must be set');
+        }
+
         if ($this->resetColumns) {
-            $this->columnConfigurations = [];
+            $this->columns = [];
             $this->resetColumns = false;
         }
+        if (is_null($label)) {
+            $label = $columnName;
+        }
+        $this->columns[$columnName] = $label;
+        return $this;
     }
 
     /**
      * Will render the table
      *
-     * @return View the view that represents the table
+     * @return string the rendered view that represents the table
      */
     public function table()
     {
-        if (empty($this->columnConfigurations)) {
+        if (empty($this->columns)) {
             throw new \InvalidArgumentException("There are no columns defined");
         }
-        return $this->viewFactory->make($this->tableView);
+
+        return $this->viewFactory
+            ->make($this->tableView, [
+                'columns' => $this->columns,
+                'showHeaders' => $this->printHeaders,
+                'id' => $this->tableId
+            ])
+            ->render();
     }
 
     /**
      * Will render the javascript for the table
      *
-     * @return View the view that represents the script
+     * @return string the rendered view that represents the script
      */
     public function script()
     {
-        if (empty($this->columnConfigurations)) {
+        if (empty($this->columns)) {
             throw new \InvalidArgumentException("There are no columns defined");
         }
-        return $this->viewFactory->make($this->tableView);
+        return $this->viewFactory
+            ->make($this->scriptView, [
+                'id' => $this->tableId,
+                'columns' => $this->columns,
+                'options' => $this->scriptOptions,
+                'callbacks' => $this->scriptCallbacks,
+            ])
+            ->render();
+    }
+
+    /**
+     * Will render the table and directly the script after it. This is a shortcut for
+     * {@link #table} followed by {@link script}
+     * @return string Will return the rendered table and the rendered script as string
+     */
+    public function html()
+    {
+        return $this->table() . $this->script();
     }
 }
