@@ -26,12 +26,12 @@ Currently it supports the following frontend tables:
 This package is available on [http://packagist.org](https://packagist.org/packages/chumper/datatable), just add it to your composer.json
 
 ```json
-"openSkill/datatable": "0.1.1"
+"openSkill/datatable": "0.1.2"
 ```
 
 Alternatively, you can install it using the composer command:
 ```bash
-composer require openSkill/datatable "0.1.1"
+composer require openSkill/datatable
 ```
 
 ### Laravel 
