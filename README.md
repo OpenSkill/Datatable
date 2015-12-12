@@ -1,9 +1,9 @@
 # Openskill/Datatable
 
+[![Build Status][ico-travis]][link-travis]
+[![Software License][ico-license]](LICENSE.md)
 [![Latest Stable Release][ico-stable]][link-packagist]
 [![Latest Unstable Release][ico-unstable]][link-packagist]
-[![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
@@ -52,11 +52,11 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-travis]: https://travis-ci.org/OpenSkill/Datatable.svg?branch=master
 [ico-scrutinizer]: https://coveralls.io/repos/OpenSkill/Datatable/badge.svg?branch=master&service=github
 [ico-code-quality]: https://scrutinizer-ci.com/g/OpenSkill/Datatable/badges/quality-score.png?b=master
-[ico-downloads]: https://img.shields.io/packagist/dt/Openskill/Datatable.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/Openskill/Datatable.svg?style=flat
 
 [link-packagist]: https://packagist.org/packages/Openskill/Datatable
 [link-travis]: https://travis-ci.org/Openskill/Datatable
-[link-scrutinizer]: https://scrutinizer-ci.com/g/Openskill/Datatable/code-structure
+[link-scrutinizer]: https://coveralls.io/github/OpenSkill/Datatable
 [link-code-quality]: https://scrutinizer-ci.com/g/Openskill/Datatable
 [link-downloads]: https://packagist.org/packages/Openskill/Datatable
 [link-author]: https://github.com/Chumper
