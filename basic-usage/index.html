@@ -151,8 +151,7 @@ if ($t-&gt;shouldHandle()) {
 return view('user-view', array('datatable' =&gt; $t-&gt;view()));
 </code></pre>
 
-<p>```html 
-{{
+<pre><code class="html">{{
     $datatable
         -&gt;headers() // tell the table to render the header in the table
         -&gt;columns('id', '#') // show # in the header instead of 'id'
@@ -162,7 +161,8 @@ return view('user-view', array('datatable' =&gt; $t-&gt;view()));
 {{
     $datatable
         -&gt;script() // now render the script
-}</p>
+}
+</code></pre>
               
             </div>
           </div>
