@@ -4,6 +4,7 @@ namespace OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\Columns\ColumnOrder;
 use OpenSkill\Datatable\Columns\ColumnSearch;
 use OpenSkill\Datatable\Data\ResponseData;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
@@ -30,6 +31,11 @@ class CollectionProvider implements Provider
      * @var callable the default global function to check if a row should be included
      */
     private $defaultGlobalSearchFunction;
+
+    /**
+     * @var callable the default global order function
+     */
+    private $defaultGlobalOrderFunction;
 
     /**
      * @var array an array of callables with local search functions to check if the row should be included
@@ -68,6 +74,13 @@ class CollectionProvider implements Provider
                 }
             }
             return false;
+        };
+
+        $this->defaultGlobalOrderFunction = function(array $first, array $second, ColumnOrder $orderColumn) {
+            if(!$orderColumn->isAscending()) {
+                return strnatcmp($first[$orderColumn->columnName()], $second[$orderColumn->columnName()]) * -1;
+            }
+            return strnatcmp($first[$orderColumn->columnName()], $second[$orderColumn->columnName()]);
         };
     }
 
@@ -204,6 +217,17 @@ class CollectionProvider implements Provider
     }
 
     /**
+     * Will accept a global search function for all columns.
+     * @param callable $orderFunction the order function to determine the order of the table
+     * @return $this
+     */
+    public function order(callable $orderFunction)
+    {
+        $this->defaultGlobalOrderFunction = $orderFunction;
+        return $this;
+    }
+
+    /**
      * Will sort the internal collection based on the given query configuration.
      * All tables only support the ordering by just one column, so if there is ordering just take the first ordering
      */
@@ -211,12 +235,10 @@ class CollectionProvider implements Provider
     {
         if ($this->queryConfiguration->hasOrderColumn()) {
             $order = $this->queryConfiguration->orderColumns()[0];
-            $this->collection->sort(function ($first, $second) use ($order) {
-                return strnatcmp($first[$order->columnName()], $second[$order->columnName()]);
+            $orderFunc = $this->defaultGlobalOrderFunction;
+            $this->collection = $this->collection->sort(function ($first, $second) use ($order, $orderFunc) {
+                return $orderFunc($first, $second, $order);
             });
-            if (!$order->isAscending()) {
-                $this->collection->reverse();
-            }
         }
     }
 }
