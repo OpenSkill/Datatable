@@ -111,22 +111,20 @@
               
                 <h1 id="simple-datatable">Simple Datatable</h1>
 <p>The simplest <code>Datatable</code> you can create looks like this:</p>
-<pre><code class="php">$t = Datatable::make(new CollectionProvider(User::all())-&gt;build();
+<pre><code class="php">$t = Datatable::make(new CollectionProvider(User::all())
+    -&gt;column('name')
+    -&gt;build();
 
 if ($t-&gt;shouldHandle()) {
     return $t-&gt;handleRequest();
 }
 
-return view('user-view', array('datatable' =&gt; $t-&gt;view()-&gt;build()));
+return view('user-view', array('datatable' =&gt; $t-&gt;view()));
 </code></pre>
 
 <p>and on the view side</p>
 <pre><code class="html">{{
-    $view-&gt;table();
-}}
-...
-{{
-    $view-&gt;script();
+    $datatable-&gt;html();
 }}
 
 </code></pre>
@@ -138,21 +136,33 @@ return view('user-view', array('datatable' =&gt; $t-&gt;view()-&gt;build()));
 <li>Build the <code>DatatableService</code> </li>
 </ol>
 <p>We then check if the <code>DatatableService</code> should handle the result and if so return the <code>$t-&gt;handleRequest()</code>.</p>
-<p><strong>Please Note</strong>: We are using the default coumns of the <code>User</code> model which means all columns by default.
-On the view side we then just render the <code>table</code> and the <code>javascript</code> part</p>
+<p>On the view side we just render the html and the javascript with the <code>html</code> method.</p>
 <h1 id="more-advanced-example">More advanced example</h1>
 <p>A more sophicticated example could look like this:</p>
 <pre><code class="php">$t = Datatable::make(new CollectionProvider(User::all())
     -&gt;columns('id') // show the id column of the user model
-    -&gt;columns('name') // also show the full name of the user
+    -&gt;columns('name', null, Searchable::NONE(), Orderable::NONE()) // also show the full name of the user, but do not allow searching or ordering of the column
     -&gt;build();
 
 if ($t-&gt;shouldHandle()) {
     return $t-&gt;handleRequest();
 }
 
-return view('user-view', array('datatable' =&gt; $t-&gt;view()-&gt;build()));
+return view('user-view', array('datatable' =&gt; $t-&gt;view()));
 </code></pre>
+
+<p>```html 
+{{
+    $datatable
+        -&gt;headers() // tell the table to render the header in the table
+        -&gt;columns('id', '#') // show # in the header instead of 'id'
+        -&gt;columns('name', 'Full name') // show 'Full name' in the header instead of 'name'
+        -&gt;table(); // render just the table
+}}
+{{
+    $datatable
+        -&gt;script() // now render the script
+}</p>
               
             </div>
           </div>
