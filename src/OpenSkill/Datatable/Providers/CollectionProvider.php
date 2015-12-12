@@ -55,9 +55,15 @@ class CollectionProvider implements Provider
         $this->collection = $collection;
         $this->totalInitialDataCount = $collection->count();
         // define search functions
-        $this->defaultGlobalSearchFunction = function ($data, $search) {
-            foreach ($data as $item) {
-                if (str_contains(mb_strtolower($item), mb_strtolower($search))) {
+        /**
+         * @param array $data the generated data for this row
+         * @param string $search the search value to look for
+         * @param ColumnConfiguration[] $columns the configuration of the columns
+         * @return bool true if the row should be included in the result, false otherwise
+         */
+        $this->defaultGlobalSearchFunction = function ($data, $search, array $columns) {
+            foreach($columns as $column) {
+                if ($column->getSearch()->isSearchable() && str_contains(mb_strtolower($data[$column->getName()]), mb_strtolower($search))) {
                     return true;
                 }
             }
@@ -156,8 +162,7 @@ class CollectionProvider implements Provider
             }
             // also do search right away
             if ($this->queryConfiguration->isGlobalSearch()) {
-                if (!$searchFunc($entry, $this->queryConfiguration->searchValue())
-                ) {
+                if (!$searchFunc($entry, $this->queryConfiguration->searchValue(), $this->columnConfiguration)) {
                     $entry = [];
                 }
             }
