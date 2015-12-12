@@ -325,7 +325,7 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(2, $first['id']);
     }
 
-    public function testDefaultOrder()
+    public function testDefaultOrder2()
     {
         $data = [
             ['id' => 1, 'name' => 'foo'],
