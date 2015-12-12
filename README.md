@@ -48,7 +48,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 [ico-stable]: https://poser.pugx.org/Openskill/Datatable/version
 [ico-unstable]: https://poser.pugx.org/Openskill/Datatable/v/unstable
-[ico-license]: https://poser.pugx.org/Openskill/Datatable/version
+[ico-license]: https://poser.pugx.org/openskill/datatable/license
 [ico-travis]: https://travis-ci.org/OpenSkill/Datatable.svg?branch=master
 [ico-scrutinizer]: https://coveralls.io/repos/OpenSkill/Datatable/badge.svg?branch=master&service=github
 [ico-code-quality]: https://scrutinizer-ci.com/g/OpenSkill/Datatable/badges/quality-score.png?b=master
