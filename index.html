@@ -112,19 +112,19 @@
               
                 <h1 id="introduction">Introduction</h1>
 <p><strong>PLEASE NOTE</strong>: This package is currently under development and not production ready yet!</p>
-<p>OpenSkill/Datatable is a package for <code>laravel4</code> and <code>laravel5</code> as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.</p>
+<p>OpenSkill/Datatable is a package for ~~<code>laravel4</code>~~ and <code>laravel5</code> as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.</p>
 <p>Currently it supports the following frontend tables:</p>
 <ul>
 <li><a href="http://legacy.datatables.net/">Datatables 1.9</a></li>
-<li><a href="http://datatables.net/">Datatables 1.10</a></li>
-<li><a href="http://www.dynatable.com/">Dynatable 0.3.1</a></li>
+<li>~~<a href="http://datatables.net/">Datatables 1.10</a>~~</li>
+<li>~~<a href="http://www.dynatable.com/">Dynatable 0.3.1</a>~~</li>
 </ul>
 <h2 id="features">Features</h2>
 <p><code>Datatable</code> has a number of features:</p>
 <ul>
-<li>Support <code>Eloquent Models</code>, <code>Collections</code>, <code>Eloquent Query Builder</code> and <code>Doctrine Query</code></li>
+<li>Support ~~<code>Eloquent Models</code>~~, <code>Collections</code>, ~~<code>Eloquent Query Builder</code>~~ and ~~<code>Doctrine Query</code>~~</li>
 <li>Easy to use interface with fully configurable behaviour</li>
-<li>Supports <a href="http://legacy.datatables.net/">Datatables 1.9</a>, <a href="http://datatables.net/">Datatables 1.10</a> and <a href="http://www.dynatable.com/">Dynatable 0.3.1</a></li>
+<li>Supports <a href="http://legacy.datatables.net/">Datatables 1.9</a>, ~~<a href="http://datatables.net/">Datatables 1.10</a>~~ and ~~<a href="http://www.dynatable.com/">Dynatable 0.3.1</a>~~</li>
 <li>Automatically generates html tables and the appropriate javascript on the side</li>
 <li>Fully tested</li>
 <li>Fully configurable</li>
@@ -133,19 +133,15 @@
 <h2 id="quickstart">Quickstart</h2>
 <h3 id="composer">Composer</h3>
 <p>This package is available on <a href="https://packagist.org/packages/chumper/datatable">http://packagist.org</a>, just add it to your composer.json</p>
-<pre><code class="json">&quot;openSkill/datatable&quot;: &quot;0.1&quot;
+<pre><code class="json">&quot;openSkill/datatable&quot;: &quot;0.1.1&quot;
 </code></pre>
 
 <p>Alternatively, you can install it using the composer command:</p>
-<pre><code class="bash">composer require openSkill/datatable &quot;0.1&quot;
+<pre><code class="bash">composer require openSkill/datatable &quot;0.1.1&quot;
 </code></pre>
 
 <h3 id="laravel">Laravel</h3>
 <p>The package is built with Laravel in mind, so just add the following lines to app.php</p>
-<h4 id="laravel-4">Laravel 4</h4>
-<pre><code class="php">no idea, please update
-</code></pre>
-
 <h4 id="laravel-5">Laravel 5</h4>
 <pre><code class="php">    'providers' =&gt; [
 
@@ -162,7 +158,7 @@
 </code></pre>
 
 <p>To override the default configuration options you can publish the config file.</p>
-<pre><code class="bash">php artisan config:publish openSkill/datatable
+<pre><code class="bash">php artisan vendor:publish
 </code></pre>
 
 <p><strong>Cogratulation</strong>, you are now able to use <code>Datatable</code> in your project. </p>
@@ -216,5 +212,5 @@
 
 <!--
 MkDocs version : 0.14.0
-Build Date UTC : 2015-12-08 08:38:43.765215
+Build Date UTC : 2015-12-12 21:01:36.061228
 -->
