@@ -280,8 +280,15 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
             ->build();
 
         $provider = new CollectionProvider(new Collection($data));
-        $provider->order(function($first, $second, ColumnOrder $order){
-            if(!$order->isAscending()) {
+
+        $provider->order(/**
+         * @param $first
+         * @param $second
+         * @param ColumnOrder[] $order
+         * @return int
+         */
+        function($first, $second, array $order){
+            if(!$order[0]->isAscending()) {
                 return ($first['id'] < $second['id']) ? 1 : (($first['id'] > $second['id']) ? -1 : 0);
             }
             return ($first['id'] < $second['id']) ? -1 : (($first['id'] > $second['id']) ? 1 : 0);
@@ -325,6 +332,35 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(2, $first['id']);
     }
 
+    public function testNoOrder()
+    {
+        $data = [
+            ['id' => 1, 'name' => 'foo'],
+            ['id' => 2, 'name' => 'foo'],
+        ];
+
+        $queryConfiguration = QueryConfigurationBuilder::create()
+            ->start(0)
+            ->length(2)
+            ->drawCall(1)
+            ->columnOrder('name', 'asc')
+            ->build();
+
+        $columnConfiguration = ColumnConfigurationBuilder::create()
+            ->name('name')
+            ->build();
+
+        $provider = new CollectionProvider(new Collection($data));
+
+        $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
+        $data = $provider->process();
+
+        $this->assertSame(2, $data->data()->count());
+        $first = $data->data()->first();
+
+        $this->assertSame('foo', $first['name']);
+    }
+
     public function testDefaultOrder2()
     {
         $data = [
@@ -352,5 +388,43 @@ class CollectionProviderTest extends \PHPUnit_Framework_TestCase
         $first = $data->data()->first();
 
         $this->assertSame(1, $first['id']);
+    }
+
+    public function testDefaultOrderMulti()
+    {
+        $data = [
+            ['id' => 1, 'name' => 'foo'],
+            ['id' => 2, 'name' => 'bar'],
+            ['id' => 3, 'name' => 'foo'],
+            ['id' => 4, 'name' => 'bar'],
+        ];
+
+        $queryConfiguration = QueryConfigurationBuilder::create()
+            ->start(0)
+            ->length(4)
+            ->drawCall(1)
+            ->columnOrder('name', 'asc')
+            ->columnOrder('id', 'desc')
+            ->build();
+
+        $columnConfiguration = ColumnConfigurationBuilder::create()
+            ->name('id')
+            ->build();
+
+        $columnConfiguration2 = ColumnConfigurationBuilder::create()
+            ->name('name')
+            ->build();
+
+        $provider = new CollectionProvider(new Collection($data));
+
+        $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration, $columnConfiguration2]);
+        $data = $provider->process();
+
+        $this->assertSame(4, $data->data()->count());
+        $first = $data->data()->first();
+        $second = $data->data()->get(1);
+
+        $this->assertSame(4, $first['id']);
+        $this->assertSame(2, $second['id']);
     }
 }

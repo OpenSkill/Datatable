@@ -5,6 +5,7 @@ namespace OpenSkill\Datatable;
 use App;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use OpenSkill\Datatable\Versions\Datatable110Version;
 use OpenSkill\Datatable\Versions\Datatable19Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -34,8 +35,9 @@ class DatatableServiceProvider extends ServiceProvider
 
         $this->app->singleton("datatable", function (Application $app) use ($requestStack) {
             $dt = new Datatable19Version($requestStack);
+            $dt2 = new Datatable110Version($requestStack);
             return new Datatable(
-                new VersionEngine([$dt], $dt),
+                new VersionEngine([$dt2, $dt]),
                 $app->make('Illuminate\Contracts\View\Factory'),
                 $app->make('Illuminate\Contracts\Config\Repository')
             );

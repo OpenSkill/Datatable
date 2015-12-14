@@ -19,18 +19,7 @@ class VersionEngineTest extends \PHPUnit_Framework_TestCase
 
         $version->shouldReceive('canParseRequest')->andReturn(true);
 
-        $versionEngine = new VersionEngine([$version], $version);
-
-        $this->assertTrue($versionEngine->hasVersion());
-        $this->assertSame($version, $versionEngine->getVersion());
-    }
-
-    public function testDefaultVersion()
-    {
-        /** @var Version $version */
-        $version = Mockery::mock('OpenSkill\Datatable\Versions\Datatable19Version');
-
-        $versionEngine = new VersionEngine([], $version);
+        $versionEngine = new VersionEngine([$version]);
 
         $this->assertTrue($versionEngine->hasVersion());
         $this->assertSame($version, $versionEngine->getVersion());
@@ -41,7 +30,7 @@ class VersionEngineTest extends \PHPUnit_Framework_TestCase
         /** @var Version $version */
         $version = Mockery::mock('OpenSkill\Datatable\Versions\Datatable19Version');
 
-        $versionEngine = new VersionEngine([], $version);
+        $versionEngine = new VersionEngine([]);
 
         $versionEngine->setVersion($version);
 
