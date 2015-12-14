@@ -253,15 +253,18 @@ class CollectionProvider implements Provider
          */
         $this->defaultGlobalOrderFunction = function (array $first, array $second, array $orderColumn) {
             foreach($orderColumn as $order) {
-                $value = strnatcmp($first[$order->columnName()], $second[$order->columnName()]);
-                if($value == 0) {
-                   continue;
+                if(array_key_exists($order->columnName(), $first)) {
+                    $value = strnatcmp($first[$order->columnName()], $second[$order->columnName()]);
+                    if($value == 0) {
+                       continue;
+                    }
+                    if (!$order->isAscending()) {
+                        return $value * -1;
+                    }
+                    return $value;
                 }
-                if (!$order->isAscending()) {
-                    return $value * -1;
-                }
-                return $value;
             }
+            return 0;
         };
     }
 }
