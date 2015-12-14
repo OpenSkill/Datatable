@@ -18,16 +18,14 @@ class VersionEngine
     private $version = null;
 
     /**
-     * DTVersionEngine constructor.
+     * DTVersionEngine constructor. The first version will be set as default version.
      *
      * @param Version[] $versions an array of possible version this data table supports
-     * @param Version $defaultVersion The version that should be used as default
      */
-    public function __construct(array $versions, Version $defaultVersion)
+    public function __construct(array $versions)
     {
-        $this->version = $defaultVersion;
         foreach ($versions as $v) {
-            if ($v->canParseRequest()) {
+            if ($v->canParseRequest() || is_null($this->version)) {
                 $this->version = $v;
                 break;
             }
