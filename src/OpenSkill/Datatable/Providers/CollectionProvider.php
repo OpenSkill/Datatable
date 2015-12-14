@@ -60,28 +60,9 @@ class CollectionProvider implements Provider
     {
         $this->collection = $collection;
         $this->totalInitialDataCount = $collection->count();
-        // define search functions
-        /**
-         * @param array $data the generated data for this row
-         * @param string $search the search value to look for
-         * @param ColumnConfiguration[] $columns the configuration of the columns
-         * @return bool true if the row should be included in the result, false otherwise
-         */
-        $this->defaultGlobalSearchFunction = function ($data, $search, array $columns) {
-            foreach($columns as $column) {
-                if ($column->getSearch()->isSearchable() && str_contains(mb_strtolower($data[$column->getName()]), mb_strtolower($search))) {
-                    return true;
-                }
-            }
-            return false;
-        };
 
-        $this->defaultGlobalOrderFunction = function(array $first, array $second, ColumnOrder $orderColumn) {
-            if(!$orderColumn->isAscending()) {
-                return strnatcmp($first[$orderColumn->columnName()], $second[$orderColumn->columnName()]) * -1;
-            }
-            return strnatcmp($first[$orderColumn->columnName()], $second[$orderColumn->columnName()]);
-        };
+        $this->setupSearch();
+        $this->setupOrder();
     }
 
     /**
@@ -229,16 +210,58 @@ class CollectionProvider implements Provider
 
     /**
      * Will sort the internal collection based on the given query configuration.
-     * All tables only support the ordering by just one column, so if there is ordering just take the first ordering
+     * Most tables only support the ordering by just one column, but we will enable sorting on all columns here
      */
     private function sortCollection()
     {
         if ($this->queryConfiguration->hasOrderColumn()) {
-            $order = $this->queryConfiguration->orderColumns()[0];
+            $order = $this->queryConfiguration->orderColumns();
             $orderFunc = $this->defaultGlobalOrderFunction;
             $this->collection = $this->collection->sort(function ($first, $second) use ($order, $orderFunc) {
                 return $orderFunc($first, $second, $order);
             });
         }
+    }
+
+    public function setupSearch()
+    {
+        /**
+         * @param array $data the generated data for this row
+         * @param string $search the search value to look for
+         * @param ColumnConfiguration[] $columns the configuration of the columns
+         * @return bool true if the row should be included in the result, false otherwise
+         */
+        $this->defaultGlobalSearchFunction = function ($data, $search, array $columns) {
+            foreach ($columns as $column) {
+                if ($column->getSearch()->isSearchable() && str_contains(mb_strtolower($data[$column->getName()]),
+                        mb_strtolower($search))
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+    }
+
+    public function setupOrder()
+    {
+        /**
+         * @param array $first
+         * @param array $second
+         * @param ColumnOrder[] $orderColumn
+         * @return int
+         */
+        $this->defaultGlobalOrderFunction = function (array $first, array $second, array $orderColumn) {
+            foreach($orderColumn as $order) {
+                $value = strnatcmp($first[$order->columnName()], $second[$order->columnName()]);
+                if($value == 0) {
+                   continue;
+                }
+                if (!$order->isAscending()) {
+                    return $value * -1;
+                }
+                return $value;
+            }
+        };
     }
 }

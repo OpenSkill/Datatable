@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
-class Datatable19QueryParser extends QueryParser
+class Datatable110QueryParser extends QueryParser
 {
 
     /**
@@ -22,7 +22,7 @@ class Datatable19QueryParser extends QueryParser
      */
     public function canParse(Request $request)
     {
-        return $request->query->has("sEcho");
+        return $request->query->has("draw");
     }
 
     /**
@@ -47,17 +47,15 @@ class Datatable19QueryParser extends QueryParser
 
         $this->getRegex($query, $builder);
 
+        $this->getOrder($query, $builder, $columnConfiguration);
+
         // for each column we need to see if there is a search value
         foreach ($columnConfiguration as $i => $c) {
             // check if there is something search related
-            if ($c->getSearch()->isSearchable() && $query->has("sSearch_" . $i) && !$this->isEmpty($query->get("sSearch_" . $i))) {
+            if ($c->getSearch()->isSearchable() &&
+                !$this->isEmpty($query->get("columns[" . $i . "][search][value]", null, true))) {
                 // search for this column is available
-                $builder->columnSearch($c->getName(), $query->get("sSearch_" . $i));
-            }
-            // check if there is something order related
-            if ($c->getOrder()->isOrderable() && $query->has("iSortCol_" . $i) && !$this->isEmpty($query->get("iSortCol_" . $i))) {
-                // order for this column is available
-                $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
+                $builder->columnSearch($c->getName(), $query->get("columns[" . $i . "][search][value]", null, true));
             }
         }
 
@@ -80,8 +78,8 @@ class Datatable19QueryParser extends QueryParser
      */
     public function getDrawCall($query, $builder)
     {
-        if ($query->has('sEcho')) {
-            $builder->drawCall($query->get('sEcho'));
+        if ($query->has('draw')) {
+            $builder->drawCall($query->get('draw'));
         }
     }
 
@@ -91,8 +89,8 @@ class Datatable19QueryParser extends QueryParser
      */
     public function getStart($query, $builder)
     {
-        if ($query->has('iDisplayStart')) {
-            $builder->start($query->get('iDisplayStart'));
+        if ($query->has('start')) {
+            $builder->start($query->get('start'));
         }
     }
 
@@ -102,8 +100,8 @@ class Datatable19QueryParser extends QueryParser
      */
     public function getLength($query, $builder)
     {
-        if ($query->has('iDisplayLength')) {
-            $builder->length($query->get('iDisplayLength'));
+        if ($query->has('length')) {
+            $builder->length($query->get('length'));
         }
     }
 
@@ -113,8 +111,8 @@ class Datatable19QueryParser extends QueryParser
      */
     public function getSearch($query, $builder)
     {
-        if ($query->has('sSearch') && !$this->isEmpty($query->get('sSearch'))) {
-            $builder->searchValue($query->get('sSearch'));
+        if (!$this->isEmpty($query->get('search[value]', null, true))) {
+            $builder->searchValue($query->get('search[value]', null, true));
         }
     }
 
@@ -124,8 +122,29 @@ class Datatable19QueryParser extends QueryParser
      */
     public function getRegex($query, $builder)
     {
-        if ($query->has('bRegex')) {
-            $builder->searchRegex($query->get('bRegex'));
+        if (!$this->isEmpty($query->get('search[regex]', null, true))) {
+            $builder->searchRegex($query->get('search[regex]', null, true));
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     * @param ColumnConfiguration[] $columnConfiguration
+     */
+    private function getOrder(ParameterBag $query, QueryConfigurationBuilder $builder, array $columnConfiguration)
+    {
+        //loop over the order
+        if(($query->has('order'))) {
+            $order = $query->get('order');
+            foreach($order as $i => $config) {
+                if(array_key_exists($config['column'], $columnConfiguration)) {
+                    $column = $columnConfiguration[$config['column']];
+                    if($column->getOrder()->isOrderable()) {
+                        $builder->columnOrder($column->getName(), $config['dir']);
+                    }
+                }
+            }
         }
     }
 }

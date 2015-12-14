@@ -5,30 +5,29 @@ namespace OpenSkill\Datatable\Versions;
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Data\ResponseData;
-use OpenSkill\Datatable\Queries\Parser\Datatable19QueryParser;
-use OpenSkill\Datatable\Queries\Parser\QueryParser;
+use OpenSkill\Datatable\Queries\Parser\Datatable110QueryParser;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class Datatable19Version
+ * Class Datatable110Version
  * @package OpenSkill\Datatable\Versions
  *
- * Version that supports the 1.9 version of datatables
- * http://legacy.datatables.net/index
+ * Version that supports the 1.10 version of datatables
+ * http://datatables.net/index
  *
  */
-class Datatable19Version extends DatatableVersion
+class Datatable110Version extends DatatableVersion
 {
     /**
-     * Datatable19Version constructor.
+     * Datatable110Version constructor.
      *
      * @param RequestStack $requestStack The current request
      */
     public function __construct(RequestStack $requestStack)
     {
-        parent::__construct($requestStack, new Datatable19QueryParser());
+        parent::__construct($requestStack, new Datatable110QueryParser());
     }
 
     /**
@@ -44,10 +43,10 @@ class Datatable19Version extends DatatableVersion
         array $columnConfigurations
     ) {
         $responseData = [
-            'sEcho' => $queryConfiguration->drawCall(),
-            'iTotalRecords' => $data->totalDataCount(),
-            'iTotalDisplayRecords' => $data->data()->count(),
-            'aaData' => $data->data()->toArray()
+            'draw' => $queryConfiguration->drawCall(),
+            'recordsTotal' => $data->totalDataCount(),
+            'recordsFiltered' => $data->data()->count(),
+            'data' => $data->data()->toArray()
         ];
         return new JsonResponse($responseData);
     }
@@ -65,6 +64,6 @@ class Datatable19Version extends DatatableVersion
      */
     public function scriptView()
     {
-        return "datatable::datatable19";
+        return "datatable::datatable110";
     }
 }
