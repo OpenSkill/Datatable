@@ -51,7 +51,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-stable]: https://poser.pugx.org/OpenSkill/Datatable/version
+[ico-stable]: https://poser.pugx.org/Openskill/Datatable/version
 [ico-unstable]: https://poser.pugx.org/Openskill/Datatable/v/unstable
 [ico-license]: https://poser.pugx.org/openskill/datatable/license
 [ico-travis]: https://travis-ci.org/OpenSkill/Datatable.svg?branch=master
@@ -60,7 +60,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-downloads]: https://img.shields.io/packagist/dt/Openskill/Datatable.svg?style=flat
 
 [link-packagist]: https://packagist.org/packages/Openskill/Datatable
-[link-travis]: https://travis-ci.org/Openskill/Datatable
+[link-travis]: https://travis-ci.org/OpenSkill/Datatable
 [link-scrutinizer]: https://coveralls.io/github/OpenSkill/Datatable
 [link-code-quality]: https://scrutinizer-ci.com/g/Openskill/Datatable
 [link-downloads]: https://packagist.org/packages/Openskill/Datatable
