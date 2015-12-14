@@ -2,6 +2,10 @@
 
 All Notable changes to `Datatable` will be documented in this file
 
+## 0.2.0 - 2015-12-14
+### Added
+* [Datatable 1.10 Support] [#14](https://github.com/OpenSkill/Datatable/issues/14) - Added support for the current version of datatables and made it default
+
 ## 0.1.2 - 2015-12-13
 ### Fixed
 * [CollectionProvider] [#12](https://github.com/OpenSkill/Datatable/issues/12) - `CollectionProvider` now accepts a custom order function
