@@ -49,15 +49,7 @@ class Datatable110QueryParser extends QueryParser
 
         $this->getOrder($query, $builder, $columnConfiguration);
 
-        // for each column we need to see if there is a search value
-        foreach ($columnConfiguration as $i => $c) {
-            // check if there is something search related
-            if ($c->getSearch()->isSearchable() &&
-                !$this->isEmpty($query->get("columns[" . $i . "][search][value]", null, true))) {
-                // search for this column is available
-                $builder->columnSearch($c->getName(), $query->get("columns[" . $i . "][search][value]", null, true));
-            }
-        }
+        $this->getSearchColumns($query, $builder, $columnConfiguration);
 
         return $builder->build();
     }
@@ -70,6 +62,25 @@ class Datatable110QueryParser extends QueryParser
     private function isEmpty($string)
     {
         return empty($string);
+    }
+
+    /**
+     * Helper function that will check if an array key exists
+     * @param mixed $array
+     * @param string $key key to check
+     * @return bool true if array & exists, false otherwise
+     */
+    private function isArrayAndHasKey($array, $key)
+    {
+        if (!is_array($array)) {
+            return false;
+        }
+
+        if (array_key_exists($key, $array)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -111,8 +122,32 @@ class Datatable110QueryParser extends QueryParser
      */
     public function getSearch($query, $builder)
     {
-        if (!$this->isEmpty($query->get('search[value]', null, true))) {
-            $builder->searchValue($query->get('search[value]', null, true));
+        $search = $query->get('search');
+
+        if ($this->isArrayAndHasKey($search, 'value')) {
+            $builder->searchValue($search['value'], null, true);
+        }
+    }
+
+    public function getSearchColumns($query, $builder, array $columnConfiguration)
+    {
+        // for each column we need to see if there is a search value
+        $columns = $query->get('columns');
+
+        foreach ($columnConfiguration as $i => $c) {
+            // check if there is something search related
+            if (!isset($columns[$i])) {
+                continue;
+            }
+
+            if ($c->getSearch()->isSearchable()) {
+                // search for this column is available
+                $value = $columns[$i]['search']['value'];
+
+                if (!$this->isEmpty($value)) {
+                    $builder->columnSearch($c->getName(), $columns[$i]['search']['value'], null, true);
+                }
+            }
         }
     }
 
@@ -122,8 +157,10 @@ class Datatable110QueryParser extends QueryParser
      */
     public function getRegex($query, $builder)
     {
-        if (!$this->isEmpty($query->get('search[regex]', null, true))) {
-            $builder->searchRegex($query->get('search[regex]', null, true));
+        $search = $query->get('search');
+
+        if ($this->isArrayAndHasKey($search, 'regex')) {
+            $builder->searchRegex($search['regex'], null, true);
         }
     }
 
