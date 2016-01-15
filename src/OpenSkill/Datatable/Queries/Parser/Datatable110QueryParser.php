@@ -6,7 +6,6 @@ namespace OpenSkill\Datatable\Queries\Parser;
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 use OpenSkill\Datatable\Queries\QueryConfigurationBuilder;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
