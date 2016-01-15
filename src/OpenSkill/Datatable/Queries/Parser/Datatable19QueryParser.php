@@ -47,19 +47,7 @@ class Datatable19QueryParser extends QueryParser
 
         $this->getRegex($query, $builder);
 
-        // for each column we need to see if there is a search value
-        foreach ($columnConfiguration as $i => $c) {
-            // check if there is something search related
-            if ($c->getSearch()->isSearchable() && $query->has("sSearch_" . $i) && !$this->isEmpty($query->get("sSearch_" . $i))) {
-                // search for this column is available
-                $builder->columnSearch($c->getName(), $query->get("sSearch_" . $i));
-            }
-            // check if there is something order related
-            if ($c->getOrder()->isOrderable() && $query->has("iSortCol_" . $i) && !$this->isEmpty($query->get("iSortCol_" . $i))) {
-                // order for this column is available
-                $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
-            }
-        }
+        $this->getSearchColumns($query, $builder, $columnConfiguration);
 
         return $builder->build();
     }
@@ -115,6 +103,27 @@ class Datatable19QueryParser extends QueryParser
     {
         if ($query->has('sSearch') && !$this->isEmpty($query->get('sSearch'))) {
             $builder->searchValue($query->get('sSearch'));
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     */
+    public function getSearchColumns($query, $builder, array $columnConfiguration)
+    {
+        // for each column we need to see if there is a search value
+        foreach ($columnConfiguration as $i => $c) {
+            // check if there is something search related
+            if ($c->getSearch()->isSearchable() && $query->has("sSearch_" . $i) && !$this->isEmpty($query->get("sSearch_" . $i))) {
+                // search for this column is available
+                $builder->columnSearch($c->getName(), $query->get("sSearch_" . $i));
+            }
+            // check if there is something order related
+            if ($c->getOrder()->isOrderable() && $query->has("iSortCol_" . $i) && !$this->isEmpty($query->get("iSortCol_" . $i))) {
+                // order for this column is available
+                $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
+            }
         }
     }
 
