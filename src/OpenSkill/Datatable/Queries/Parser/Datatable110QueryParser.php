@@ -148,7 +148,7 @@ class Datatable110QueryParser extends QueryParser
                 $value = $columns[$i]['search']['value'];
 
                 if (!$this->isEmpty($value)) {
-                    $builder->columnSearch($c->getName(), $columns[$i]['search']['value'], null, true);
+                    $builder->columnSearch($c->getName(), $columns[$i]['search']['value']);
                 }
             }
         }

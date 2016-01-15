@@ -43,7 +43,7 @@ class QueryConfigurationBuilder
      */
     public static function create()
     {
-        return new QueryCOnfigurationBuilder();
+        return new QueryConfigurationBuilder();
     }
 
     /**
