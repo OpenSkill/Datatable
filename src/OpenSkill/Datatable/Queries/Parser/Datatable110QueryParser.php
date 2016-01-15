@@ -125,10 +125,14 @@ class Datatable110QueryParser extends QueryParser
         $search = $query->get('search');
 
         if ($this->isArrayAndHasKey($search, 'value')) {
-            $builder->searchValue($search['value'], null, true);
+            $builder->searchValue($search['value']);
         }
     }
 
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     */
     public function getSearchColumns($query, $builder, array $columnConfiguration)
     {
         // for each column we need to see if there is a search value
@@ -160,7 +164,7 @@ class Datatable110QueryParser extends QueryParser
         $search = $query->get('search');
 
         if ($this->isArrayAndHasKey($search, 'regex')) {
-            $builder->searchRegex($search['regex'], null, true);
+            $builder->searchRegex($search['regex']);
         }
     }
 
