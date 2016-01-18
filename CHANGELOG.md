@@ -2,6 +2,10 @@
 
 All Notable changes to `Datatable` will be documented in this file
 
+## 0.2.1 - 2016-01-18
+### Fixed
+* Support Symphony 3.0 [#17](https://github.com/OpenSkill/Datatable/issues/17) - OpenSkill does not work with symfony/http-foundation ~3.0
+
 ## 0.2.0 - 2015-12-14
 ### Added
 * [Datatable 1.10 Support] [#14](https://github.com/OpenSkill/Datatable/issues/14) - Added support for the current version of datatables and made it default
