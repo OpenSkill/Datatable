@@ -7,7 +7,7 @@
             "sAjaxSource": "{{ isset($options['route']) ? $options['route'] : '/' }}",
             "aoColumns": [
                 @foreach($columns as $name => $label)
-                { 'mData': '{{ $label }}' },
+                { 'mData': '{{ $name }}' },
                 @endforeach
             ]
         });
