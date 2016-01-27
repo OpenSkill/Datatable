@@ -4,7 +4,7 @@
         oTable = jQuery('#{{ $id }}').dataTable({
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": "/",
+            "sAjaxSource": "{{ isset($options['route']) ? $options['route'] : '/' }}",
             "aoColumns": [
                 @foreach($columns as $name => $label)
                 { 'mData': '{{ $label }}' },
