@@ -96,6 +96,7 @@ class DatatableViewTest extends \PHPUnit_Framework_TestCase
                     'columns' => ['id' => 'id'],
                     'showHeaders' => false,
                     'id' => 123,
+                    'endpoint' => '/'
                 ]
             ])
             ->times(1)
@@ -119,6 +120,7 @@ class DatatableViewTest extends \PHPUnit_Framework_TestCase
                         'fooBar1' => ['fooBar']
                     ],
                     'callbacks' => [],
+                    'endpoint' => '/'
                 ]
             ])
             ->times(1)
@@ -143,6 +145,7 @@ class DatatableViewTest extends \PHPUnit_Framework_TestCase
                         'fooBar' => 'fooBar',
                         'fooBar1' => ['fooBar']
                     ],
+                    'endpoint' => '/'
                 ]
             ])
             ->times(1)
@@ -163,7 +166,8 @@ class DatatableViewTest extends \PHPUnit_Framework_TestCase
                     'columns' => ['id' => 'id'],
                     'showHeaders' => true,
                     'id' => 'fooBar',
-                ]
+                    'endpoint' => '/'
+                ],
             ])
             ->times(1)
             ->andReturn($this->view);
@@ -185,7 +189,8 @@ class DatatableViewTest extends \PHPUnit_Framework_TestCase
                     ],
                     'showHeaders' => false,
                     'id' => 'fooBar',
-                ]
+                    'endpoint' => '/'
+                ],
             ])
             ->times(1)
             ->andReturn($this->view);
@@ -201,6 +206,7 @@ class DatatableViewTest extends \PHPUnit_Framework_TestCase
                     ],
                     'options' => [],
                     'callbacks' => [],
+                    'endpoint' => '/'
                 ]
             ])
             ->times(1)
@@ -209,6 +215,40 @@ class DatatableViewTest extends \PHPUnit_Framework_TestCase
         $this->dtv2->columns('fooBar', 'fooBarLabel');
         $this->dtv2->columns('fooBar2');
 
+        $this->dtv2->html();
+    }
+
+    public function testEndpoint()
+    {
+        $this->viewFactory->shouldReceive('make')
+            ->withArgs([
+                'fooTable',
+                [
+                    'columns' => ['id' => 'id'],
+                    'showHeaders' => false,
+                    'id' => 'fooBar',
+                    'endpoint' => '/test/endpoint/gets/set'
+                ],
+            ])
+            ->times(1)
+            ->andReturn($this->view);
+
+        $this->viewFactory->shouldReceive('make')
+            ->withArgs([
+                'fooScript',
+                [
+                    'id' => 'fooBar',
+                    'columns' => ['id' => 'id'],
+                    'options' => [],
+                    'callbacks' => [],
+                    'endpoint' => '/test/endpoint/gets/set'
+                ]
+            ])
+            ->times(1)
+            ->andReturn($this->view);
+
+
+        $this->dtv2->endpoint('/test/endpoint/gets/set');
         $this->dtv2->html();
     }
 
