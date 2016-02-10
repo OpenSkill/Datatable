@@ -36,11 +36,7 @@ abstract class DatatableVersion extends Version
      */
     public function canParseRequest()
     {
-        $request = $this->requestStack->getCurrentRequest();
-        if (is_null($request)) {
-            throw new \InvalidArgumentException("Can not determine a request that is null");
-        }
-        return $this->queryParser->canParse($request);
+        return $this->queryParser->canParse($this->getRequest());
     }
 
     /**
@@ -51,10 +47,21 @@ abstract class DatatableVersion extends Version
      */
     public function parseRequest(array $columnConfiguration)
     {
+        return $this->queryParser->parse($this->getRequest(), $columnConfiguration);
+    }
+
+    /**
+     * Get the request out of the request stack
+     * @return \Symfony\Component\HttpFoundation\Request
+     * @throws \InvalidArgumentException when the current request is empty/null
+     */
+    private function getRequest()
+    {
         $request = $this->requestStack->getCurrentRequest();
         if (is_null($request)) {
             throw new \InvalidArgumentException("Can not parse a request that is null");
         }
-        return $this->queryParser->parse($request, $columnConfiguration);
+
+        return $request;
     }
 }
