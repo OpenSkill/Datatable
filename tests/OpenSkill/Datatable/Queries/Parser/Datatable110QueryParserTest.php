@@ -251,4 +251,48 @@ class Datatable110QueryParserTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $conf->searchColumns());
         $this->assertFalse($conf->isColumnSearch());
     }
+
+    public function testArrayHasValidKeys()
+    {
+        $requestParameters = [
+            'draw' => 13,
+            'start' => 11,
+            'length' => 103,
+            'order' => [
+                0 => [
+                    'column' => 0,
+                    'dir' => 'asc'
+                ],
+            ],
+        ];
+
+        $this->request = new Request($requestParameters);
+        $this->parser = new Datatable110QueryParser($this->request);
+
+        $column = ColumnConfigurationBuilder::create()
+            ->name("id")
+            ->build();
+
+        $conf = $this->parser->parse($this->request, [$column]);
+        $this->assertFalse($conf->isGlobalSearch());
+
+        $requestParameters['search'] = [
+            'string' => 'something'
+        ];
+
+        $this->request = new Request($requestParameters);
+        $this->parser = new Datatable110QueryParser($this->request);
+        $conf = $this->parser->parse($this->request, [$column]);
+        $this->assertFalse($conf->isGlobalSearch());
+
+        $requestParameters['search'] = [
+            'string' => 'something',
+            'regex' => true
+        ];
+
+        $this->request = new Request($requestParameters);
+        $this->parser = new Datatable110QueryParser($this->request);
+        $conf = $this->parser->parse($this->request, [$column]);
+        $this->assertFalse($conf->isGlobalSearch());
+    }
 }
