@@ -142,23 +142,22 @@ class ColumnConfigurationBuilder
     private function checkCallable()
     {
         if (is_null($this->callable) || !is_callable($this->callable)) {
-            $self = $this;
-            $this->callable = function ($data) use (&$self) {
-                $name = $self->name;
+            $this->callable = function ($data) {
+                $name = $this->name;
 
                 if (is_array($data) && array_key_exists($name, $data)) {
                     return $data[$name];
-                } else {
-                    if (is_object($data) && property_exists($data, $name)) {
-                        return $data->$name;
-                    } else {
-                        if (is_object($data) && method_exists($data, $name)) {
-                            return $data->$name();
-                        } else {
-                            return "";
-                        }
-                    }
                 }
+
+                if (is_object($data) && property_exists($data, $name)) {
+                    return $data->$name;
+                }
+
+                if (is_object($data) && method_exists($data, $name)) {
+                    return $data->$name();
+                }
+
+                return "";
             };
         }
     }
