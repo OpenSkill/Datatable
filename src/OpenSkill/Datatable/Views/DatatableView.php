@@ -46,6 +46,9 @@ class DatatableView
     /** @var Repository The repository responsible for the config value resolution */
     private $configRepository;
 
+    /** @var string the URL for the endpoint */
+    private $endpointURL = '/';
+
     /**
      * DatatableView constructor, will take a view as a string if a custom one should be used. will also take the
      * column configurations to provide out of the box headers for the view.
@@ -121,6 +124,17 @@ class DatatableView
     }
 
     /**
+     * Sets the endpoint URL that will be passed to templates when rendering html & scripts.
+     * @param $endpoint_url
+     * @return $this
+     */
+    public function endpoint($endpoint_url)
+    {
+        $this->endpointURL = $endpoint_url;
+        return $this;
+    }
+
+    /**
      * Will set the columns for the view
      * @param string $columnName The name of the column
      * @param string $label The label for this column
@@ -158,7 +172,8 @@ class DatatableView
             ->make($this->tableView, [
                 'columns' => $this->columns,
                 'showHeaders' => $this->printHeaders,
-                'id' => $this->tableId
+                'id' => $this->tableId,
+                'endpoint' => $this->endpointURL,
             ])
             ->render();
     }
@@ -179,6 +194,7 @@ class DatatableView
                 'columns' => $this->columns,
                 'options' => $this->scriptOptions,
                 'callbacks' => $this->scriptCallbacks,
+                'endpoint' => $this->endpointURL,
             ])
             ->render();
     }
