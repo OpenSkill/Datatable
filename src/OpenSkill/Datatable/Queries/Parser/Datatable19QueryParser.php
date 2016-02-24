@@ -4,6 +4,7 @@ namespace OpenSkill\Datatable\Queries\Parser;
 
 
 use OpenSkill\Datatable\Columns\ColumnConfiguration;
+use OpenSkill\Datatable\DatatableException;
 use OpenSkill\Datatable\Queries\QueryConfiguration;
 use OpenSkill\Datatable\Queries\QueryConfigurationBuilder;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -109,6 +110,7 @@ class Datatable19QueryParser extends QueryParser
     /**
      * @param ParameterBag $query
      * @param QueryConfigurationBuilder $builder
+     * @param ColumnConfiguration[] $columnConfiguration
      */
     public function getSearchColumns($query, $builder, array $columnConfiguration)
     {
@@ -119,10 +121,36 @@ class Datatable19QueryParser extends QueryParser
                 // search for this column is available
                 $builder->columnSearch($c->getName(), $query->get("sSearch_" . $i));
             }
-            // check if there is something order related
-            if ($c->getOrder()->isOrderable() && $query->has("iSortCol_" . $i) && !$this->isEmpty($query->get("iSortCol_" . $i))) {
-                // order for this column is available
-                $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
+        }
+
+        if ($query->has('iSortingCols')) {
+            $this->determineSortableColumns($query, $builder, $columnConfiguration);
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     * @param ColumnConfiguration[] $columnConfiguration
+     * @throws DatatableException when a column for sorting is out of bounds
+     */
+    private function determineSortableColumns($query, $builder, array $columnConfiguration)
+    {
+        $columns = intval($query->get('iSortingCols'));
+
+        for($i = 0; $i < $columns+1; $i++) {
+            if ($query->has("iSortCol_" . $i) && !$this->isEmpty($query->get("iSortCol_" . $i))) {
+                $columnPosition = intval($query->get("iSortCol_" . $i));
+
+                if (!isset($columnConfiguration[$columnPosition])) {
+                    throw new DatatableException('The column requested for ordering does not exist');
+                }
+
+                $c = $columnConfiguration[$columnPosition];
+
+                if ($c->getOrder()->isOrderable()) {
+                    $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
+                }
             }
         }
     }
