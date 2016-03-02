@@ -203,18 +203,20 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('orWhere')
-            ->withArgs(["id", "LIKE", "%2%"]);
+            ->withArgs(["id", "LIKE", "%2%"])
+            ->once();
 
         $queryBuilder
             ->shouldReceive('get')
-            ->withArgs([['id']]);
+            ->withArgs([['id']])
+            ->once();
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
         $provider->process();
     }
 
-    public function testNoOrder()
+    public function testOrder()
     {
         $queryConfiguration = QueryConfigurationBuilder::create()
             ->start(0)
@@ -243,12 +245,9 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
             ->withNoArgs();
 
         $queryBuilder
-            ->shouldReceive('orWhere')
-            ->withArgs(["id", "LIKE", "%2%"]);
-
-        $queryBuilder
             ->shouldReceive('orderBy')
-            ->withArgs(["name", "asc"]);
+            ->withArgs(["name", "asc"])
+            ->once();
 
         $queryBuilder
             ->shouldReceive('get')
@@ -259,22 +258,33 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $provider->process();
     }
 
-    public function testDefaultOrderMulti()
+    private function orderAndSearchMultiTest($withSearch = false, $withRegex = false)
     {
         $queryConfiguration = QueryConfigurationBuilder::create()
             ->start(0)
             ->length(4)
             ->drawCall(1)
             ->columnOrder('name', 'asc')
-            ->columnOrder('id', 'desc')
-            ->build();
+            ->columnOrder('id', 'desc');
 
-        $columnConfiguration = ColumnConfigurationBuilder::create()
+        if ($withSearch) {
+            $queryConfiguration = $queryConfiguration->searchValue('blah');
+            if ($withRegex) {
+                $queryConfiguration = $queryConfiguration->searchRegex(true);
+            }
+        }
+
+        $queryConfiguration = $queryConfiguration->build();
+
+        $columnConfiguration = [];
+        $columnConfiguration[] = ColumnConfigurationBuilder::create()
             ->name('id')
+            ->searchable(Searchable::NONE())
             ->build();
 
-        $columnConfiguration2 = ColumnConfigurationBuilder::create()
+        $columnConfiguration[] = ColumnConfigurationBuilder::create()
             ->name('name')
+            ->searchable($withRegex ? Searchable::REGEX() : Searchable::NORMAL())
             ->build();
 
         // Set up mock item
@@ -291,9 +301,19 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('count')
             ->withNoArgs();
 
-        $queryBuilder
-            ->shouldReceive('orWhere')
-            ->withArgs(["id", "LIKE", "%2%"]);
+        if ($withSearch) {
+            if ($withRegex) {
+                $queryBuilder
+                    ->shouldReceive('orWhere')
+                    ->withArgs(["name", "REGEXP", "blah"])
+                    ->once();
+            } else {
+                $queryBuilder
+                    ->shouldReceive('orWhere')
+                    ->withArgs(["name", "LIKE", "%blah%"])
+                    ->once();
+            }
+        }
 
         $queryBuilder
             ->shouldReceive('orderBy')
@@ -310,8 +330,23 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
             ->withArgs([['id', 'name']]);
 
         $provider = new QueryBuilderProvider($queryBuilder);
-        $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration, $columnConfiguration2]);
+        $provider->prepareForProcessing($queryConfiguration, $columnConfiguration);
         $provider->process();
+    }
+
+    public function testDefaultOrderMulti()
+    {
+        $this->orderAndSearchMultiTest(false);
+    }
+
+    public function testDefaultOrderMultiWithSearch()
+    {
+        $this->orderAndSearchMultiTest(true, false);
+    }
+
+    public function testDefaultOrderMultiWithRegexSearch()
+    {
+        $this->orderAndSearchMultiTest(true, true);
     }
 
     public function tearDown()

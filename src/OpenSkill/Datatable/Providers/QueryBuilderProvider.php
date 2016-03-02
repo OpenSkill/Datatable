@@ -189,8 +189,10 @@ class QueryBuilderProvider implements Provider
         if ($searchType == DefaultSearchable::NONE()) {
             // Don't do anything, this is not a searchable field
             return $this->query;
-        } elseif ($column->getSearch() == DefaultSearchable::NORMAL()) {
+        } elseif ($searchType == DefaultSearchable::NORMAL()) {
             $this->query->orWhere($column->getName(), 'LIKE', '%' . $searchValue . '%');
+        } elseif ($searchType == DefaultSearchable::REGEX()) {
+            $this->query->orWhere($column->getName(), 'REGEXP', $searchValue);
         } else {
             throw new DatatableException('An unsupported DefaultSearchable was provided.');
         }
