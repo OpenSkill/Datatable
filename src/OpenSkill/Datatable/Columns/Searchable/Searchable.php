@@ -39,6 +39,27 @@ abstract class Searchable
     }
 
     /**
+     * Will return a new searchable that will allow for an exact match.
+     * @return ExactSearchable
+     */
+    public static function EXACT()
+    {
+        return new ExactSearchable();
+    }
+
+    /**
+     * Will return a new searchable that is not implemented.
+     *
+     * This is used for unit testing. Nothing to see here.
+     *
+     * @return NotImplementedSearchable
+     */
+    public static function NOTIMPLEMENTED()
+    {
+        return new NotImplementedSearchable();
+    }
+
+    /**
      * Will return if this configuration allows searching on the column.
      * @return bool
      */
