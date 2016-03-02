@@ -112,7 +112,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('orWhere')
-            ->withArgs(["name", "LIKE", "%foo2%"]);
+            ->withArgs(["name", "LIKE", "%foo2%"])
+            ->once();
 
         $queryBuilder
             ->shouldReceive('get')

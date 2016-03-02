@@ -69,9 +69,6 @@ class QueryBuilderProvider implements Provider
     {
         $this->originalQuery = $query;
         $this->query = clone $query;
-
-        $this->setupSearch();
-        $this->setupOrder();
     }
 
     /**
@@ -87,18 +84,6 @@ class QueryBuilderProvider implements Provider
     {
         $this->queryConfiguration = $queryConfiguration;
         $this->columnConfiguration = $columnConfiguration;
-
-        // generate a custom search function for each column
-        foreach ($this->columnConfiguration as $col) {
-            if (!array_key_exists($col->getName(), $this->columnSearchFunction)) {
-                $this->columnSearchFunction[$col->getName()] = function ($data, ColumnSearch $search) use ($col) {
-                    if (str_contains(mb_strtolower($data[$col->getName()]), mb_strtolower($search->searchValue()))) {
-                        return true;
-                    }
-                    return false;
-                };
-            }
-        }
     }
 
     /**
@@ -118,7 +103,7 @@ class QueryBuilderProvider implements Provider
         }
 
         // compile the query first
-        $this->compileQuery($this->query, $this->columnConfiguration);
+        $this->compileQuery($this->columnConfiguration);
 
         // sort
         $this->sortQuery();
@@ -153,67 +138,64 @@ class QueryBuilderProvider implements Provider
      * @return QueryBuilder
      * @throws DatatableException
      */
-    private function compileQuery(QueryBuilder $query, array $columnConfiguration)
+    private function compileQuery(array $columnConfiguration)
     {
         if ($this->queryConfiguration->isGlobalSearch()) {
-            $query = $this->compileGlobalQuery($query, $columnConfiguration);
+            $this->compileGlobalQuery($columnConfiguration);
         } elseif ($this->queryConfiguration->isColumnSearch()) {
-            $query = $this->compileColumnQuery($query, $columnConfiguration);
+            $this->compileColumnQuery($columnConfiguration);
         }
-
-        return $query;
     }
 
     /**
      * When a global (single) search has been done against data in the datatable.
      *
-     * @param QueryBuilder $query
      * @param array $columnConfiguration
      * @return QueryBuilder
      * @throws DatatableException
      */
-    private function compileGlobalQuery(QueryBuilder $query, array $columnConfiguration)
+    private function compileGlobalQuery(array $columnConfiguration)
     {
         foreach ($columnConfiguration as $i => $col) {
-            if ($col->getSearch() == DefaultSearchable::NONE()) {
-                // Don't do anything, this is not a searchable field
-            } elseif ($col->getSearch() == DefaultSearchable::NORMAL()) {
-                $query->orWhere($col->getName(), 'LIKE', '%' . $this->queryConfiguration->searchValue() . '%');
-            } else {
-                throw new DatatableException('An unsupported DefaultSearchable was provided.');
-            }
+            $this->createQueryForColumn($col, $this->queryConfiguration->searchValue());
         }
-
-        return $query;
     }
 
     /**
      * When a global query is being performed (ie, a query against a single column)
      *
-     * @param QueryBuilder $query
      * @param ColumnConfiguration[] $columnConfiguration
      * @return QueryBuilder
      * @throws DatatableException
      */
-    private function compileColumnQuery(QueryBuilder $query, array $columnConfiguration)
+    private function compileColumnQuery(array $columnConfiguration)
     {
         $searchColumns = $this->queryConfiguration->searchColumns();
 
         foreach ($searchColumns as $i => $col) {
             $column = $this->getColumnFromName($columnConfiguration, $col->columnName());
+
             if (!isset($column))
                 continue;
 
-            if ($column->getSearch() == DefaultSearchable::NONE()) {
-                // Don't do anything, this is not a searchable field
-            } elseif ($column->getSearch() == DefaultSearchable::NORMAL()) {
-                $query->orWhere($col->columnName(), 'LIKE', '%' . $col->searchValue() . '%');
-            } else {
-                throw new DatatableException('An unsupported DefaultSearchable was provided.');
-            }
+            $this->createQueryForColumn($column, $col->searchValue());
+        }
+    }
+
+    private function createQueryForColumn(ColumnConfiguration $column, $searchValue)
+    {
+        $searchType = $column->getSearch();
+
+        if ($searchType == DefaultSearchable::NONE()) {
+            // Don't do anything, this is not a searchable field
+            return $this->query;
+        } elseif ($column->getSearch() == DefaultSearchable::NORMAL()) {
+            $this->query->orWhere($column->getName(), 'LIKE', '%' . $searchValue . '%');
+        } else {
+            throw new DatatableException('An unsupported DefaultSearchable was provided.');
         }
 
-        return $query;
+        return $this->query;
     }
 
     /**
@@ -243,41 +225,6 @@ class QueryBuilderProvider implements Provider
     }
 
     /**
-     * Will accept a search function that should be called for the column with the given name.
-     * If the function returns true, it will be accepted as search matching
-     *
-     * @param string $columnName the name of the column to pass this function to
-     * @param callable $searchFunction the function for the searching
-     * @return $this
-     */
-    public function searchColumn($columnName, callable $searchFunction)
-    {
-        $this->columnSearchFunction[$columnName] = $searchFunction;
-
-        return $this;
-    }
-
-    /**
-     * Will accept a global search function for all columns.
-     * @param callable $searchFunction the search function to determine if a row should be included
-     * @return $this
-     */
-    public function search(callable $searchFunction)
-    {
-        return $this;
-    }
-
-    /**
-     * Will accept a global search function for all columns.
-     * @param callable $orderFunction the order function to determine the order of the table
-     * @return $this
-     */
-    public function order(callable $orderFunction)
-    {
-        return $this;
-    }
-
-    /**
      * Will sort the query based on the given datatable query configuration.
      */
     private function sortQuery()
@@ -298,13 +245,5 @@ class QueryBuilderProvider implements Provider
     {
         $this->query->skip($this->queryConfiguration->start());
         $this->query->limit($this->queryConfiguration->length());
-    }
-
-    public function setupSearch()
-    {
-    }
-
-    public function setupOrder()
-    {
     }
 }
