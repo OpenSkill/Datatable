@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Mockery;
 use OpenSkill\Datatable\Data\ResponseData;
 use OpenSkill\Datatable\Versions\Datatable19Version;
+use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
 class Datatable19VersionTest extends \PHPUnit_Framework_TestCase
@@ -31,13 +32,15 @@ class Datatable19VersionTest extends \PHPUnit_Framework_TestCase
             'bRegex_1' => true, // will be ignored, the configuration is already set on the server side
             'bSortable_1' => true, // will be ignored, the configuration is already set on the server side
             'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
-            'iSortCol_2' => true,
-            'sSortDir_2' => 'desc',
-            'iSortCol_1' => true,
+            'iSortCol_1' => 0,
             'sSortDir_1' => 'desc',
+            'iSortCol_2' => 1,
+            'sSortDir_2' => 'desc',
         ]);
+
         $requestStack = Mockery::mock('Symfony\Component\HttpFoundation\RequestStack');
         $requestStack->shouldReceive('getCurrentRequest')->andReturn($this->request);
+
         $this->version = new Datatable19Version($requestStack);
     }
 
@@ -48,7 +51,15 @@ class Datatable19VersionTest extends \PHPUnit_Framework_TestCase
 
     public function testParse()
     {
-        $cc = $this->version->parseRequest([]);
+        $column = ColumnConfigurationBuilder::create()
+            ->name("id")
+            ->build();
+
+        $column1 = ColumnConfigurationBuilder::create()
+            ->name("name")
+            ->build();
+
+        $cc = $this->version->parseRequest([$column, $column1]);
         $this->assertNotNull($cc);
 
         $rsp = $this->version->createResponse(new ResponseData(new Collection([]), 123), $cc, []);

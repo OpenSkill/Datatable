@@ -37,4 +37,12 @@ class ColumnOrder
     {
         return $this->isAscOrdering;
     }
+
+    /**
+     * @return bool
+     */
+    public function isDescending()
+    {
+        return !$this->isAscOrdering;
+    }
 }

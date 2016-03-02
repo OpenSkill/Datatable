@@ -45,9 +45,10 @@ class Datatable110Version extends DatatableVersion
         $responseData = [
             'draw' => $queryConfiguration->drawCall(),
             'recordsTotal' => $data->totalDataCount(),
-            'recordsFiltered' => $data->data()->count(),
+            'recordsFiltered' => $data->filteredDataCount(),
             'data' => $data->data()->toArray()
         ];
+
         return new JsonResponse($responseData);
     }
 

@@ -6,6 +6,7 @@ namespace OpenSkill\Datatable\Queries\Parser;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
 use OpenSkill\Datatable\Columns\Orderable\Orderable;
 use OpenSkill\Datatable\Columns\Searchable\Searchable;
+use OpenSkill\Datatable\DatatableException;
 use OpenSkill\Datatable\Queries\Parser\Datatable19QueryParser;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,8 +40,8 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
             'sSearch_0' => 'fooBar_1',
             'bRegex_0' => true, // will be ignored, the configuration is already set on the server side
             'bSortable_0' => true, // will be ignored, the configuration is already set on the server side
-            'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
-            'iSortCol_0' => true,
+            'iSortingCols' => 1,
+            'iSortCol_0' => 0,
             'sSortDir_0' => 'desc',
         ]);
 
@@ -66,7 +67,6 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(103, $conf->length());
         $this->assertSame('fooBar', $conf->searchValue());
         $this->assertTrue($conf->isGlobalRegex());
-
 
         // assert column search
         $this->assertCount(1, $conf->searchColumns());
@@ -119,11 +119,11 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
             'sSearch_0' => 'fooBar_1',
             'bRegex_0' => true, // will be ignored, the configuration is already set on the server side
             'bSortable_0' => true, // will be ignored, the configuration is already set on the server side
-            'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
-            'iSortCol_1' => true,
-            'sSortDir_1' => 'desc',
-            'iSortCol_0' => true,
+            'iSortingCols' => 2,
+            'iSortCol_0' => 1,
             'sSortDir_0' => 'desc',
+            'iSortCol_1' => 0,
+            'sSortDir_1' => 'desc',
         ]);
 
         $this->parser = new Datatable19QueryParser($this->request);
@@ -131,6 +131,7 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
         $column = ColumnConfigurationBuilder::create()
             ->name("id")
             ->build();
+
         $column1 = ColumnConfigurationBuilder::create()
             ->name("name")
             ->build();
@@ -140,11 +141,34 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
         // assert column order
         $this->assertCount(2, $conf->orderColumns());
         $def = $conf->orderColumns()[0];
-        $this->assertSame('id', $def->columnName());
+        $this->assertSame('name', $def->columnName());
         $this->assertFalse($def->isAscending());
     }
 
+    /**
+     * Will test that the sorting order from the query can be used to sort the data in the correct order.
+     */
     public function testSortingOrder2()
+    {
+        $this->sortingOrderGeneration();
+    }
+
+    /**
+     * Will test that the sorting order without all the columns in the configuration correctly throws an exception
+     * @expectedException \OpenSkill\Datatable\DatatableException
+     */
+    public function testSortingOrder3()
+    {
+        $this->sortingOrderGeneration(false);
+    }
+
+    /**
+     * The real testSortingOrder2 & testSortingOrder3 test
+     * @see testSortingOrder2
+     * @see testSortingOrder3
+     * @param bool $includeSecondColumnInConfiguration
+     */
+    private function sortingOrderGeneration($includeSecondColumnInConfiguration = true)
     {
         $this->request = new Request([
             'sEcho' => 13,
@@ -157,27 +181,33 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
             'sSearch_0' => 'fooBar_1',
             'bRegex_0' => true, // will be ignored, the configuration is already set on the server side
             'bSortable_0' => true, // will be ignored, the configuration is already set on the server side
-            'iSortingCols' => 1, // will be ignored, the configuration is already set on the server side
-            'iSortCol_1' => true,
-            'sSortDir_1' => 'desc',
+            'iSortingCols' => 1,
+            'iSortCol_0' => 1,
+            'sSortDir_0' => 'desc',
         ]);
 
         $this->parser = new Datatable19QueryParser($this->request);
 
-        $column = ColumnConfigurationBuilder::create()
+        $columns = [];
+        $columns[] = ColumnConfigurationBuilder::create()
             ->name("id")
             ->build();
-        $column1 = ColumnConfigurationBuilder::create()
-            ->name("name")
-            ->build();
 
-        $conf = $this->parser->parse($this->request, [$column, $column1]);
+        if ($includeSecondColumnInConfiguration) {
+            $columns[] = ColumnConfigurationBuilder::create()
+                ->name("name")
+                ->build();
+        }
+
+        $conf = $this->parser->parse($this->request, $columns);
 
         // assert column order
-        $this->assertCount(1, $conf->orderColumns());
-        $def = $conf->orderColumns()[0];
-        $this->assertSame('name', $def->columnName());
-        $this->assertFalse($def->isAscending());
+        if (!$includeSecondColumnInConfiguration) {
+            $this->assertCount(1, $conf->orderColumns());
+            $def = $conf->orderColumns()[0];
+            $this->assertSame('name', $def->columnName());
+            $this->assertFalse($def->isAscending());
+        }
     }
 
     /**
@@ -207,5 +237,5 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($conf->isColumnSearch());
     }
 
-
 }
+
