@@ -144,6 +144,7 @@ class Datatable19QueryParser extends QueryParser
      * @param QueryConfigurationBuilder $builder
      * @param ColumnConfiguration[] $columnConfiguration
      * @throws DatatableException when a column for sorting is out of bounds
+     * @return bool success?
      */
     private function determineSortableColumns($query, $builder, array $columnConfiguration)
     {
@@ -163,17 +164,31 @@ class Datatable19QueryParser extends QueryParser
                 }
             }
         }
+
+        return true;
     }
 
+    /**
+     * Find out how many columns we are sorting by for the sorting loop
+     * @see determineSortableColumns
+     * @param ParameterBag $query
+     * @return int
+     */
     private function getNumberOfSortingColumns(ParameterBag $query)
     {
         if (!$query->has('iSortingCols'))
             return 0;
 
-        return intval($query->get('iSortingCols')) + 1;
+        return intval($query->get('iSortingCols'));
     }
 
-    private function getColumnFromConfiguration($columnConfiguration, $item)
+    /**
+     * @param ColumnConfiguration[] $columnConfiguration
+     * @param int $item
+     * @return ColumnConfiguration a specific item from $ColumnConfiguration
+     * @throws DatatableException
+     */
+    private function getColumnFromConfiguration(array $columnConfiguration, $item)
     {
         $columnPosition = intval($item);
 
