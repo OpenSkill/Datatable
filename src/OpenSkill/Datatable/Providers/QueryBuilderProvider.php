@@ -242,7 +242,7 @@ class QueryBuilderProvider implements Provider
             $orderColumns = $this->queryConfiguration->orderColumns();
 
             foreach($orderColumns as $order) {
-                $this->query->orderBy($order->columnName(), $order->isAscending() ? 'asc' : 'desc');
+                $this->query->orderBy($order->columnName(), $order->isDescending() ? 'desc' : 'asc');
             }
         }
     }
