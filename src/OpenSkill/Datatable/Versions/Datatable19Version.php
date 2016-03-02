@@ -46,9 +46,10 @@ class Datatable19Version extends DatatableVersion
         $responseData = [
             'sEcho' => $queryConfiguration->drawCall(),
             'iTotalRecords' => $data->totalDataCount(),
-            'iTotalDisplayRecords' => $data->data()->count(),
+            'iTotalDisplayRecords' => $data->filteredDataCount(),
             'aaData' => $data->data()->toArray()
         ];
+
         return new JsonResponse($responseData);
     }
 
