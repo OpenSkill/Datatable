@@ -97,10 +97,6 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         // Set up mock item
         $queryBuilder = $this->setupMockQueryBuilder();
-        $queryBuilder
-            ->shouldReceive('orderBy')
-            ->with('name', 'desc')
-            ->once();
 
         $queryBuilder
             ->shouldReceive('skip')
@@ -151,10 +147,6 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         // Set up mock item
         $queryBuilder = $this->setupMockQueryBuilder();
-        $queryBuilder
-            ->shouldReceive('orderBy')
-            ->with('name', 'desc')
-            ->once();
 
         $queryBuilder
             ->shouldReceive('skip')
@@ -197,11 +189,6 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         // Set up mock item
         $queryBuilder = $this->setupMockQueryBuilder();
         $queryBuilder
-            ->shouldReceive('orderBy')
-            ->with('name', 'desc')
-            ->once();
-
-        $queryBuilder
             ->shouldReceive('skip')
             ->with(0);
 
@@ -241,10 +228,6 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         // Set up mock item
         $queryBuilder = $this->setupMockQueryBuilder();
-        $queryBuilder
-            ->shouldReceive('orderBy')
-            ->with('name', 'desc')
-            ->once();
 
         $queryBuilder
             ->shouldReceive('skip')
@@ -296,11 +279,6 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         // Set up mock item
         $queryBuilder = $this->setupMockQueryBuilder();
         $queryBuilder
-            ->shouldReceive('orderBy')
-            ->with('name', 'desc')
-            ->once();
-
-        $queryBuilder
             ->shouldReceive('skip')
             ->with(0);
 
@@ -315,7 +293,6 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $queryBuilder
             ->shouldReceive('orWhere')
             ->withArgs(["id", "LIKE", "%2%"]);
-
 
         $queryBuilder
             ->shouldReceive('orderBy')
@@ -334,5 +311,10 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration, $columnConfiguration2]);
         $provider->process();
+    }
+
+    public function tearDown()
+    {
+        \Mockery::close();
     }
 }
