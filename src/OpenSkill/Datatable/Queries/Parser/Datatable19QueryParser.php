@@ -46,6 +46,8 @@ class Datatable19QueryParser extends QueryParser
 
         $this->getSearch($query, $builder);
 
+        $this->determineSortableColumns($query, $builder, $columnConfiguration);
+
         $this->getRegex($query, $builder);
 
         $this->getSearchColumns($query, $builder, $columnConfiguration);
@@ -61,6 +63,19 @@ class Datatable19QueryParser extends QueryParser
     private function isEmpty($string)
     {
         return empty($string);
+    }
+
+    /**
+     * Helper function that will check if a variable has a value
+     *
+     * NOTE: (this is almost the opposite of isEmpty, but it is *not* the same)
+     *
+     * @param mixed $string
+     * @return bool true if empty, false otherwise
+     */
+    private function hasValue($string)
+    {
+        return isset($string) && (strlen($string) > 0);
     }
 
     /**
@@ -122,10 +137,6 @@ class Datatable19QueryParser extends QueryParser
                 $builder->columnSearch($c->getName(), $query->get("sSearch_" . $i));
             }
         }
-
-        if ($query->has('iSortingCols')) {
-            $this->determineSortableColumns($query, $builder, $columnConfiguration);
-        }
     }
 
     /**
@@ -136,23 +147,41 @@ class Datatable19QueryParser extends QueryParser
      */
     private function determineSortableColumns($query, $builder, array $columnConfiguration)
     {
-        $columns = intval($query->get('iSortingCols'));
+        $columns = $this->getNumberOfSortingColumns($query);
 
-        for($i = 0; $i < $columns+1; $i++) {
-            if ($query->has("iSortCol_" . $i) && !$this->isEmpty($query->get("iSortCol_" . $i))) {
-                $columnPosition = intval($query->get("iSortCol_" . $i));
+        // this technically isn't needed, because the filtering will never hit the for loop anyways
+        if ($columns == 0) {
+            return false;
+        }
 
-                if (!isset($columnConfiguration[$columnPosition])) {
-                    throw new DatatableException('The column requested for ordering does not exist');
-                }
-
-                $c = $columnConfiguration[$columnPosition];
+        for ($i = 0; $i < $columns; $i++) {
+            if ($query->has("iSortCol_" . $i) && $this->hasValue($query->get("iSortCol_" . $i))) {
+                $c = $this->getColumnFromConfiguration($columnConfiguration, $query->get("iSortCol_" . $i));
 
                 if ($c->getOrder()->isOrderable()) {
                     $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
                 }
             }
         }
+    }
+
+    private function getNumberOfSortingColumns(ParameterBag $query)
+    {
+        if (!$query->has('iSortingCols'))
+            return 0;
+
+        return intval($query->get('iSortingCols')) + 1;
+    }
+
+    private function getColumnFromConfiguration($columnConfiguration, $item)
+    {
+        $columnPosition = intval($item);
+
+        if (!isset($columnConfiguration[$columnPosition])) {
+            throw new DatatableException('The column requested for ordering does not exist');
+        }
+
+        return $columnConfiguration[$columnPosition];
     }
 
     /**
