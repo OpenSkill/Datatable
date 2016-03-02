@@ -182,6 +182,13 @@ class QueryBuilderProvider implements Provider
         }
     }
 
+    /**
+     * Create the query w/ QueryBuilder
+     * @param ColumnConfiguration $column
+     * @param $searchValue
+     * @return QueryBuilder
+     * @throws DatatableException
+     */
     private function createQueryForColumn(ColumnConfiguration $column, $searchValue)
     {
         $searchType = $column->getSearch();

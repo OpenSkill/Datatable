@@ -195,11 +195,13 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('limit')
-            ->with(2);
+            ->with(2)
+            ->once();
 
         $queryBuilder
             ->shouldReceive('count')
-            ->withNoArgs();
+            ->withNoArgs()
+            ->twice();
 
         $queryBuilder
             ->shouldReceive('orWhere')
@@ -238,11 +240,13 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('limit')
-            ->with(2);
+            ->with(2)
+            ->once();
 
         $queryBuilder
             ->shouldReceive('count')
-            ->withNoArgs();
+            ->withNoArgs()
+            ->twice();
 
         $queryBuilder
             ->shouldReceive('orderBy')
@@ -251,7 +255,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('get')
-            ->withArgs([['name']]);
+            ->withArgs([['name']])
+            ->once();
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
@@ -327,7 +332,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('get')
-            ->withArgs([['id', 'name']]);
+            ->withArgs([['id', 'name']])
+            ->once();
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, $columnConfiguration);
