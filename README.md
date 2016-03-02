@@ -45,6 +45,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 ## Credits
 
 - [Nils Plaschke][link-author]
+- [Tim Groeneveld][link-author2]
 - [All Contributors][link-contributors]
 
 ## License
@@ -65,4 +66,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-code-quality]: https://scrutinizer-ci.com/g/Openskill/Datatable
 [link-downloads]: https://packagist.org/packages/Openskill/Datatable
 [link-author]: https://github.com/Chumper
+[link-author2]: https://github.com/timgws
 [link-contributors]: ../../contributors
