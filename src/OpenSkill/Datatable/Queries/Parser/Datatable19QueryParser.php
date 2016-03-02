@@ -150,18 +150,12 @@ class Datatable19QueryParser extends QueryParser
     {
         $columns = $this->getNumberOfSortingColumns($query);
 
-        // this technically isn't needed, because the filtering will never hit the for loop anyways
-        if ($columns == 0) {
-            return false;
-        }
-
         for ($i = 0; $i < $columns; $i++) {
             if ($query->has("iSortCol_" . $i) && $this->hasValue($query->get("iSortCol_" . $i))) {
-                $c = $this->getColumnFromConfiguration($columnConfiguration, $query->get("iSortCol_" . $i));
+                $item = $query->get("iSortCol_" . $i);
+                $direction = $query->get("sSortDir_" . $i);
 
-                if ($c->getOrder()->isOrderable()) {
-                    $builder->columnOrder($c->getName(), $query->get("sSortDir_" . $i));
-                }
+                $this->addColumnForOrdering($builder, $columnConfiguration, $item, $direction);
             }
         }
 
@@ -180,6 +174,24 @@ class Datatable19QueryParser extends QueryParser
             return 0;
 
         return intval($query->get('iSortingCols'));
+    }
+
+    /**
+     * Add a column for ordering to the QueryConfigurationBuilder
+     * @see determineSortableColumns
+     * @param $builder
+     * @param $columnConfiguration
+     * @param $item
+     * @param $direction
+     * @throws DatatableException
+     */
+    private function addColumnForOrdering($builder, $columnConfiguration, $item, $direction)
+    {
+        $c = $this->getColumnFromConfiguration($columnConfiguration, $item);
+
+        if ($c->getOrder()->isOrderable()) {
+            $builder->columnOrder($c->getName(), $direction);
+        }
     }
 
     /**

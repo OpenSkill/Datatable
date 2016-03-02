@@ -181,9 +181,9 @@ class Datatable19QueryParserTest extends \PHPUnit_Framework_TestCase
             'sSearch_0' => 'fooBar_1',
             'bRegex_0' => true, // will be ignored, the configuration is already set on the server side
             'bSortable_0' => true, // will be ignored, the configuration is already set on the server side
-            'iSortingCols' => 2,
-            'iSortCol_1' => 1,
-            'sSortDir_1' => 'desc',
+            'iSortingCols' => 1,
+            'iSortCol_0' => 1,
+            'sSortDir_0' => 'desc',
         ]);
 
         $this->parser = new Datatable19QueryParser($this->request);
