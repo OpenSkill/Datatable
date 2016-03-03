@@ -57,9 +57,9 @@ if ($t->shouldHandle()) {
 
 ## Getting data out of MongoDB
 
-If you install `jenssegers/mongodb`, QueryBuilderParser will also be able to pull data out of MongoDB using jenssegers' MongoDB Query Builder!
+If you install [`jenssegers/mongodb`](https://github.com/jenssegers/laravel-mongodb), QueryBuilderParser will also be able to pull data out of MongoDB using jenssegers' MongoDB Query Builder!
 
-```
+```php
 $query = DB::collection('data');
 
 $t = Datatable::make(new QueryBuilderProvider($query))

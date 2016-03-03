@@ -1,22 +1,22 @@
 # Introduction
 
-**PLEASE NOTE**: This package is currently under development and not production ready yet!
-
-OpenSkill/Datatable is a package for `laravel5` as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.
+OpenSkill/Datatable is a package for `Laravel 5` as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.
 
 Currently it supports the following frontend tables:
 
 - [Datatables 1.9](http://legacy.datatables.net/)
 
+Currently, it supports the following backend providers:
+
+- Support [`ColectionProvider`](basic-usage.md)
+- Support [`QueryBuilderProvider`](database-usage.md) (for example, MySQL, Microsoft SQL, PostgreSQL and MongoDB)
+
 ## Features
 
 `Datatable` has a number of features:
 
-- Support [`Colections`](basic-usage.md)
-- Support [`QueryBuilders`](database-usage.md) (for example, MySQL, Microsoft SQL, PostgreSQL)
 - Easy to use interface with fully configurable behaviour
-- Supports [Datatables 1.9](http://legacy.datatables.net/)
-- Automatically generates html tables and the appropriate javascript on the side
+- Automatically generates html tables and the appropriate javascript on the client side
 - Fully tested
 - Fully configurable
 - Extensible
@@ -27,12 +27,12 @@ Currently it supports the following frontend tables:
 This package is available on [http://packagist.org](https://packagist.org/packages/chumper/datatable), just add it to your composer.json
 
 ```json
-"openSkill/datatable": "0.1.2"
+"openSkill/datatable": "^0.2"
 ```
 
 Alternatively, you can install it using the composer command:
 ```bash
-composer require openSkill/datatable
+composer require openskill/datatable
 ```
 
 ### Laravel 
@@ -60,7 +60,7 @@ To override the default configuration options you can publish the config file.
 php artisan vendor:publish
 ```
 
-**Cogratulation**, you are now able to use `Datatable` in your project. 
+**Cogratulations**, you are now able to use `Datatable` in your project.
 
 [Head on](basic-usage.md) to the next section 
 
