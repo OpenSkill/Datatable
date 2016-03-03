@@ -9,6 +9,7 @@ use OpenSkill\Datatable\Providers\Provider;
 use OpenSkill\Datatable\Versions\Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
 use OpenSkill\Datatable\Views\DatatableView;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -73,13 +74,32 @@ class DatatableService
     }
 
     /**
-     * Will handle the current request and returns the correct response
+     * Prepare a request for processing (without doing the actual datatable).
+     *
+     * @return Version
      */
-    public function handleRequest()
+    public function prepareRequest()
     {
         $version = $this->versionEngine->getVersion();
         $queryConfiguration = $version->parseRequest($this->columnConfigurations);
         $this->provider->prepareForProcessing($queryConfiguration, $this->columnConfigurations);
+
+        return [
+            'version' => $version,
+            'queryConfiguration' => $queryConfiguration
+        ];
+    }
+
+    /**
+     * Will handle the current request and returns the correct response
+     * @return JsonResponse the response that should be returned to the client.
+     */
+    public function handleRequest()
+    {
+        $request = $this->prepareRequest();
+        $version = $request['version'];
+        $queryConfiguration = $request['queryConfiguration'];
+
         $data = $this->provider->process();
         return $version->createResponse($data, $queryConfiguration, $this->columnConfigurations);
     }
