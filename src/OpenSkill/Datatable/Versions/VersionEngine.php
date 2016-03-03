@@ -25,7 +25,7 @@ class VersionEngine
     public function __construct(array $versions)
     {
         foreach ($versions as $v) {
-            if ($v->canParseRequest() || is_null($this->version)) {
+            if ($v->canParseRequest()) {
                 $this->version = $v;
                 break;
             }

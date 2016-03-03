@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use OpenSkill\Datatable\Versions\Datatable110Version;
 use OpenSkill\Datatable\Versions\Datatable19Version;
 use OpenSkill\Datatable\Versions\VersionEngine;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class DatatableServiceProvider extends ServiceProvider
