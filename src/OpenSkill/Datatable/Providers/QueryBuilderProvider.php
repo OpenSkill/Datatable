@@ -84,6 +84,12 @@ class QueryBuilderProvider implements Provider
     {
         $this->queryConfiguration = $queryConfiguration;
         $this->columnConfiguration = $columnConfiguration;
+
+        // compile the query first
+        $this->compileQuery();
+
+        // sort
+        $this->sortQuery();
     }
 
     /**
@@ -102,20 +108,11 @@ class QueryBuilderProvider implements Provider
             throw new \InvalidArgumentException("Provider was not configured. Did you call prepareForProcessing first?");
         }
 
-        // compile the query first
-        $this->compileQuery($this->columnConfiguration);
-
-        // sort
-        $this->sortQuery();
-
         // limit
         $this->queryBeforeLimits = clone $this->query;
         $this->limitQuery();
 
-        // original # of items
-        $filteredItems = $this->originalQuery->count();
-
-        // # of items in filtered & ordered dataset
+        // # of items in filtered & ordered data set
         $dataCount = $this->queryBeforeLimits->count();
 
         // the data for the response
@@ -125,38 +122,44 @@ class QueryBuilderProvider implements Provider
         // slice the result into the right size
         return new ResponseData(
             $response,
-            $filteredItems,
+            $this->getTotalNumberOfRows(),
             $dataCount
         );
     }
 
     /**
+     * Get the total number of rows for the original query.
+     * @return int
+     */
+    private function getTotalNumberOfRows()
+    {
+        return $this->originalQuery->count();
+    }
+
+    /**
      * Will compile the collection into the final collection where operations like search and order can be applied.
      *
-     * @param QueryBuilder $query
-     * @param ColumnConfiguration[] $columnConfiguration
      * @return QueryBuilder
      * @throws DatatableException
      */
-    private function compileQuery(array $columnConfiguration)
+    private function compileQuery()
     {
         if ($this->queryConfiguration->isGlobalSearch()) {
-            $this->compileGlobalQuery($columnConfiguration);
+            $this->compileGlobalQuery();
         } elseif ($this->queryConfiguration->isColumnSearch()) {
-            $this->compileColumnQuery($columnConfiguration);
+            $this->compileColumnQuery();
         }
     }
 
     /**
      * When a global (single) search has been done against data in the datatable.
      *
-     * @param array $columnConfiguration
      * @return QueryBuilder
      * @throws DatatableException
      */
-    private function compileGlobalQuery(array $columnConfiguration)
+    private function compileGlobalQuery()
     {
-        foreach ($columnConfiguration as $i => $col) {
+        foreach ($this->columnConfiguration as $i => $col) {
             $this->createQueryForColumn($col, $this->queryConfiguration->searchValue());
         }
     }
@@ -164,16 +167,15 @@ class QueryBuilderProvider implements Provider
     /**
      * When a global query is being performed (ie, a query against a single column)
      *
-     * @param ColumnConfiguration[] $columnConfiguration
      * @return QueryBuilder
      * @throws DatatableException
      */
-    private function compileColumnQuery(array $columnConfiguration)
+    private function compileColumnQuery()
     {
         $searchColumns = $this->queryConfiguration->searchColumns();
 
         foreach ($searchColumns as $i => $col) {
-            $column = $this->getColumnFromName($columnConfiguration, $col->columnName());
+            $column = $this->getColumnFromName($col->columnName());
 
             if (!isset($column))
                 continue;
@@ -208,20 +210,27 @@ class QueryBuilderProvider implements Provider
     }
 
     /**
-     * @param ColumnConfiguration[] $columnConfiguration
+     * Get the requested column configuration from the name of a column
      * @param string $name
      * @return ColumnConfiguration
+     * @throws DatatableException when a column is not found
      */
-    private function getColumnFromName($columnConfiguration, $name)
+    private function getColumnFromName($name)
     {
-        foreach ($columnConfiguration as $i => $col) {
-            if ($col->getName() == $name)
+        foreach ($this->columnConfiguration as $i => $col) {
+            if ($col->getName() == $name) {
                 return $col;
+            }
         }
+
+        // This exception should never happen. If it does, something is
+        // wrong w/ the relationship between searchable columns and the
+        // configuration.
+        throw new DatatableException("A requested column was not found in the columnConfiguration.");
     }
 
     /**
-     * When a global query is being performed (ie, a query against
+     * Get a list of all the column names for the SELECT query.
      */
     private function compileColumnNames()
     {
@@ -248,7 +257,7 @@ class QueryBuilderProvider implements Provider
     }
 
     /**
-     * Will limit a query hased on the start and length given
+     * Will limit a query based on the start and length given
      */
     private function limitQuery()
     {
