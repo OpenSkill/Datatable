@@ -42,21 +42,6 @@ class QueryBuilderProvider implements Provider
     private $queryConfiguration;
 
     /**
-     * @var callable the default global function to check if a row should be included
-     */
-    private $defaultGlobalSearchFunction;
-
-    /**
-     * @var callable the default global order function
-     */
-    private $defaultGlobalOrderFunction;
-
-    /**
-     * @var array an array of callables with local search functions to check if the row should be included
-     */
-    private $columnSearchFunction = [];
-
-    /**
      * @var array an array that will hold the search functions for each column
      */
     private $columnConfiguration = [];

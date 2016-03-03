@@ -4,6 +4,7 @@ namespace packages\OpenSkill\Datatable\tests\OpenSkill\Datatable\Providers;
 
 use Illuminate\Support\Collection;
 use OpenSkill\Datatable\Columns\ColumnConfigurationBuilder;
+use OpenSkill\Datatable\Columns\ColumnConfiguration;
 use OpenSkill\Datatable\Columns\ColumnOrder;
 use OpenSkill\Datatable\Columns\Searchable\Searchable;
 use OpenSkill\Datatable\Providers\QueryBuilderProvider;
@@ -72,7 +73,10 @@ class ReflectionQueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $getColumnFromName->setAccessible(true);
 
         //$provider->getColumnFromName('notFound');
-        $getColumnFromName->invoke($provider, 'foundColumn');
+        $foundColumn = $getColumnFromName->invoke($provider, 'foundColumn');
+
+        $this->assertInstanceOf(ColumnConfiguration::class, $foundColumn);
+        $this->assertEquals($columnConfiguration, $foundColumn);
     }
 
     /**

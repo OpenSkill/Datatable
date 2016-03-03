@@ -143,13 +143,24 @@ class Datatable110QueryParser extends QueryParser
                 continue;
             }
 
-            if ($c->getSearch()->isSearchable()) {
-                // search for this column is available
-                $value = $columns[$i]['search']['value'];
+            $this->addColumnSearchToBuilderIfRequested($columns, $builder, $c, $i);
+        }
+    }
 
-                if (!$this->isEmpty($value)) {
-                    $builder->columnSearch($c->getName(), $columns[$i]['search']['value']);
-                }
+    /**
+     * @param array $columns incoming column request
+     * @param QueryConfigurationBuilder $builder
+     * @param ColumnConfiguration $column
+     * @param integer $position position of the column in the columnConfiguration loop
+     */
+    private function addColumnSearchToBuilderIfRequested($columns, $builder, $column, $position)
+    {
+        if ($column->getSearch()->isSearchable()) {
+            // search for this column is available
+            $value = $columns[$position]['search']['value'];
+
+            if (!$this->isEmpty($value)) {
+                $builder->columnSearch($column->getName(), $value);
             }
         }
     }
