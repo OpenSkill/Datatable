@@ -263,7 +263,7 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $provider->process();
     }
 
-    private function orderAndSearchMultiTest($withSearch = false, $withRegex = false)
+    private function orderAndSearchMultiTest($withSearch = false, $searchableType = null)
     {
         $queryConfiguration = QueryConfigurationBuilder::create()
             ->start(0)
@@ -274,7 +274,7 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         if ($withSearch) {
             $queryConfiguration = $queryConfiguration->searchValue('blah');
-            if ($withRegex) {
+            if ($searchableType == Searchable::REGEX()) {
                 $queryConfiguration = $queryConfiguration->searchRegex(true);
             }
         }
@@ -289,7 +289,7 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $columnConfiguration[] = ColumnConfigurationBuilder::create()
             ->name('name')
-            ->searchable($withRegex ? Searchable::REGEX() : Searchable::NORMAL())
+            ->searchable($searchableType)
             ->build();
 
         // Set up mock item
@@ -307,12 +307,12 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
             ->withNoArgs();
 
         if ($withSearch) {
-            if ($withRegex) {
+            if ($searchableType == Searchable::REGEX()) {
                 $queryBuilder
                     ->shouldReceive('orWhere')
                     ->withArgs(["name", "REGEXP", "blah"])
                     ->once();
-            } else {
+            } elseif ($searchableType == Searchable::NORMAL()) {
                 $queryBuilder
                     ->shouldReceive('orWhere')
                     ->withArgs(["name", "LIKE", "%blah%"])
@@ -340,19 +340,59 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $provider->process();
     }
 
+    private function orderAndSearchNotImplementedTest($searchableType = null)
+    {
+        $queryConfiguration = QueryConfigurationBuilder::create()
+            ->start(0)
+            ->length(4)
+            ->drawCall(1)
+            ->columnOrder('name', 'asc')
+            ->columnOrder('id', 'desc');
+
+        $queryConfiguration = $queryConfiguration->searchValue('blah');
+        $queryConfiguration = $queryConfiguration->build();
+
+        $columnConfiguration = [];
+        $columnConfiguration[] = ColumnConfigurationBuilder::create()
+            ->name('id')
+            ->searchable(Searchable::NONE())
+            ->build();
+
+        $columnConfiguration[] = ColumnConfigurationBuilder::create()
+            ->name('name')
+            ->searchable($searchableType)
+            ->build();
+
+        // Set up mock item
+        $queryBuilder = $this->setupMockQueryBuilder();
+
+        $provider = new QueryBuilderProvider($queryBuilder);
+        $provider->prepareForProcessing($queryConfiguration, $columnConfiguration);
+        $provider->process();
+    }
+
     public function testDefaultOrderMulti()
     {
-        $this->orderAndSearchMultiTest(false);
+        $this->orderAndSearchMultiTest(false, Searchable::NORMAL());
     }
 
     public function testDefaultOrderMultiWithSearch()
     {
-        $this->orderAndSearchMultiTest(true, false);
+        $this->orderAndSearchMultiTest(true, Searchable::NORMAL());
     }
 
     public function testDefaultOrderMultiWithRegexSearch()
     {
-        $this->orderAndSearchMultiTest(true, true);
+        $this->orderAndSearchMultiTest(true, Searchable::REGEX());
+    }
+
+    /**
+     * @expectedException OpenSkill\Datatable\DatatableException
+     * @expectedExceptionMessage An unsupported DefaultSearchable was provided.
+     */
+    public function testDefaultOrderWithSearchNotImplemented()
+    {
+        $this->orderAndSearchNotImplementedTest(Searchable::NOTIMPLEMENTED());
     }
 
     public function tearDown()
