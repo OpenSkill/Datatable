@@ -16,4 +16,13 @@ class ResponseDataTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(123, $rp->totalDataCount());
         $this->assertEquals(new Collection([]), $rp->data());
     }
+
+    public function testResponseDataCustomFilteredLength()
+    {
+        $rp = new ResponseData(new Collection([]), 456, 123);
+
+        $this->assertSame(456, $rp->totalDataCount());
+        $this->assertSame(123, $rp->filteredDataCount());
+        $this->assertEquals(new Collection([]), $rp->data());
+    }
 }
