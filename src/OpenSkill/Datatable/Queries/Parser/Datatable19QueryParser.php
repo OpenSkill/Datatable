@@ -132,10 +132,22 @@ class Datatable19QueryParser extends QueryParser
         // for each column we need to see if there is a search value
         foreach ($columnConfiguration as $i => $c) {
             // check if there is something search related
-            if ($c->getSearch()->isSearchable() && $query->has("sSearch_" . $i) && !$this->isEmpty($query->get("sSearch_" . $i))) {
-                // search for this column is available
-                $builder->columnSearch($c->getName(), $query->get("sSearch_" . $i));
-            }
+            $this->addColumnSearchToBuilderIfRequested($query, $builder, $c, $i);
+        }
+    }
+
+    /**
+     * @param ParameterBag $query
+     * @param QueryConfigurationBuilder $builder
+     * @param ColumnConfiguration $column
+     * @param integer $position position of the column in the columnConfiguration loop
+     */
+    private function addColumnSearchToBuilderIfRequested($query, $builder, $column, $position)
+    {
+        $query_key = 'sSearch_' . $position;
+
+        if ($column->getSearch()->isSearchable() && $query->has($query_key) && !$this->isEmpty($query->get($query_key))) {
+            $builder->columnSearch($column->getName(), $query->get($query_key));
         }
     }
 
