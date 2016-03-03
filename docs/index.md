@@ -12,7 +12,8 @@ Currently it supports the following frontend tables:
 
 `Datatable` has a number of features:
 
-- Support `Collections`
+- Support [`Colections`](basic-usage.md)
+- Support [`QueryBuilders`](database-usage.md) (for example, MySQL, Microsoft SQL, PostgreSQL)
 - Easy to use interface with fully configurable behaviour
 - Supports [Datatables 1.9](http://legacy.datatables.net/)
 - Automatically generates html tables and the appropriate javascript on the side

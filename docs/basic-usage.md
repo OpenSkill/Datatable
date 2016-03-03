@@ -68,3 +68,11 @@ return view('user-view', array('datatable' => $t->view()));
 ### Laravel 5 note
 
 You will want to use `{!!` and `!!}` in place of `{{` and `}}` respictively to skip Laravel's escaping!
+
+## Different Collections
+
+So far all of our examples have been with the `CollectionProvider`, but other providers are supported too!
+
+* [`CollectionProvider`](basic-usage.md)
+* [`QueryBuilderProvider`](database-usage.md)
+
