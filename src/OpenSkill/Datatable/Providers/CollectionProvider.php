@@ -137,6 +137,18 @@ class CollectionProvider implements Provider
             $searchFunc = $this->defaultGlobalSearchFunction;
         }
 
+        $this->transformCollectionData($columnConfiguration, $searchFunc);
+        $this->removeEmptyRowsFromCollection();
+    }
+
+    /**
+     * Transform collection data. Used for searches.
+     *
+     * @param ColumnConfiguration[] $columnConfiguration
+     * @param $searchFunc
+     */
+    private function transformCollectionData($columnConfiguration, $searchFunc)
+    {
         $this->collection->transform(function ($data) use ($columnConfiguration, $searchFunc) {
             $entry = [];
             // for each column call the callback
@@ -154,6 +166,7 @@ class CollectionProvider implements Provider
                     }
                 }
             }
+
             // also do search right away
             if ($this->queryConfiguration->isGlobalSearch()) {
                 if (!$searchFunc($entry, $this->queryConfiguration->searchValue(), $this->columnConfiguration)) {
@@ -162,7 +175,15 @@ class CollectionProvider implements Provider
             }
             return $entry;
         });
+    }
 
+    /**
+     * Remove the empty rows from the collection
+     *
+     * @see compileCollection
+     */
+    private function removeEmptyRowsFromCollection()
+    {
         $this->collection = $this->collection->reject(function ($data) {
             if (empty($data)) {
                 return true;
