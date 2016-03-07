@@ -107,13 +107,7 @@ class ColumnComposer
         }
 
         if (!is_null($callable)) {
-            if (is_callable($callable)) {
-                $config->withCallable($callable);
-            } elseif (is_string($callable)) {
-                $config->withCallable(function () use ($callable) {
-                    return $callable;
-                });
-            }
+            $this->setCallableColumn($config, $callable);
         }
 
         if (is_null($searchable)) {
@@ -155,4 +149,19 @@ class ColumnComposer
         );
     }
 
+    /**
+     * Determine a sane configuration value for a column's callable function
+     * @param $config
+     * @param $callable
+     */
+    private function setCallableColumn($config, $callable)
+    {
+        if (is_callable($callable)) {
+            $config->withCallable($callable);
+        } elseif (is_string($callable)) {
+            $config->withCallable(function () use ($callable) {
+                return $callable;
+            });
+        }
+    }
 }
