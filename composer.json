@@ -14,9 +14,10 @@
   "name": "openskill/datatable",
   "require": {
     "php": ">=5.4.0",
-    "symfony/http-foundation": "2.7.*|~3.0",
-    "illuminate/support": ">=4.2.0",
-    "illuminate/contracts": ">=4.2.0"
+    "symfony/http-foundation": "~2.1|>=2.7.0|~3.0",
+    "illuminate/support": ">=4.2.2",
+    "illuminate/contracts": ">=4.2.2",
+    "illuminate/config": ">=4.2.2"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.*",

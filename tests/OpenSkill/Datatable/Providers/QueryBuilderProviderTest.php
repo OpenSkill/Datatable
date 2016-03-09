@@ -72,7 +72,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('get')
-            ->withArgs([['name']]);
+            ->withArgs([['name']])
+            ->andReturn([]);
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
@@ -117,7 +118,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('get')
-            ->withArgs([['name']]);
+            ->withArgs([['name']])
+            ->andReturn([]);
 
         $provider = new QueryBuilderProvider($queryBuilder);
 
@@ -167,7 +169,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
 
         $queryBuilder
             ->shouldReceive('get')
-            ->withArgs([['id', 'name']]);
+            ->withArgs([['id', 'name']])
+            ->andReturn([]);
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration, $columnConfiguration2]);
@@ -211,7 +214,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $queryBuilder
             ->shouldReceive('get')
             ->withArgs([['id']])
-            ->once();
+            ->once()
+            ->andReturn([]);
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
@@ -256,7 +260,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $queryBuilder
             ->shouldReceive('get')
             ->withArgs([['name']])
-            ->once();
+            ->once()
+            ->andReturn([]);
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, [$columnConfiguration]);
@@ -333,7 +338,8 @@ class QueryBuilderProviderTest extends \PHPUnit_Framework_TestCase
         $queryBuilder
             ->shouldReceive('get')
             ->withArgs([['id', 'name']])
-            ->once();
+            ->once()
+            ->andReturn([]);
 
         $provider = new QueryBuilderProvider($queryBuilder);
         $provider->prepareForProcessing($queryConfiguration, $columnConfiguration);
