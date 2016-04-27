@@ -40,6 +40,11 @@ class VersionEngineTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($version, $versionEngine->getVersion());
     }
 
+    /**
+     * Tests for issue #26 (https://github.com/OpenSkill/Datatable/issues/26)
+     * Datatable 1.10 would always be selected, even if the query was for
+     * Datatable 1.9
+     */
     public function testGivesDatatable19Version()
     {
         $query = new Request([
