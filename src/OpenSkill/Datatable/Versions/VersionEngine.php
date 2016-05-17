@@ -3,6 +3,7 @@
 namespace OpenSkill\Datatable\Versions;
 
 
+use OpenSkill\Datatable\DatatableException;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -24,6 +25,22 @@ class VersionEngine
      */
     public function __construct(array $versions)
     {
+        $this->setVersionFromRequest($versions);
+    }
+
+    private function setDefaultVersion(array $versions)
+    {
+        if (count($versions) < 1) {
+            throw new DatatableException('VersionEngine needs at least one engine (default)');
+        }
+
+        $this->version = $versions[0];
+    }
+
+    private function setVersionFromRequest(array $versions)
+    {
+        $this->setDefaultVersion($versions);
+
         foreach ($versions as $v) {
             if ($v->canParseRequest()) {
                 $this->version = $v;
