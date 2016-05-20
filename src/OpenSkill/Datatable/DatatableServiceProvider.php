@@ -37,6 +37,7 @@ class DatatableServiceProvider extends ServiceProvider
         $this->app->singleton("datatable", function (Application $app) use ($requestStack) {
             $dt = new Datatable19Version($requestStack);
             $dt2 = new Datatable110Version($requestStack);
+
             return new Datatable(
                 new VersionEngine([$dt2, $dt]),
                 $app->make('Illuminate\Contracts\View\Factory'),

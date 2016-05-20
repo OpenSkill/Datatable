@@ -28,15 +28,25 @@ class VersionEngine
         $this->setVersionFromRequest($versions);
     }
 
+    /**
+     * Set the default version that will be used by the VersionEngine.
+     *
+     * @param Version[] $versions an array of possible version this data table supports
+     */ 
     private function setDefaultVersion(array $versions)
     {
         if (count($versions) < 1) {
-            throw new DatatableException('VersionEngine needs at least one engine (default)');
+            return;
         }
 
         $this->version = $versions[0];
     }
 
+    /**
+     * Pick the verison of an engine that can parse a request.
+     *
+     * @param Version[] $versions an array of possible version this data table supports
+     */
     private function setVersionFromRequest(array $versions)
     {
         $this->setDefaultVersion($versions);
