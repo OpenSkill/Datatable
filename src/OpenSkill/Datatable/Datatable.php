@@ -72,6 +72,7 @@ class Datatable
         if (is_null($tableView)) {
             $tableView = $this->versionEngine->getVersion()->tableView();
         }
+
         if (is_null($scriptView)) {
             $scriptView = $this->versionEngine->getVersion()->scriptView();
         }
