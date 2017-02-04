@@ -14,7 +14,9 @@ server side handler for a number of javascript table plugins.
 ## WARNING
 
 This package is in an early development state and not everything is finished yet. 
-Mostly the documentation is lacking, so for the time being you should look at [Chumper/Datatable](https://github.com/Chumper/Datatable) for a more complete solution.
+~~Mostly the documentation is lacking, so for the time being you should look at [Chumper/Datatable](https://github.com/Chumper/Datatable) for a more complete solution.~~
+
+UPDATE: Its seems that we do not have more time to develop this further, if somebody wants to take ownership please ping the owners.
 
 ## Install
 
