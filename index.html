@@ -3,31 +3,28 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>OpenSkill/Datatable Documentation</title>
-  
-
+  <meta name="description" content="None">
+  <meta name="author" content="Nils Plaschke">
   <link rel="shortcut icon" href="./img/favicon.ico">
-
-  
+  <title>Home - OpenSkill/Datatable Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="./css/theme.css" type="text/css" />
   <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="./css/highlight.css">
-
   
   <script>
     // Current page data
-    var mkdocs_page_name = "None";
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
   </script>
   
   <script src="./js/jquery-2.1.1.min.js"></script>
   <script src="./js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="./js/highlight.pack.js"></script>
-  <script src="./js/theme.js"></script> 
-
+  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
   
 </head>
 
@@ -47,7 +44,7 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        <ul class="current">
+	<ul class="current">
           
             <li>
     <li class="toctree-l1 current">
@@ -99,9 +96,8 @@
     <li>Home</li>
     <li class="wy-breadcrumbs-aside">
       
-        
-          <a href="https://github.com/OpenSkill/Datatable/" class="icon icon-github"> Edit on GitHub</a>
-        
+        <a href="https://github.com/OpenSkill/Datatable/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
@@ -111,19 +107,22 @@
             <div class="section">
               
                 <h1 id="introduction">Introduction</h1>
-<p><strong>PLEASE NOTE</strong>: This package is currently under development and not production ready yet!</p>
-<p>OpenSkill/Datatable is a package for <code>laravel5</code> as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.</p>
+<p>OpenSkill/Datatable is a package for <code>Laravel 5</code> as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.</p>
 <p>Currently it supports the following frontend tables:</p>
 <ul>
 <li><a href="http://legacy.datatables.net/">Datatables 1.9</a></li>
+<li><a href="http://www.datatables.net/">Datatables 1.10</a></li>
+</ul>
+<p>Currently, it supports the following backend providers:</p>
+<ul>
+<li>Support <a href="basic-usage/"><code>ColectionProvider</code></a></li>
+<li>Support <a href="database-usage.md"><code>QueryBuilderProvider</code></a> (for example, MySQL, Microsoft SQL, PostgreSQL and MongoDB)</li>
 </ul>
 <h2 id="features">Features</h2>
 <p><code>Datatable</code> has a number of features:</p>
 <ul>
-<li>Support <code>Collections</code></li>
 <li>Easy to use interface with fully configurable behaviour</li>
-<li>Supports <a href="http://legacy.datatables.net/">Datatables 1.9</a></li>
-<li>Automatically generates html tables and the appropriate javascript on the side</li>
+<li>Automatically generates html tables and the appropriate javascript on the client side</li>
 <li>Fully tested</li>
 <li>Fully configurable</li>
 <li>Extensible</li>
@@ -131,11 +130,11 @@
 <h2 id="quickstart">Quickstart</h2>
 <h3 id="composer">Composer</h3>
 <p>This package is available on <a href="https://packagist.org/packages/chumper/datatable">http://packagist.org</a>, just add it to your composer.json</p>
-<pre><code class="json">&quot;openSkill/datatable&quot;: &quot;0.1.2&quot;
+<pre><code class="json">&quot;openSkill/datatable&quot;: &quot;^0.2&quot;
 </code></pre>
 
 <p>Alternatively, you can install it using the composer command:</p>
-<pre><code class="bash">composer require openSkill/datatable
+<pre><code class="bash">composer require openskill/datatable
 </code></pre>
 
 <h3 id="laravel">Laravel</h3>
@@ -159,7 +158,7 @@
 <pre><code class="bash">php artisan vendor:publish
 </code></pre>
 
-<p><strong>Cogratulation</strong>, you are now able to use <code>Datatable</code> in your project. </p>
+<p><strong>Cogratulations</strong>, you are now able to use <code>Datatable</code> in your project.</p>
 <p><a href="basic-usage/">Head on</a> to the next section </p>
               
             </div>
@@ -168,7 +167,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="basic-usage/" class="btn btn-neutral float-right" title="Basic Usage"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="basic-usage/" class="btn btn-neutral float-right" title="Basic Usage">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -190,13 +189,13 @@
       </div>
 
     </section>
-
+    
   </div>
 
-<div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/OpenSkill/Datatable/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
       
@@ -204,11 +203,12 @@
       
     </span>
 </div>
+    <script src="./js/theme.js"></script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 0.14.0
-Build Date UTC : 2015-12-12 23:29:28.451967
+MkDocs version : 0.16.1
+Build Date UTC : 2017-02-06 02:16:17
 -->

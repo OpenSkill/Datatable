@@ -2,38 +2,68 @@
     "docs": [
         {
             "location": "/", 
-            "text": "Introduction\n\n\nPLEASE NOTE\n: This package is currently under development and not production ready yet!\n\n\nOpenSkill/Datatable is a package for \nlaravel5\n as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.\n\n\nCurrently it supports the following frontend tables:\n\n\n\n\nDatatables 1.9\n\n\n\n\nFeatures\n\n\nDatatable\n has a number of features:\n\n\n\n\nSupport \nCollections\n\n\nEasy to use interface with fully configurable behaviour\n\n\nSupports \nDatatables 1.9\n\n\nAutomatically generates html tables and the appropriate javascript on the side\n\n\nFully tested\n\n\nFully configurable\n\n\nExtensible\n\n\n\n\nQuickstart\n\n\nComposer\n\n\nThis package is available on \nhttp://packagist.org\n, just add it to your composer.json\n\n\nopenSkill/datatable\n: \n0.1.2\n\n\n\n\n\nAlternatively, you can install it using the composer command:\n\n\ncomposer require openSkill/datatable\n\n\n\n\nLaravel\n\n\nThe package is built with Laravel in mind, so just add the following lines to app.php\n\n\nLaravel 5\n\n\n    'providers' =\n [\n\n        ...\n        OpenSkill\\Datatable\\DatatableServiceProvider::class,\n        ...\n    ],\n    'aliases' =\n [\n\n        ...\n        'Datatable'=\n OpenSkill\\Datatable\\Facades\\DatatableFacade::class,\n        ...\n    ],\n\n\n\n\nTo override the default configuration options you can publish the config file.\n\n\nphp artisan vendor:publish\n\n\n\n\nCogratulation\n, you are now able to use \nDatatable\n in your project. \n\n\nHead on\n to the next section", 
+            "text": "Introduction\n\n\nOpenSkill/Datatable is a package for \nLaravel 5\n as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.\n\n\nCurrently it supports the following frontend tables:\n\n\n\n\nDatatables 1.9\n\n\nDatatables 1.10\n\n\n\n\nCurrently, it supports the following backend providers:\n\n\n\n\nSupport \nColectionProvider\n\n\nSupport \nQueryBuilderProvider\n (for example, MySQL, Microsoft SQL, PostgreSQL and MongoDB)\n\n\n\n\nFeatures\n\n\nDatatable\n has a number of features:\n\n\n\n\nEasy to use interface with fully configurable behaviour\n\n\nAutomatically generates html tables and the appropriate javascript on the client side\n\n\nFully tested\n\n\nFully configurable\n\n\nExtensible\n\n\n\n\nQuickstart\n\n\nComposer\n\n\nThis package is available on \nhttp://packagist.org\n, just add it to your composer.json\n\n\nopenSkill/datatable\n: \n^0.2\n\n\n\n\n\nAlternatively, you can install it using the composer command:\n\n\ncomposer require openskill/datatable\n\n\n\n\nLaravel\n\n\nThe package is built with Laravel in mind, so just add the following lines to app.php\n\n\nLaravel 5\n\n\n    'providers' =\n [\n\n        ...\n        OpenSkill\\Datatable\\DatatableServiceProvider::class,\n        ...\n    ],\n    'aliases' =\n [\n\n        ...\n        'Datatable'=\n OpenSkill\\Datatable\\Facades\\DatatableFacade::class,\n        ...\n    ],\n\n\n\n\nTo override the default configuration options you can publish the config file.\n\n\nphp artisan vendor:publish\n\n\n\n\nCogratulations\n, you are now able to use \nDatatable\n in your project.\n\n\nHead on\n to the next section", 
             "title": "Home"
         }, 
         {
             "location": "/#introduction", 
-            "text": "PLEASE NOTE : This package is currently under development and not production ready yet!  OpenSkill/Datatable is a package for  laravel5  as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.  Currently it supports the following frontend tables:   Datatables 1.9", 
+            "text": "OpenSkill/Datatable is a package for  Laravel 5  as well as all other composer based projects that provides a server side handler for a number of javascript table plugins.  Currently it supports the following frontend tables:   Datatables 1.9  Datatables 1.10   Currently, it supports the following backend providers:   Support  ColectionProvider  Support  QueryBuilderProvider  (for example, MySQL, Microsoft SQL, PostgreSQL and MongoDB)", 
             "title": "Introduction"
         }, 
         {
             "location": "/#features", 
-            "text": "Datatable  has a number of features:   Support  Collections  Easy to use interface with fully configurable behaviour  Supports  Datatables 1.9  Automatically generates html tables and the appropriate javascript on the side  Fully tested  Fully configurable  Extensible", 
+            "text": "Datatable  has a number of features:   Easy to use interface with fully configurable behaviour  Automatically generates html tables and the appropriate javascript on the client side  Fully tested  Fully configurable  Extensible", 
             "title": "Features"
         }, 
         {
             "location": "/#quickstart", 
-            "text": "Composer  This package is available on  http://packagist.org , just add it to your composer.json  openSkill/datatable :  0.1.2   Alternatively, you can install it using the composer command:  composer require openSkill/datatable  Laravel  The package is built with Laravel in mind, so just add the following lines to app.php  Laravel 5      'providers' =  [\n\n        ...\n        OpenSkill\\Datatable\\DatatableServiceProvider::class,\n        ...\n    ],\n    'aliases' =  [\n\n        ...\n        'Datatable'=  OpenSkill\\Datatable\\Facades\\DatatableFacade::class,\n        ...\n    ],  To override the default configuration options you can publish the config file.  php artisan vendor:publish  Cogratulation , you are now able to use  Datatable  in your project.   Head on  to the next section", 
+            "text": "", 
             "title": "Quickstart"
         }, 
         {
+            "location": "/#composer", 
+            "text": "This package is available on  http://packagist.org , just add it to your composer.json  openSkill/datatable :  ^0.2   Alternatively, you can install it using the composer command:  composer require openskill/datatable", 
+            "title": "Composer"
+        }, 
+        {
+            "location": "/#laravel", 
+            "text": "The package is built with Laravel in mind, so just add the following lines to app.php", 
+            "title": "Laravel"
+        }, 
+        {
+            "location": "/#laravel-5", 
+            "text": "'providers' =  [\n\n        ...\n        OpenSkill\\Datatable\\DatatableServiceProvider::class,\n        ...\n    ],\n    'aliases' =  [\n\n        ...\n        'Datatable'=  OpenSkill\\Datatable\\Facades\\DatatableFacade::class,\n        ...\n    ],  To override the default configuration options you can publish the config file.  php artisan vendor:publish  Cogratulations , you are now able to use  Datatable  in your project.  Head on  to the next section", 
+            "title": "Laravel 5"
+        }, 
+        {
             "location": "/basic-usage/", 
-            "text": "Simple Datatable\n\n\nThe simplest \nDatatable\n you can create looks like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all())\n    -\ncolumn('name')\n    -\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t-\nview()));\n\n\n\n\nand on the view side\n\n\n{{\n    $datatable-\nhtml();\n}}\n\n\n\n\n\nIn this example we do the following:\n\n\n\n\nGet all users with \nUser::all()\n \n\n\nPass the user collection to a \nCollectionProvider\n\n\nBuild the \nDatatableService\n \n\n\n\n\nWe then check if the \nDatatableService\n should handle the result and if so return the \n$t-\nhandleRequest()\n.\n\n\nOn the view side we just render the html and the javascript with the \nhtml\n method.\n\n\nMore advanced example\n\n\nA more sophicticated example could look like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all())\n    -\ncolumns('id') // show the id column of the user model\n    -\ncolumns('name', null, Searchable::NONE(), Orderable::NONE()) // also show the full name of the user, but do not allow searching or ordering of the column\n    -\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t-\nview()));\n\n\n\n\n{{\n    $datatable\n        -\nheaders() // tell the table to render the header in the table\n        -\ncolumns('id', '#') // show # in the header instead of 'id'\n        -\ncolumns('name', 'Full name') // show 'Full name' in the header instead of 'name'\n        -\ntable(); // render just the table\n}}\n{{\n    $datatable\n        -\nscript() // now render the script\n}", 
+            "text": "Datatable Usage\n\n\nSimple Datatable\n\n\nThe simplest \nDatatable\n you can create looks like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all()))\n    -\ncolumn('name')\n    -\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t-\nview()));\n\n\n\n\nand on the view side\n\n\n{{\n    $datatable-\nhtml();\n}}\n\n\n\n\n\nIn this example we do the following:\n\n\n\n\nGet all users with \nUser::all()\n \n\n\nPass the user collection to a \nCollectionProvider\n\n\nBuild the \nDatatableService\n \n\n\n\n\nWe then check if the \nDatatableService\n should handle the result and if so return the \n$t-\nhandleRequest()\n.\n\n\nOn the view side we just render the html and the javascript with the \nhtml\n method.\n\n\nMore advanced example\n\n\nA more sophicticated example could look like this:\n\n\n$t = Datatable::make(new CollectionProvider(User::all()))\n    -\ncolumn('id') // show the id column of the user model\n    -\ncolumn('name', null, Searchable::NONE(), Orderable::NONE()) // also show the full name of the user, but do not allow searching or ordering of the column\n    -\nbuild();\n\nif ($t-\nshouldHandle()) {\n    return $t-\nhandleRequest();\n}\n\nreturn view('user-view', array('datatable' =\n $t-\nview()));\n\n\n\n\n{{\n    $datatable\n        -\nheaders() // tell the table to render the header in the table\n        -\ncolumns('id', '#') // show # in the header instead of 'id'\n        -\ncolumns('name', 'Full name') // show 'Full name' in the header instead of 'name'\n        // render just the table\n        -\ntable()\n}}\n{{\n    $datatable\n        // now render the script\n        -\nscript() \n}}\n\n\n\n\nLaravel 5 note\n\n\nYou will want to use \n{!!\n and \n!!}\n in place of \n{{\n and \n}}\n respictively to skip Laravel's escaping!\n\n\nDifferent Collections\n\n\nSo far all of our examples have been with the \nCollectionProvider\n, but other providers are supported too!\n\n\n\n\nCollectionProvider\n\n\nQueryBuilderProvider", 
             "title": "Basic Usage"
         }, 
         {
+            "location": "/basic-usage/#datatable-usage", 
+            "text": "", 
+            "title": "Datatable Usage"
+        }, 
+        {
             "location": "/basic-usage/#simple-datatable", 
-            "text": "The simplest  Datatable  you can create looks like this:  $t = Datatable::make(new CollectionProvider(User::all())\n    - column('name')\n    - build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t- view()));  and on the view side  {{\n    $datatable- html();\n}}  In this example we do the following:   Get all users with  User::all()    Pass the user collection to a  CollectionProvider  Build the  DatatableService     We then check if the  DatatableService  should handle the result and if so return the  $t- handleRequest() .  On the view side we just render the html and the javascript with the  html  method.", 
+            "text": "The simplest  Datatable  you can create looks like this:  $t = Datatable::make(new CollectionProvider(User::all()))\n    - column('name')\n    - build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t- view()));  and on the view side  {{\n    $datatable- html();\n}}  In this example we do the following:   Get all users with  User::all()    Pass the user collection to a  CollectionProvider  Build the  DatatableService     We then check if the  DatatableService  should handle the result and if so return the  $t- handleRequest() .  On the view side we just render the html and the javascript with the  html  method.", 
             "title": "Simple Datatable"
         }, 
         {
             "location": "/basic-usage/#more-advanced-example", 
-            "text": "A more sophicticated example could look like this:  $t = Datatable::make(new CollectionProvider(User::all())\n    - columns('id') // show the id column of the user model\n    - columns('name', null, Searchable::NONE(), Orderable::NONE()) // also show the full name of the user, but do not allow searching or ordering of the column\n    - build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t- view()));  {{\n    $datatable\n        - headers() // tell the table to render the header in the table\n        - columns('id', '#') // show # in the header instead of 'id'\n        - columns('name', 'Full name') // show 'Full name' in the header instead of 'name'\n        - table(); // render just the table\n}}\n{{\n    $datatable\n        - script() // now render the script\n}", 
+            "text": "A more sophicticated example could look like this:  $t = Datatable::make(new CollectionProvider(User::all()))\n    - column('id') // show the id column of the user model\n    - column('name', null, Searchable::NONE(), Orderable::NONE()) // also show the full name of the user, but do not allow searching or ordering of the column\n    - build();\n\nif ($t- shouldHandle()) {\n    return $t- handleRequest();\n}\n\nreturn view('user-view', array('datatable' =  $t- view()));  {{\n    $datatable\n        - headers() // tell the table to render the header in the table\n        - columns('id', '#') // show # in the header instead of 'id'\n        - columns('name', 'Full name') // show 'Full name' in the header instead of 'name'\n        // render just the table\n        - table()\n}}\n{{\n    $datatable\n        // now render the script\n        - script() \n}}", 
             "title": "More advanced example"
+        }, 
+        {
+            "location": "/basic-usage/#laravel-5-note", 
+            "text": "You will want to use  {!!  and  !!}  in place of  {{  and  }}  respictively to skip Laravel's escaping!", 
+            "title": "Laravel 5 note"
+        }, 
+        {
+            "location": "/basic-usage/#different-collections", 
+            "text": "So far all of our examples have been with the  CollectionProvider , but other providers are supported too!   CollectionProvider  QueryBuilderProvider", 
+            "title": "Different Collections"
         }
     ]
 }
