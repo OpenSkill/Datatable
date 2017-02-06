@@ -2,6 +2,7 @@ site_name: OpenSkill/Datatable Documentation
 pages:
 - Home: index.md
 - Basic Usage: basic-usage.md
+- Database Usage: database-usage.md
 theme: readthedocs
 repo_url: https://github.com/OpenSkill/Datatable/
 site_author: Nils Plaschke

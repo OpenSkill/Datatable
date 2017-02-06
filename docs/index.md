@@ -4,8 +4,8 @@ OpenSkill/Datatable is a package for `Laravel 5` as well as all other composer b
 
 Currently it supports the following frontend tables:
 
-- [Datatables 1.9](http://legacy.datatables.net/)
 - [Datatables 1.10](http://www.datatables.net/)
+- [Datatables 1.9](http://legacy.datatables.net/) [_legacy_]
 
 Currently, it supports the following backend providers:
 
