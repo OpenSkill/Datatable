@@ -11,13 +11,6 @@
 OpenSkill/Datatable is a package for laravel4 and laravel5 as well as all other composer based projects that provides a
 server side handler for a number of javascript table plugins.
 
-## WARNING
-
-This package is in an early development state and not everything is finished yet. 
-~~Mostly the documentation is lacking, so for the time being you should look at [Chumper/Datatable](https://github.com/Chumper/Datatable) for a more complete solution.~~
-
-UPDATE: Its seems that we do not have more time to develop this further, so the state is `As Is` but so far it is pretty stable for all available features.
-
 ## Install
 
 Via Composer
@@ -29,6 +22,14 @@ $ composer require OpenSkill/Datatable
 ## Documentation
 
 Please see for http://openskill.github.io/Datatable/ more information what you can do with this package.
+
+**Note:** The documentation is currently a work in progress, and there is a number of places where it is serverly lacking. Please feel free to add a pull request with updated documentation.
+
+## Reporting issues
+
+This project is actively supported, and is used in a number of production platforms, so if you do find an issue, please feel free to report it with [GitHub's bug tracker](https://github.com/OpenSkill/Datatable/issues) for this project.
+
+Alternatively, fork the project and make a pull request :)
 
 ## Changelog
 
