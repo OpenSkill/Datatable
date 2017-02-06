@@ -8,7 +8,7 @@
   
   <meta name="author" content="Nils Plaschke">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Basic Usage - OpenSkill/Datatable Documentation</title>
+  <title>Database Usage - OpenSkill/Datatable Documentation</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Basic Usage";
-    var mkdocs_page_input_path = "basic-usage.md";
-    var mkdocs_page_url = "/basic-usage/";
+    var mkdocs_page_name = "Database Usage";
+    var mkdocs_page_input_path = "database-usage.md";
+    var mkdocs_page_url = "/database-usage/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -54,28 +54,28 @@
 <li>
           
             <li>
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Basic Usage</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#datatable-usage">Datatable Usage</a></li>
-                
-                    <li><a class="toctree-l4" href="#simple-datatable">Simple Datatable</a></li>
-                
-                    <li><a class="toctree-l4" href="#more-advanced-example">More advanced example</a></li>
-                
-                    <li><a class="toctree-l4" href="#different-collections">Different Collections</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../basic-usage/">Basic Usage</a>
         
     </li>
 <li>
           
             <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../database-usage/">Database Usage</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Database Usage</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#datatable-usage">Datatable Usage</a></li>
+                
+                    <li><a class="toctree-l4" href="#using-querybuilderprovider">Using QueryBuilderProvider</a></li>
+                
+                    <li><a class="toctree-l4" href="#modifying-queries-before-preparing-datatable">Modifying queries before preparing Datatable</a></li>
+                
+                    <li><a class="toctree-l4" href="#getting-data-out-of-mongodb">Getting data out of MongoDB</a></li>
+                
+            
+            </ul>
         
     </li>
 <li>
@@ -102,10 +102,10 @@
     
       
     
-    <li>Basic Usage</li>
+    <li>Database Usage</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/OpenSkill/Datatable/edit/master/docs/basic-usage.md"
+        <a href="https://github.com/OpenSkill/Datatable/edit/master/docs/database-usage.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -116,9 +116,10 @@
             <div class="section">
               
                 <h1 id="datatable-usage">Datatable Usage</h1>
-<h2 id="simple-datatable">Simple Datatable</h2>
-<p>The simplest <code>Datatable</code> you can create looks like this:</p>
-<pre><code class="php">$t = Datatable::make(new CollectionProvider(User::all()))
+<h2 id="using-querybuilderprovider">Using QueryBuilderProvider</h2>
+<p><code>QueryBuilderProvider</code> is a provider for <code>Datatable</code> that allows pulling data for a Datatable outside of a Laravel Query Builder.</p>
+<p>Similar to the <code>CollectionProvider</code>, the simplest <code>Datatable</code> you can create looks like this:</p>
+<pre><code class="php">$t = Datatable::make(new QueryBuilderProvider(DB::table('data')))
     -&gt;column('name')
     -&gt;build();
 
@@ -130,57 +131,47 @@ return view('user-view', array('datatable' =&gt; $t-&gt;view()));
 </code></pre>
 
 <p>and on the view side</p>
-<pre><code class="html">{{
+<pre><code>{{
     $datatable-&gt;html();
 }}
-
 </code></pre>
 
 <p>In this example we do the following:</p>
 <ol>
-<li>Get all users with <code>User::all()</code> </li>
-<li>Pass the user collection to a <code>CollectionProvider</code></li>
-<li>Build the <code>DatatableService</code> </li>
+<li>Create an instance of <code>Illuminate\Database\Query\Builder</code> with DB::table()</li>
+<li>Pass the instance to a QueryBuilderProvider</li>
+<li>Build the DatatableService</li>
 </ol>
 <p>We then check if the <code>DatatableService</code> should handle the result and if so return the <code>$t-&gt;handleRequest()</code>.</p>
-<p>On the view side we just render the html and the javascript with the <code>html</code> method.</p>
-<h2 id="more-advanced-example">More advanced example</h2>
-<p>A more sophicticated example could look like this:</p>
-<pre><code class="php">$t = Datatable::make(new CollectionProvider(User::all()))
-    -&gt;column('id') // show the id column of the user model
-    -&gt;column('name', null, Searchable::NONE(), Orderable::NONE()) // also show the full name of the user, but do not allow searching or ordering of the column
+<p>On the view side we just render the html and the javascript with the html method.</p>
+<h2 id="modifying-queries-before-preparing-datatable">Modifying queries before preparing Datatable</h2>
+<p>One of the benefits of passing an instance of <code>Illuminate\Database\Query\Builder</code> is that we can change the query that is passed to the <code>QueryBuilderProvider</code> before the Datatable is handled.</p>
+<p>This means that we could hide particular data from a Datatable. This is handy for many use cases, for example, we might not want to show users that have been deleted.</p>
+<pre><code class="php">$query = DB::table('users')
+            -&gt;where('activated', '=', 1)
+            -&gt;where('deleted', '=', 0);
+
+$t = Datatable::make(new QueryBuilderProvider($query))
+    -&gt;column('name')
     -&gt;build();
 
 if ($t-&gt;shouldHandle()) {
     return $t-&gt;handleRequest();
 }
-
-return view('user-view', array('datatable' =&gt; $t-&gt;view()));
 </code></pre>
 
-<pre><code class="html">{{
-    $datatable
-        -&gt;headers() // tell the table to render the header in the table
-        -&gt;columns('id', '#') // show # in the header instead of 'id'
-        -&gt;columns('name', 'Full name') // show 'Full name' in the header instead of 'name'
-        // render just the table
-        -&gt;table()
-}}
-{{
-    $datatable
-        // now render the script
-        -&gt;script() 
-}}
-</code></pre>
+<h2 id="getting-data-out-of-mongodb">Getting data out of MongoDB</h2>
+<p>If you install <a href="https://github.com/jenssegers/laravel-mongodb"><code>jenssegers/mongodb</code></a>, QueryBuilderParser will also be able to pull data out of MongoDB using jenssegers' MongoDB Query Builder!</p>
+<pre><code class="php">$query = DB::collection('data');
 
-<h3 id="laravel-5-note">Laravel 5 note</h3>
-<p>You will want to use <code>{!!</code> and <code>!!}</code> in place of <code>{{</code> and <code>}}</code> respictively to skip Laravel's escaping!</p>
-<h2 id="different-collections">Different Collections</h2>
-<p>So far all of our examples have been with the <code>CollectionProvider</code>, but other providers are supported too!</p>
-<ul>
-<li><a href="./"><code>CollectionProvider</code></a></li>
-<li><a href="../database-usage/"><code>QueryBuilderProvider</code></a></li>
-</ul>
+$t = Datatable::make(new QueryBuilderProvider($query))
+    -&gt;column('name', 'title', 'description')
+    -&gt;build();
+
+if ($t-&gt;shouldHandle()) {
+    return $t-&gt;handleRequest();
+}
+</code></pre>
               
             </div>
           </div>
@@ -188,10 +179,8 @@ return view('user-view', array('datatable' =&gt; $t-&gt;view()));
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../database-usage/" class="btn btn-neutral float-right" title="Database Usage">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../basic-usage/" class="btn btn-neutral" title="Basic Usage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -221,10 +210,8 @@ return view('user-view', array('datatable' =&gt; $t-&gt;view()));
           <a href="https://github.com/OpenSkill/Datatable/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../basic-usage/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../database-usage/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
